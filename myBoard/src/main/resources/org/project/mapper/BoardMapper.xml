@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- namespace 속성값은 Mapper 인터페이스와 동일한 이름으로 작성 -->
+<mapper namespace="org.project.mapper.BoardMapper">
+	
+	<!-- 쿼리 정의 -->
+	<select id="getList" resultType="org.project.domain.BoardVO">
+
+	<![CDATA[
+		select * from tbl_board where bno > 0
+		]]>
+	</select>
+	<!-- SELECT * FROM board; -->
+
+	<insert id="insert"
+		parameterType="org.project.domain.BoardVO">
+	
+		insert into tbl_board (title, content, writer)
+		values (#{title}, #{content}, #{writer})
+		<selectKey resultType="java.lang.Long" keyProperty="bno"
+			order="AFTER">
+			select last_insert_id()
+		</selectKey>
+	</insert>
+
+	<select id="read" resultType="org.project.domain.BoardVO">
+		select * from tbl_board where bno = #{bno}
+	</select>
+
+</mapper>

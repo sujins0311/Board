@@ -26,7 +26,7 @@ public class BoardMapperTests {
 		System.out.println(mapper.getList());
  
 //		mapper.getList().forEach(board -> log.info(board));
-		List<BoardVO> boards = mapper.getList(); //BoardVO클래스는 @Data 어노테이션에 의해 사용가능
+		List<BoardVO> boards = mapper.getList(); 
 		for (BoardVO board : boards) {
 		    log.info(board);
 		}
