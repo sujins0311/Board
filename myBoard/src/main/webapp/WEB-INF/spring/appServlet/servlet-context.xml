@@ -16,12 +16,14 @@
 	<resources mapping="/resources/**" location="/resources/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<!--  /WEB-INF는 브라우저에서 접근 할 수 없는 경로 -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="org.project.controller" />
+	<context:component-scan base-package="org.project.*" />
+	<!-- <context:component-scan base-package="org.project.controller" /> -->
 	
 	
 	

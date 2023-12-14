@@ -6,7 +6,8 @@ import org.project.domain.BoardVO;
 
 public interface BoardService {
 	
+	public List<BoardVO> getList();
 	public void register(BoardVO boardVO);
 	public  BoardVO get(Long bno);
-	public List<BoardVO> getList();
+	
 }
