@@ -22,8 +22,10 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="org.project.*" />
-	<!-- <context:component-scan base-package="org.project.controller" /> -->
+	<!-- <context:component-scan base-package="org.project.*" /> -->
+	<!-- 컨트롤러 / 예외처리 -->
+	<context:component-scan base-package="org.project.controller" />
+	<context:component-scan base-package="org.project.exception" />
 	
 	
 	

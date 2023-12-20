@@ -23,21 +23,39 @@ public class BoardController {
 	
 	private BoardService service;
 	
-// http://localhost:8080/baord/get?bno=1
-	@GetMapping({ "/get"})
+	// JSP 부트스트랩 적용하기
+	
+	
+	// 조회 + 페이징
+	// http://localhost:8080/baord/get?bno=1
+	
+	
+	// 삭제
+	// http://localhost:8080/baord/register
+	
+	
+	// 수정
+	// http://localhost:8080/baord/register
+	
+	// 조회
+	// v
+	@GetMapping({ "/get"}) // get.jsp
 	public void get(@RequestParam("bno") Long bno, Model model) {
 		log.info("/get");
 		model.addAttribute("board", service.get(bno));
 	}
 	
+	// 등록 > addAttribute로 전달 된 신규 id값 조회 i=모달창("작성완료") > list.jsp
+	// 작성하기 버튼 (history)
 	// http://localhost:8080/baord/register
-	@PostMapping("/register")
+	@PostMapping("/register") // register.jsp
 	public void register() {
 		log.info("/register");
 	}
 	
+	// 목록 > addAttribute로 전달 된 신규 id값 조회 i=모달창("작성완료") > 목록 > 뒤로가기(addAttribute / 1회사용) 모달창 여부 if문
 	// http://localhost:8080/baord/list
-	@GetMapping("/list") 
+	@GetMapping("/list")  // list.jsp
 	public void list(Model model) {
 		log.info("list");
 		model.addAttribute("list", service.getList());	

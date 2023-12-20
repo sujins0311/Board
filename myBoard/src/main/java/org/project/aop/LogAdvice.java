@@ -9,7 +9,7 @@ import lombok.extern.log4j.Log4j;
 @Aspect
 @Log4j
 @Component
-public class LogAdvice {
+public class LogAdvice { //공통로직
 	
 	@Before("execution(* org.project.service.BoardService*.*(..))")
 	public void logBefore() {
