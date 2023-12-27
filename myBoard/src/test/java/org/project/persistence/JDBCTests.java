@@ -15,7 +15,7 @@ public class JDBCTests {
 	
 	static {
         try {
-            // MySQL JDBC 드라이버 클래스를 로드(DBMS 별로 name이 다름)
+            // MariaDB JDBC 드라이버 클래스를 로드
             Class.forName("org.mariadb.jdbc.Driver");
         } catch (Exception e) {
             e.printStackTrace();
@@ -25,7 +25,7 @@ public class JDBCTests {
     @Test
     public void testConnection() {
         try (Connection con = DriverManager.getConnection(
-                // mariaDB 데이터베이스에 연결
+                // MariaDB 데이터베이스에 연결
         		
         		// 데이터베이스 서버 주소 및 포트, 데이터베이스 이름, SSL옵션 추가
         		"jdbc:mariadb://localhost:13306/myBoard?useSSL=false",             

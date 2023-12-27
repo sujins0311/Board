@@ -1,6 +1,6 @@
 package org.project.domain;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import lombok.Data;
 
@@ -11,7 +11,25 @@ public class BoardVO {
 	private String title;
 	private String content;
 	private String writer;
-	private Date regdate;
-	private Date updateDate;
+	private LocalDateTime createdDate;
+	private LocalDateTime updatedDate;
+
+    // setCreatedDate가 호출되는 시점을 현재시간으로 등록됨
+    public void setCreatedDate() {
+    	this.createdDate = LocalDateTime.now();
+    }
+    
+    // setUpdatedDate가 호출되는 시점을 현재시간으로 등록됨
+    public void setUpdatedDate() {
+        this.updatedDate = LocalDateTime.now();
+    }
+    
+//	@Override
+//	public boolean modifyPost(BoardVO boardVO) {
+//		boardVO.setUpdatedDate();
+//	    log.info("modifyPost.....");
+//	    return mapper.modify(boardVO) == 1;
+//	}
+    
 
 }
