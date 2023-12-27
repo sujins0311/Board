@@ -15,28 +15,42 @@ import lombok.extern.log4j.Log4j;
 public class BoardServiceImpl implements BoardService {
 
 	private BoardMapper mapper;
-
+	
 	@Override
-	public void register(BoardVO board) {
-
-		log.info("register......" + board);
-
-		mapper.insert(board);
+	public void createPost(BoardVO boardVO) {
+		boardVO.setCreatedDate();
+		log.info("createPost......" + boardVO);
+		mapper.insert(boardVO);
 	}
 
 	@Override
-	public BoardVO get(Long bno) {
-		log.info("get....." + bno);
-		// INFO : org.zerock.service.BoardServiceImpl - get.....1
+	public BoardVO getPost(Long bno) {
+		log.info("getPost....." + bno);
 		return mapper.read(bno);
 	}
 
 	@Override
-	public List<BoardVO> getList() {
-		log.info("getList.....");
-
+	public List<BoardVO> getPostList() {
+		log.info("getPostList.....");
 		return mapper.getList();
 
 	}
+
+	@Override
+	public int deletePost(Long bno) {
+		
+		log.info("deletePost.....");
+		return mapper.delete(bno);
+	}
+
+
+	@Override
+	public boolean modifyPost(BoardVO boardVO) {
+		boardVO.setUpdatedDate();
+	    log.info("modifyPost.....");
+	    return mapper.modify(boardVO) == 1;
+	}
+
+	
 
 }

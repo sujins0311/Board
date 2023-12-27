@@ -183,14 +183,13 @@
 			<version>2.15.2</version>
 		</dependency>
 
-		<!-- test할때 java인스턴스를 JSON타입의 문자열로 변환하기 위해 -->
+		<!-- mockMvc할때 java인스턴스를 JSON타입의 문자열로 변환하기 위해 -->
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>2.9.0</version>
 		</dependency>
-		<!-- JSON데이터와 java객체 변환 관련 라이브러리 추가 끝 -->
 		<!-- JSON데이터와 java객체 변환 관련 라이브러리 추가 끝 -->
 
 
