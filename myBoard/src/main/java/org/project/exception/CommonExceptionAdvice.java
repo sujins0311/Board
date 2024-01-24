@@ -1,7 +1,7 @@
 package org.project.exception;
 
+
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,10 +14,9 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class CommonExceptionAdvice { // 예외처리(java.jsp.bean등록)
 	
-	@ExceptionHandler(NoHandlerFoundException.class)
+	@ExceptionHandler(NoHandlerFoundException.class) //404 Not Found
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public String handle404(NoHandlerFoundException ex) {
-
 		return "error404";
 	}
 
@@ -33,6 +32,6 @@ public class CommonExceptionAdvice { // 예외처리(java.jsp.bean등록)
 		model.addAttribute("exception", ex);
 		log.error(model);
 		return "errorPage";
-
 	}
+
 }

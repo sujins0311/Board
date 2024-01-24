@@ -42,10 +42,23 @@ public class BoardControllerTests {
 				.webAppContextSetup(ctx) // 웹 어플리케이션 환경설정(ApplicationContext 또는 WebApplicationContext를 인자로 받음)
 				.build();
 	}
+	
+	
+	// 게시글 목록(페이지)
+	@Test
+	public void testGetPostsByPage() throws Exception {
+		log.info(mockMvc
+				.perform(MockMvcRequestBuilders.get("/board/getPostList")
+				.param("currentPageNum", "2")
+				.param("itemsPerPage", "10"))
+				.andReturn() // 요청결과를 반환
+				.getModelAndView() // 반환된 결과에서`ModelAndView`객체를 가져옴
+				.getModelMap()); // `ModelAndView`에서 모델 정보를 가져옴
+	}
 
 
 
-	//@Test // 게시글 수정
+	// 게시글 수정
 	public void testModify() throws Exception {
 		String resultPage = mockMvc
 				.perform(MockMvcRequestBuilders.post("/board/modifyPost")
@@ -58,17 +71,17 @@ public class BoardControllerTests {
 	}
 	
 	
-	//@Test // 게시글 삭제
+	// 게시글 삭제
 	public void testDeletePost() throws Exception {
 		String resultPage = mockMvc
-		.perform(MockMvcRequestBuilders.delete("/board/deletePost")
+		.perform(MockMvcRequestBuilders.post("/board/deletePost")
 				.param("bno", "9"))
 				.andReturn().getModelAndView().getViewName();
 		log.info(resultPage);
 	}
 
 
-	//@Test // 게시글 조회
+	// 게시글 조회
 	public void testGetPost() throws Exception {
 		log.info(mockMvc
 				.perform(MockMvcRequestBuilders.get("/board/getPost")
@@ -84,7 +97,7 @@ public class BoardControllerTests {
 	
 	// ModelMap는 컨트롤러가 뷰에 전달한 데이터
 	// MvcResult를 통해 HTTP 응답과 관련된 정보
-	//@Test // 게시글 등록
+	// 게시글 등록
 	public void testCreatePost() throws Exception {
 		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/board/createPost")
 				.param("title", "테스트 새글 제목")
@@ -98,7 +111,7 @@ public class BoardControllerTests {
 	// 가짜URL: MockMvcRequestBuilders를 이용해 GET방식 호출하고,
 	// BoardContorller의 @RequestMapping("/board/*")@GetMapping("/list")list()
 	// list()메서드의 service.getList()에서 반환된 결과를 이용해 Model에 어떤 데이터가 담긴지 확인함
-	//@Test // 게시글 목록 조회
+	// 게시글 목록 조회
 	public void testGetPostList() throws Exception {
 		log.info(mockMvc
 				.perform(MockMvcRequestBuilders.get("/board/getPostList"))

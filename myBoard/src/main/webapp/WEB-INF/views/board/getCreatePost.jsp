@@ -1,14 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><!-- JSP 페이지 설정: Java 언어 사용, 문자 인코딩은 UTF-8 -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%><!-- 함수 -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%><!-- 파일업로드,년월일 -->
+<!-- 헤더 + 바디 ------------------------------------------------------------------------------ -->
+<%@include file="../includes/header.jsp"%>
 
-<!DOCTYPE html>
-<html>
-<head>
-<!-- 부트스트랩 CSS CDN 링크 -->
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>게시글 등록</title>
-</head>
-<body>
 	<!-- role: 시멘틱하지않은 요소에 추가설명을 위한 태그 -->
 	<!-- action: controller의 메서드 경로 -->
 	<!-- name: 서버로 전송할때 사용자입력한 내용과 같이 전송됨 -->
@@ -19,27 +15,103 @@
 "form-group":폼요소를 감싸는 컨테이너, 
 "form-control":입력필트에 적용되어 부트스트랩 폼스타일 적용 -->
 
-	<div role="boardForm" class="container">
-		<h1>게시글등록</h1>
-		<div class="row">
-			<div class="col-lg-8">
-				<form role="form" action="createPost" method="post">
+<div class="row">
+	<div class="col-lg-12">
+		<h1 class="page-header">게시글 등록</h1>
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">게시글 등록</div>
+			<div class="panel-body">
+				<form id="createPostForm" role="form" action=getCreatePost method="post">
 					<div class="form-group">
 						<label for="title">제목:</label> 
 						<input type="text" class="form-control" placeholder="제목을 입력하세요" id="title" name="title">
 					</div>
 					<div class="form-group">
 						<label for="content">내용:</label>
-						<textarea class="form-control" placeholder="내용을 입력하세요" style="resize: none;" rows="8" cols="40" id="content" name="content"></textarea>
+						<textarea class="form-control" placeholder="내용을 입력하세요" rows="3" id="content" name="content"></textarea>
 					</div>
 					<div class="form-group">
 						<label for="writer">작성자:</label> 
 						<input type="text" class="form-control" id="writer" name="writer">
+						<%-- <input type="text" class="form-control" id="writer" name="writer" value="${createPostResult.writer}" readonly="readonly"> --%>
 					</div>
-					<button type="submit" class="btn btn-primary">등록</button>
+					<button id="submitBtn" type="button" class="btn btn-primary">등록</button>
+					<!-- <button id="submitBtn" type="submit" class="btn btn-primary">등록</button> -->
+					<button id="resetBtn" type="reset" class="btn btn-primary">Reset</button>
 				</form>
 			</div>
 		</div>
 	</div>
-</body>
-</html>
+</div>
+
+
+<!-- Modal -->
+	<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="confirmModalLabel">게시글 등록 확인</h4>
+				</div>
+				<div class="modal-body">게시글을 등록하시겠습니까?</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+					<button id="confirmSubmitBtn" type="button" class="btn btn-primary">확인</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+
+
+	<script type="text/javascript">
+		// 값이 전달이되는 지 확인하기위해 log 추가
+		$(document).ready(function() {
+			console.log("Document is ready.");
+			// `document`는 웹 페이지의 전체 문서를 나타내는 객체로, DOM (Document Object Model)의 최상위 객체
+
+			// 등록버튼 누르면 모달창열기
+			$("#submitBtn").on("click", function(event) {
+				//event.preventDefault(); // 기본 동작 방지
+				console.log("제목:", $("#title").val());
+				console.log("내용:", $("#content").val());
+				console.log("작성자:", $("#writer").val());
+				// 확인 모달 창 열기
+				$('#confirmModal').modal('show');
+				
+			});
+
+			// 모달창에서 확인 버튼을 누르면 클릭이벤트
+			$("#confirmSubmitBtn").on("click", function() {
+				// 폼 전송
+				$("#createPostForm").submit();
+			});
+
+			// Reset 버튼 클릭 이벤트
+			$("#resetBtn").on("click", function() {
+				console.log("필드가 리셋되었습니다.");
+			});
+			
+		    // 모달이 닫힐 때
+		    $('#confirmModal').on('hidden.bs.modal', function (e) {
+		        // 뒤로가기 시에 모달이 다시 열리지 않도록 상태를 null로 설정
+		        history.replaceState(null, null, null);
+		        
+		    });
+
+		});
+	</script>
+
+
+
+
+	<!-- 푸터------------------------------------------------------------------------------ -->
+	<%@include file="../includes/footer.jsp"%>
