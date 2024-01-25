@@ -71,11 +71,10 @@
 	</div>
 	<!-- /.modal -->
 
-
-	<script type="text/javascript">
-		// 값이 전달이되는 지 확인하기위해 log 추가
-		$(document).ready(function() {
-			console.log("Document is ready.");
+	<script type="text/javascript">	
+ 		// 값이 전달이되는 지 확인하기위해 log 추가
+		$(function() {
+			// = $(document).ready(function() {
 			// `document`는 웹 페이지의 전체 문서를 나타내는 객체로, DOM (Document Object Model)의 최상위 객체
 
 			// 등록버튼 누르면 모달창열기
@@ -86,7 +85,6 @@
 				console.log("작성자:", $("#writer").val());
 				// 확인 모달 창 열기
 				$('#confirmModal').modal('show');
-				
 			});
 
 			// 모달창에서 확인 버튼을 누르면 클릭이벤트
@@ -100,17 +98,15 @@
 				console.log("필드가 리셋되었습니다.");
 			});
 			
-		    // 모달이 닫힐 때
-		    $('#confirmModal').on('hidden.bs.modal', function (e) {
-		        // 뒤로가기 시에 모달이 다시 열리지 않도록 상태를 null로 설정
-		        history.replaceState(null, null, null);
-		        
-		    });
-
 		});
+			
+		// 모달이 닫힐 때(동작안함)
+/* 		$('#confirmModal').on('hidden.bs.modal', function (e) {
+		    setTimeout(function() {
+		        history.replaceState(null, null, null);
+		    }, 0);
+		}) */
 	</script>
-
-
 
 
 	<!-- 푸터------------------------------------------------------------------------------ -->

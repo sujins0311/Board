@@ -94,7 +94,6 @@ public class BoardController {
 
 	// 삭제 > 조회 페이지에서 삭제버튼 > 모달창 > 게시글 목록페이지
 	// http://localhost:8080/board/deletePost?bno=1
-	// funtion
 	@PostMapping("deletePost")
 	public String deletePost(@RequestParam("bno") Long bno, RedirectAttributes rttr, 
 			@ModelAttribute("cri") Criteria cri) {

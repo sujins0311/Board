@@ -38,7 +38,7 @@
 							<tr>
 								<td><c:out value="${getPostList.bno}" /></td>
 								<%-- <td><a href='/board/getPost?bno=${getPostList.bno}'>${getPostList.title}</a></td> --%>
-								<td><a class="move" href='<c:out value="${getPostList.bno}"/>'> 
+								<td><a class="toGetPost" href='<c:out value="${getPostList.bno}"/>'> 
 								<c:out value="${getPostList.title}" /></a></td>
 								<td><c:out value="${getPostList.writer}" /></td>
 								<td><c:out value="${getPostList.createdDate}" /></td>
@@ -69,16 +69,16 @@
 			</form>
 		</div>
 	</div>
-	<!-- 페이징 시작 -->
+	
+	<!-- 페이징/ 버튼생성 -->
 	<div class='pull-right'>
 		<ul class="pagination">
 			<c:if test="${pageMaker.hasPrev}">
-				<li class="paginate_button previous">
-				<a href="${pageMaker.startPageNum -1}">Previous</a></li>
+				<li class="paginate_button previous"><a href="${pageMaker.startPageNum -1}">Previous</a></li>
 			</c:if>
 
 			<c:forEach var="num" begin="${pageMaker.startPageNum}" end="${pageMaker.endPageNum}">
-				<li class="paginate_button ${pageMaker.cri.currentPageNum == num ? "active":""} ">
+				<li class="paginate_button ${pageMaker.cri.currentPageNum eq num ? "active":""} "><!-- 페이지 버튼의 숫자 num과 값currentPageNum이 같은가  -->
 				<a href="${num}">${num}</a> <%-- 	<c:out value="${num}"/> --%></li>
 			</c:forEach>
 
@@ -89,8 +89,8 @@
 		</ul>
 	</div>
 
-
-	<form id='actionForm' action="/board/getPostList" method='get'>
+	<!-- 페이징/ a태그(num)대신 form태그로 currentPageNum,itemsPerPage값 넘겨주기 -->
+	<form id='paginate_button_actionForm' action="/board/getPostList" method='get'>
 		<input type='hidden' name='currentPageNum' value='<c:out value="${pageMaker.cri.currentPageNum}"/>'> 
 		<input type='hidden' name='itemsPerPage' value='<c:out value="${pageMaker.cri.itemsPerPage}"/>'>
 <%-- 		<input type='hidden' name='type' value='<c:out value="${ pageMaker.cri.type }"/>'> 
@@ -105,12 +105,12 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+					<h4 class="modal-title" id="myModalLabel">알림</h4>
 				</div>
 				<div class="modal-body">처리가 완료되었습니다.</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Save changes</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+					<!-- <button type="button" class="btn btn-primary">Save changes</button> -->
 				</div>
 			</div>
 			<!-- /.modal-content -->
@@ -121,51 +121,52 @@
 
 
 
-<script src="https://code.jquery.com/jquery-3.6.4.min.js">
-		/* Modal addAttribute로 bno 받음 */
-		$(document).ready(function() {
-			var result = '<c:out value="${getCreatePostResult}"/>';
-
-			checkModal(result);
-			history.replaceState({}, null, null);
-	
-			function checkModal(result) {
-				
-				if (result === '' || history.state) {
-					return;
-				}
-				
-				if (parseInt(result) > 0) {
-					$(".modal-body").html( "게시글 " + parseInt(result) + " 번이 등록되었습니다.");
-				}
-				$("#myModal").modal("show");
-				
+<script type="text/javascript">
+	var actionForm = $("#paginate_button_actionForm"); //#는 jQuery에서 id를 선택하는 선택자
+	/* Modal addAttribute로 bno 받음 */
+	$(function() {
+		var result = '<c:out value="${getCreatePostResult}"/>';
+		checkModal(result);
+		history.replaceState({}, null, null);
+		function checkModal(result) {
+			if (result === '' || history.state) {
+				return;
 			}
-			$("#regBtn").on("click", function() {
-				self.location = "/board/getCreatePost";
-			});
-	
-			var actionForm = $("#actionForm");
-	
-			$(".paginate_button a").on( "click", function(e) {
-				e.preventDefault();
-				console.log('click');
-				actionForm.find( "input[name='currentPageNum']").val($(this).attr("href"));
-				actionForm.submit();
-			});
+
+			if (parseInt(result) > 0) {
+				$(".modal-body").html(
+						"게시글 " + parseInt(result) + " 번이 등록되었습니다.");
+			}
+			$("#myModal").modal("show");
+
+		}
+		$("#regBtn").on("click", function() {
+			self.location = "/board/getCreatePost";
 		});
 
-		/* 제목 누르면 게시글조회로 이동 */
- 		$(".move").on(
+		$(".paginate_button a").on(
 				"click",
 				function(e) {
 					e.preventDefault();
-					actionForm.append("<input type='hidden' name='bno' value='" + $(this).attr("href") + "'>");
-					actionForm.attr("action", "/board/getPost");
+					console.log('paginate_button');
+					actionForm.find("input[name='currentPageNum']").val(
+							$(this).attr("href"));/* currentPageNum의 값을 href의 속성값으로 */
 					actionForm.submit();
 				});
-	</script>
-	
-	
+	});
+
+	/* 제목 누르면 게시글조회로 이동 */
+	$(".toGetPost").on(
+			"click",
+			function(e) {
+				e.preventDefault();
+				actionForm.append("<input type='hidden' name='bno' value='"
+						+ $(this).attr("href") + "'>");
+				actionForm.attr("action", "/board/getPost");
+				actionForm.submit();
+			});
+</script>
+
+
 <!-- 푸터------------------------------------------------------------------------------ -->
 <%@include file="../includes/footer.jsp"%>
