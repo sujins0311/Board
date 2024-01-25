@@ -1,59 +1,67 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
+<!-- 각 jsp에 아래와 같이 header.jsp 추가하기 -->
+<!--  JSP 페이지에서 다른 JSP 파일을 포함하고자 할 때 사용하는 지시자 -->
+<%-- <%@include file="../includes/header.jsp"%> --%>
+<!-- 정적인콘텐츠(해당 JSP파일은 컴파일시점에 포함) -->
+<%-- <jsp:include page="../includes/header.jsp"/> --%>
+<!-- 동적인콘텐츠(해당 JSP파일이 실행 될때 포함/header.jsp와 list.jsp가 각각 실행되고, header.jsp의 결과 HTML만 include) -->
 <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<!-- 공통 스타일 -->
+<title>부트스트랩 리소스에 부트스트랩 추가하여 로컬경로로 변경할 예정 http//->your-project/src/main/resources/css/~~.css</title>
+<title>SB Admin 2 - Bootstrap Admin Theme</title>
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+<!-- 부트스트랩 CSS CDN 링크 -->
+ <link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Bootstrap Core CSS -->
-    <link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- MetisMenu CSS(반응형 사이드바 메뉴를 생성하는데 도움을 주는 jQuery 플러그인) -->
+<link href="/resources/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
 
-    <!-- MetisMenu CSS -->
-    <link href="/resources/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+<!-- DataTables의 Responsive 확장 플러그인의 스타일(표 형태의 데이터를 동적으로 정렬, 검색, 페이지네이션할 수 있는 플러그인) -->
+<link href="/resources/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
 
-    <!-- DataTables CSS -->
-    <link href="/resources/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+<!-- DataTables Responsive CSS( DataTables와 함께 사용하여 테이블이 작은 화면에서도 응답할 수 있게 도와주는 플러그인) -->
+<link href="/resources/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
 
-    <!-- DataTables Responsive CSS -->
-    <link href="/resources/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+<!-- Custom CSS -->
+<!-- 사용자 정의 CSS 파일을 로컬 경로에서 호출 -->
+<link href="/resources/dist/css/sb-admin-2.css" rel="stylesheet">
 
-    <!-- Custom CSS -->
-    <link href="/resources/dist/css/sb-admin-2.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="/resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+<!-- Custom Fonts (FontAwesome 아이콘) -->
+ <link href="/resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
-
     <div id="wrapper">
+	<!-- 게시글 작성 링크 -->
+	<a href="/board/getCreatePost">게시글 작성</a>
+	<!-- 처음으로 링크 -->
+	<a href="/">처음으로</a>
+	<a href="/board/getCreatePost">게시글 작성</a>
+	<a href="/board/getPostList">게시글 목록</a>
+	<a href="/board/getPost?bno=1">1번 게시글 조회</a>
+	<a href="/board/getModifyPost?bno=1">1번 게시글 수정</a>
+
 
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
+            	<a class="navbar-brand" href="/">MyBoard</a>
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+
             </div>
             <!-- /.navbar-header -->
 
@@ -375,6 +383,7 @@
             <!-- /.navbar-static-side -->
         </nav>
 
-        <div id="page-wrapper">
-        
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ <div id="page-wrapper">
+<!-- 공통 스크립트 -->
+<!--  jQuery 라이브러리의 3.6.4 버전 -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

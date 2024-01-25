@@ -10,7 +10,7 @@ public class BoardVO {
 	private Long bno;
 	private String title;
 	private String content;
-	private String writer;
+	private String writer;	
 	private LocalDateTime createdDate;
 	private LocalDateTime updatedDate;
 
@@ -23,13 +23,4 @@ public class BoardVO {
     public void setUpdatedDate() {
         this.updatedDate = LocalDateTime.now();
     }
-    
-//	@Override
-//	public boolean modifyPost(BoardVO boardVO) {
-//		boardVO.setUpdatedDate();
-//	    log.info("modifyPost.....");
-//	    return mapper.modify(boardVO) == 1;
-//	}
-    
-
 }

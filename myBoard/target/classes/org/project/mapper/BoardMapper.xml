@@ -6,28 +6,29 @@
 <!-- namespace 속성값은 Mapper 인터페이스와 동일한 이름으로 작성 -->
 <mapper namespace="org.project.mapper.BoardMapper">
 
+
 	<!-- getPostList(get) -->
 	<select id="getList" resultType="org.project.domain.BoardVO">
 
 	<![CDATA[
-		select * from tbl_board where bno > 0
+		SELECT * FROM tbl_board WHERE bno > 0
 		]]>
-	</select>	<!-- SELECT * FROM board; -->
+	</select>
 
 
 	<!-- createPost(post) -->
 	<insert id="insert" parameterType="org.project.domain.BoardVO">
-		insert into tbl_board (title, content, writer, createdDate)
-		values (#{title}, #{content}, #{writer}, #{createdDate})
+		INSERT INTO tbl_board (title, content, writer, createdDate)
+		VALUES (#{title}, #{content}, #{writer}, #{createdDate})
 		<selectKey resultType="java.lang.Long" keyProperty="bno" order="AFTER">
-			select last_insert_id()
+			SELECT last_insert_id()
 		</selectKey>
 	</insert>
 
 
 	<!-- getPost(get) -->
 	<select id="read" resultType="org.project.domain.BoardVO">
-		select * from tbl_board where bno = #{bno}
+		SELECT * FROM tbl_board WHERE bno = #{bno}
 	</select>
 
 
@@ -43,6 +44,31 @@
     SET title = #{title}, content = #{content}, writer = #{writer}, updatedDate = #{updatedDate}
     WHERE bno = #{bno}
 	</update>
-
+	
+	
+	<!-- getPostsByPage(get) -->
+	<!-- (LIMIT: 가져올 행 수, OFFSET: 시작 지점) -->
+	<!-- DB는 0번째부터 시작하므로 (pageNum - 1) -->
+	<select id="getListWithPaging" resultType="org.project.domain.BoardVO">
+	    <![CDATA[
+	        SELECT bno, title, content, writer, createdDate, updatedDate
+	        FROM tbl_board
+	        ORDER BY bno ASC
+	        LIMIT #{itemsPerPage} OFFSET ${(currentPageNum - 1) * itemsPerPage}
+	    ]]>
+	</select>
+	
+	
+	
+  
+  <select id="getListWithPaging1" resultType="org.project.domain.BoardVO">
+  <![CDATA[
+   SELECT bno, title, content, writer, createdDate, updatedDate
+   FROM tbl_board
+   ORDER BY bno DESC
+   LIMIT 10 OFFSET 10
+  ]]>
+</select>
+  
 
 </mapper>
