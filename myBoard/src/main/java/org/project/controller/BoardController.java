@@ -37,33 +37,12 @@ public class BoardController {
 	public void getPostList(Criteria cri, Model model) {
 		log.info("getPostList: " + cri);
 		model.addAttribute("getPostListResult", service.getPostList(cri)); //게시글목록
-		model.addAttribute("pageMaker", new PagingDTO(cri, 123)); //페이징
+	    
+		int total = service.getTotal(cri);
+		log.info("total: " + total);
+		model.addAttribute("pageMaker", new PagingDTO(cri, total)); //페이징
 	}
-
 	
-
-//	// 목록(페이징x)
-//	// http://localhost:8080/board/getPostList
-//	@GetMapping("/getPostList") // getPostList.jsp
-//	public void list(Model model) {
-//		log.info("getPostList");
-//		model.addAttribute("getPostListResult", service.getPostList());
-//	}
-
-
-
-
-	// 목록 + 페이징
-	// > addAttribute로 전달 된 신규 id값 조회 i=모달창("작성완료") > 목록 > 뒤로가기(addAttribute / 1회사용)
-	// 모달창 여부 if문
-	// http://localhost:8080/board/getPostList
-//	@GetMapping("/getPostsByPage") // getPostList.jsp
-//		public String getPostsByPage(Model model, PagingDTO pagingDTO) {
-//		    log.info("getPostsByPage" + pagingDTO);
-//		    model.addAttribute("getPostsByPageResult", service.getPostsByPage(pagingDTO));
-//		    return "redirect:/board/getPostList";
-//		}
-//		
 	
 //	// 등록 + 파일업로드 (작성중)
 //	@GetMapping("Upload") // getUpload.jsp
@@ -94,16 +73,48 @@ public class BoardController {
 
 	// 삭제 > 조회 페이지에서 삭제버튼 > 모달창 > 게시글 목록페이지
 	// http://localhost:8080/board/deletePost?bno=1
+	// 현재 application/x-www-form-urlencoded를 받음 
 	@PostMapping("deletePost")
 	public String deletePost(@RequestParam("bno") Long bno, RedirectAttributes rttr, 
 			@ModelAttribute("cri") Criteria cri) {
 		log.info("/deletePostResult" + bno);
 		if(service.deletePost(bno)) {
-			rttr.addFlashAttribute("deletePostResult", "success");
+			rttr.addFlashAttribute("deletePostResult", bno);
 		}
-		rttr.addFlashAttribute("deletePostResult",bno); //삭제한 번호 전달 값이 없으면 삭제성공 모달창
+		
+		rttr.addAttribute("currentPageNum",cri.getCurrentPageNum()); // 
+		rttr.addAttribute("itemPerPage",cri.getItemsPerPage());
+		rttr.addAttribute("type",cri.getType());
+		rttr.addAttribute("keyword",cri.getKeyword());
+			
+		// board/getPostList로 리다이렉트하면 text/html타입으로 응답하는데 ajax는 text/*는 모두 text로 퉁침 
 		return "redirect:/board/getPostList";
 	}
+
+//	@PostMapping("deletePost")
+//	public String deletePost(@RequestParam("bno") Long bno, RedirectAttributes rttr, 
+//			@ModelAttribute("cri") Criteria cri) {
+//		log.info("/deletePostResult" + bno);
+//		if(service.deletePost(bno)) {
+//			rttr.addFlashAttribute("deletePostResult", bno);
+//		}
+//
+//		// board/getPostList로 리다이렉트하면 text/html타입으로 응답하는데 ajax는 text/*는 모두 text로 퉁침 
+//		return "redirect:/board/getPostList"+cri.getListLink();
+//	}
+	
+//	@PostMapping("deletePost")
+//	public String deletePost(@RequestParam("bno") Long bno, RedirectAttributes rttr, 
+//			@ModelAttribute("cri") Criteria cri) {
+//		log.info("/deletePostResult" + bno);
+//		if(service.deletePost(bno)) {
+//			rttr.addFlashAttribute("deletePostResult", "success");
+//		}
+//		rttr.addFlashAttribute("deletePostResult",bno); //삭제한 번호 전달 값이 없으면 삭제성공 모달창
+//		
+//		// board/getPostList로 리다이렉트하면 text/html타입으로 응답하는데 ajax는 text/*는 모두 text로 퉁침 
+//		return "redirect:/board/getPostList";
+//	}
 	
 	
 	// 수정페이지
@@ -118,20 +129,49 @@ public class BoardController {
 	
 	// 수정 > 조회 페이지에서 삭제 버튼 > 수정페이지 > 수정 후 게시글 목록페이지
 	// > 수정한 form을 받아 DB에 저장 > 모달창(수정완료) > 회원조회(RedirectAttributes)
-	@PostMapping("getModifyPost")
+	@PostMapping("modifyPost")
 	public String modifyPost(BoardVO boardVO, RedirectAttributes rttr, 
 			@ModelAttribute("cri") Criteria cri) {
 		log.info("/getModifyPost" + boardVO);
 		
 		if (service.modifyPost(boardVO)) {
-			rttr.addFlashAttribute("getModifyPostResult", "success");
+			rttr.addFlashAttribute("getModifyPostResult", boardVO.getBno());
 		}
 		
 		rttr.addAttribute("currentPageNum", cri.getCurrentPageNum());
 		rttr.addAttribute("itemPerPage", cri.getItemsPerPage());
-	
+		rttr.addAttribute("type",cri.getType());
+		rttr.addAttribute("keyword",cri.getKeyword());
+		
 		return "redirect:/board/getPostList";
 	}
+	
+//	@PostMapping("modifyPost")
+//	public String modifyPost(BoardVO boardVO, RedirectAttributes rttr, 
+//			@ModelAttribute("cri") Criteria cri) {
+//		log.info("/getModifyPost" + boardVO);
+//		
+//		if (service.modifyPost(boardVO)) {
+//			rttr.addFlashAttribute("getModifyPostResult", boardVO.getBno());
+//		}
+//		
+//		return "redirect:/board/getPostList"+cri.getListLink();
+//	}
+	
+//	@PostMapping("modifyPost")
+//	public String modifyPost(BoardVO boardVO, RedirectAttributes rttr, 
+//			@ModelAttribute("cri") Criteria cri) {
+//		log.info("/getModifyPost" + boardVO);
+//		
+//		if (service.modifyPost(boardVO)) {
+//			rttr.addFlashAttribute("getModifyPostResult", "success");
+//		}
+//		
+//		rttr.addAttribute("currentPageNum", cri.getCurrentPageNum());
+//		rttr.addAttribute("itemPerPage", cri.getItemsPerPage());
+//	
+//		return "redirect:/board/getPostList";
+//	}
 
 
 	// 등록 > 모달창 > 게시글 목록페이지
