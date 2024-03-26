@@ -1,5 +1,7 @@
 package org.project.domain;
 
+import org.springframework.web.util.UriComponentsBuilder;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -11,10 +13,13 @@ public class Criteria {
 
 	private int currentPageNum; // 현재 페이지 그룹의 번호
 	private int itemsPerPage; // 한 페이지에 보여줄 아이템 개수
-
-	//private String type;
-	//private String keyword;
-
+	
+	private String type;
+	private String keyword;
+//	private String titleKeyword;
+//	private String contentKeyword;
+//	private String writerKeyword;
+	
 	// 생성자 정의 -> @Builder로 대체함
 	// 생성자는 클래스의 이름과 동일해야 합니다.
 	// 생성자에 반환 타입을 명시하지 않습니다.
@@ -29,8 +34,23 @@ public class Criteria {
 		this(1, 10);
 	}
 
-//	public String[] getTypeArr() {
-//
-//		return type == null ? new String[] {} : type.split("");
+	// 검색
+	public String[] getTypeArr() {
+		return type == null? new String[] {} : type.split(""); 
+		// 디버그모드에서 메서드 진입 후 그 메서드에서 실행부의 결과를 미리 실행해볼수 있다.
+		// ctrl + shift + i
+		// 이클립스 여러줄 편집 alt + shift + a
+		// 삼항연산자(조건 ? 값1 : 값2)
+		// type.split("") 빈문자열을 구분자로 hi = h,i
+	}
+	
+//	// ****getListLink
+//	public String getListLink() {
+//		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("")
+//				.queryParam("currentPageNum", this.getCurrentPageNum())
+//				.queryParam("itemsPerPage", this.getItemsPerPage())
+//				.queryParam("type", this.getType())
+//				.queryParam("keyword", this.getKeyword());
+//		return builder.toUriString();
 //	}
 }

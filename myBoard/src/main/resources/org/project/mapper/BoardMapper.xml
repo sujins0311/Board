@@ -6,15 +6,12 @@
 <!-- namespace 속성값은 Mapper 인터페이스와 동일한 이름으로 작성 -->
 <mapper namespace="org.project.mapper.BoardMapper">
 
-
 	<!-- getPostList(get) -->
 	<select id="getList" resultType="org.project.domain.BoardVO">
-
-	<![CDATA[
-		SELECT * FROM tbl_board WHERE bno > 0
-		]]>
+        <![CDATA[
+        SELECT * FROM tbl_board WHERE bno > 0
+        ]]>
 	</select>
-
 
 	<!-- createPost(post) -->
 	<insert id="insert" parameterType="org.project.domain.BoardVO">
@@ -40,35 +37,86 @@
 
 	<!-- modifyPost(update) -->
 	<update id="modify" parameterType="org.project.domain.BoardVO">
-    UPDATE tbl_board
-    SET title = #{title}, content = #{content}, writer = #{writer}, updatedDate = #{updatedDate}
-    WHERE bno = #{bno}
+		UPDATE tbl_board
+		SET title = #{title}, content = #{content}, writer = #{writer}, updatedDate = #{updatedDate}
+		WHERE bno = #{bno}
 	</update>
-	
-	
+
+
 	<!-- getPostsByPage(get) -->
-	<!-- (LIMIT: 가져올 행 수, OFFSET: 시작 지점) -->
-	<!-- DB는 0번째부터 시작하므로 (pageNum - 1) -->
-	<select id="getListWithPaging" resultType="org.project.domain.BoardVO">
-	    <![CDATA[
-	        SELECT bno, title, content, writer, createdDate, updatedDate
-	        FROM tbl_board
-	        ORDER BY bno ASC
-	        LIMIT #{itemsPerPage} OFFSET ${(currentPageNum - 1) * itemsPerPage}
-	    ]]>
+	<!-- DB는 0번째부터 시작하므로 (currentPageNum - 1) -->
+	<select id="getListWithPaging" resultType="org.project.domain.BoardVO" parameterType="org.project.domain.Criteria">
+        <![CDATA[
+        SELECT bno, title, content, writer, createdDate, updatedDate
+        FROM tbl_board
+        ]]>
+		<where>
+			<include refid="Criteria"></include>
+		</where>
+        <![CDATA[
+        ORDER BY bno ASC
+        LIMIT #{itemsPerPage} OFFSET ${(currentPageNum - 1) * itemsPerPage}
+        ]]>
 	</select>
+
+	<!-- getPostList(get) -->
+	<select id="getTotalCount" resultType="int">
+		SELECT count(*) from tbl_board
+		WHERE bno > 0
+		<include refid="Criteria"></include>
+	</select>
+
+	<!-- Criteria SQL -->
+		<sql id="Criteria">
+		<trim prefix="AND" prefixOverrides="AND">
+			<foreach item='type' collection="typeArr" separator="OR">
+				<choose>
+					<when test="type == 'T'.toString()">
+						title like CONCAT('%', #{keyword}, '%')
+					</when>
+					<when test="type == 'C'.toString()">
+						content like CONCAT('%', #{keyword}, '%')
+					</when>
+					<when test="type == 'W'.toString()">
+						writer like CONCAT('%', #{keyword}, '%')
+					</when>
+				</choose>
+			</foreach>
+		</trim>
+	</sql>
+<!-- 	<sql id="Criteria">
+		<trim prefix="AND" prefixOverrides="AND">
+			<foreach item='type' collection="typeArr" separator="OR">
+				<choose>
+					<when test="type == 'T'.toString()">
+						title like CONCAT('%', #{titleKeyword}, '%')
+					</when>
+					<when test="type == 'C'.toString()">
+						content like CONCAT('%', #{contentKeyword}, '%')
+					</when>
+					<when test="type == 'W'.toString()">
+						writer like CONCAT('%', #{writerKeyword}, '%')
+					</when>
+				</choose>
+			</foreach>
+		</trim>
+	</sql> -->
 	
 	
-	
-  
-  <select id="getListWithPaging1" resultType="org.project.domain.BoardVO">
-  <![CDATA[
-   SELECT bno, title, content, writer, createdDate, updatedDate
-   FROM tbl_board
-   ORDER BY bno DESC
-   LIMIT 10 OFFSET 10
-  ]]>
-</select>
-  
+
+
+	<!-- getPostsByPage(get) --><!-- DB는 0번째부터 시작하므로 (currentPageNum - 1) --><!-- 타이틀에 test가 들어가는 글만 조회 -->
+	<!-- <select id="getListWithPaging" resultType="org.project.domain.BoardVO"> <![CDATA[ SELECT bno, title, content, writer, createdDate, updatedDate FROM 
+		tbl_board where title like '%Test%' ORDER BY bno ASC LIMIT #{itemsPerPage} OFFSET ${(currentPageNum - 1) * itemsPerPage} ]]> </select> -->
+
+	<!-- <select id="getListWithPaging" resultType="org.project.domain.BoardVO"> <![CDATA[ SELECT bno, title, content, writer, createdDate, updatedDate FROM 
+		tbl_board WHERE ]]> <trim prefix="(" suffix=") AND " prefixOverrides="OR"> <foreach item='type' collection="typeArr" > <choose> <when test="type == 'T'.toString()"> 
+		content like '%' || #{keyword} || '%' </when> <when test="type == 'C'.toString()"> content like '%' || #{keyword} || '%' </when> <when test="type == 'W'.toString()"> 
+		content like '%' || #{keyword} || '%' </when> </choose> </foreach> </trim> <![CDATA[ ORDER BY bno ASC LIMIT #{itemsPerPage} OFFSET ${(currentPageNum - 
+		1) * itemsPerPage} ]]> </select> -->
+
+	<!-- <sql id="Criteria"> <trim prefix="(" suffix=") AND " prefixOverrides="OR"> <foreach item='type' collection="typeArr" separator="OR"> <choose> <when 
+		test="type == 'T'.toString()"> title like '%'||#{keyword}|| '%' </when> <when test="type == 'C'.toString()"> content like '%'||#{keyword}|| '%' </when> 
+		<when test="type == 'W'.toString()"> writer like '%'||#{keyword}|| '%' </when> </choose> </foreach> </trim> </sql> -->
 
 </mapper>
