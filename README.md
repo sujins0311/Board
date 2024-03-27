@@ -1,4 +1,5 @@
-# 🎯 [MyBoard.site](http://MyBoard.site/) : 수정중입니다.
+# 🎯 [MyBoard.site] : 업데이트중입니다.
+<!-- (http://MyBoard.site/) --> 
 <br>
 <br>
 <br>
@@ -75,7 +76,6 @@
 <br>
 
 #### 🌐 배포 
-<br>
 
 ```mermaid
 graph TD;
@@ -111,11 +111,37 @@ graph TD;
 ```
 
 <br>
+
+### 📆 개발 일정 요약본
+
 <br>
 
-<hr>
+```mermaid
+gantt
+    title 2023.11.30 - 2024.01.31
+    dateFormat X
+    axisFormat %s
+    section 기획
+        구상: 0, 5
+    section 기능 구현
+        Develop: 5, 65
+    section 테스트
+        Test & BugFix: 65, 75
+    section 배포
+        가비아도메인: 75, 105
+```
+
+<br>
+<!-- 
+기획: 5일
+기능 구현: 60일
+테스트: 10일
+배포: 30일
+-->
 
 #### 🧲DB ERD
+
+<br>
 
 ![MyBoard](https://github.com/sujins0311/Board/assets/122525760/0ca76f9d-0bea-43bc-b7cb-302cf8bf36bb)
 
@@ -124,10 +150,8 @@ graph TD;
 🧲 [Use Case](https://github.com/sujins0311/Board/wiki/UseCase) <br>
 🧲 [시퀀스다이어그램](https://github.com/sujins0311/Board/wiki/시퀀스다이어그램) <br>
 🧲 [Front](https://github.com/sujins0311/Board/wiki/화면설계)<br>
- 
-<br>
-<br>
 
+<br>
 <!-- 
 ### 🧲 프로젝트 중점사항
 - 버전관리
@@ -141,27 +165,4 @@ graph TD;
 - Docker를 이용하여 CD 구현
 - Mysql Replication – AOP를 이용하여 Master/Slave로 데이터베이스 이중화
 - Nginx의 Reversed-Proxy를 이용하여 로드밸런싱
--->
-<!-- 🧲
-### 📆 개발 일정 요약본
-
----
-
-```mermaid
-gantt
-    title 2023.05.30 - 2023.07.03
-    dateFormat X
-    axisFormat %s
-    section 기획
-        구상: -2, 3
-    section 기능 구현
-        Develop: 2, 24
-    section 테스트
-        Test & BugFix: 20, 29
-    section 배포
-        AWS: 27, 33
-```
-
-<br>
-<br>
 -->
