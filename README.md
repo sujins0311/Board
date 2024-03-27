@@ -75,65 +75,40 @@
 <br>
 
 #### 🌐 배포 
-
+<br>
 
 ```mermaid
 graph TD;
-    A((개발서버)) -->|스프링 프로젝트| B{빌드 도구};
-    B -->|빌드| C(War 파일);
-    C --> D{Tomcat};
-    D -->|배포| E((애플리케이션));
-    A --> F((DB 서버));
-    A --> G(GitHub);
 
-    H((공용 IP)) -->|프로젝트 접속| E;
-    I((도메인)) -->|프로젝트 접속| E;
+    subgraph 개발서버
+        A((CentsOS)) -->|스프링 프로젝트|maven;
+        maven -->|War 파일| Tomcat;
+        Tomcat --> 애플리케이션;
+        A --> DB서버(MariaDB);
+    end
 
-    style A fill:#fff,stroke:#333,stroke-width:2px;
-    style B fill:#fff,stroke:#333,stroke-width:2px;
-    style C fill:#fff,stroke:#333,stroke-width:2px;
-    style D fill:#fff,stroke:#333,stroke-width:2px;
-    style E fill:#fff,stroke:#333,stroke-width:2px;
-    style F fill:#fff,stroke:#333,stroke-width:2px;
-    style G fill:#fff,stroke:#333,stroke-width:2px;
-    style H fill:#fff,stroke:#333,stroke-width:2px;
-    style I fill:#fff,stroke:#333,stroke-width:2px;
+    subgraph 운영서버
+        B((windows11)) -->|웹 서버| Tomcat;
+        Tomcat --> 애플리케이션;
+        B --> DB서버(MariaDB);
+        B --> 공용_IP;
+        공용_IP --> 프로젝트;
+        공용_IP --> 도메인;
+    end
+
+    A --> GitHub[Github: Git];
+
+    style 개발서버 fill:#BFD7B5,stroke:#333,stroke-width:2px;
+    style 운영서버 fill:#F0F4C3,stroke:#333,stroke-width:2px;
+    style maven fill:#9CCC65,stroke:#333,stroke-width:2px;
+    style Tomcat fill:#E57373,stroke:#333,stroke-width:2px;
+    style 애플리케이션 fill:#fff,stroke:#333,stroke-width:2px;
+    style DB서버 fill:#fff,stroke:#333,stroke-width:2px;
+    style 공용_IP fill:#fff,stroke:#333,stroke-width:2px;
+    style 프로젝트 fill:#fff,stroke:#333,stroke-width:2px;
+    style 도메인 fill:#fff,stroke:#333,stroke-width:2px;
+    style GitHub fill:#fff,stroke:#333,stroke-width:2px;
 ```
-
-<br>
-<br>
-<br>
-
-```mermaid
-graph LR;
-    subgraph 개발(Development)
-        A[소스 코드] --> B(빌드);
-    end
-
-    subgraph 빌드(Build)
-        B --> C(WAR 파일);
-    end
-
-    subgraph 테스트(Test)
-        C --> D{테스트};
-    end
-
-    subgraph 배포(Deployment)
-        D --> E{상용 서버 배포};
-    end
-
-    subgraph 운영(Production)
-        E --> F(웹 서버);
-        E --> G(데이터베이스 서버);
-    end
-
-    style 개발 fill:#FFD966,stroke:#333,stroke-width:2px;
-    style 빌드 fill:#4CAF50,stroke:#333,stroke-width:2px;
-    style 테스트 fill:#2196F3,stroke:#333,stroke-width:2px;
-    style 배포 fill:#f44336,stroke:#333,stroke-width:2px;
-    style 운영 fill:#00BCD4,stroke:#333,stroke-width:2px;
-
-
 
 <br>
 <br>
