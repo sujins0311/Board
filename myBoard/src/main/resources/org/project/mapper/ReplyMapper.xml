@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace 속성값은 Mapper 인터페이스와 동일한 이름으로 작성 -->
+<mapper namespace="org.project.mapper.ReplyMapper">
+
+
+	<!-- create(@PostMapping) -->
+	<insert id="insert" parameterType="org.project.domain.ReplyVO">
+		INSERT INTO tbl_reply (bno, reply, replyer, replyDate)
+		VALUES (#{bno}, #{reply}, #{replyer}, #{replyDate})
+		<!-- 새로운 댓글이 추가될 때, rno를 얻어오기 위한 selectKey -->
+		<selectKey resultType="java.lang.Long" keyProperty="rno" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
+	
+
+	<!-- getPostList(get) -->
+	<select id="read" resultType="org.project.domain.ReplyVO">
+		SELECT * FROM tbl_reply WHERE rno = #{rno}
+	</select>
+		
+	
+	<!-- modify(@RequestMapping(method = { RequestMethod.PUT,) -->
+	<update id="update" parameterType="org.project.domain.ReplyVO">
+		UPDATE tbl_reply
+		SET reply = #{reply}, updateDate = #{updateDate}
+		WHERE rno = #{rno}
+	</update>
+
+
+	<!-- remove(@DeleteMapping) -->
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM tbl_reply WHERE rno = #{rno}
+	</delete>
+
+
+	<!-- getList(@GetMapping(value = "/pages/{bno}/{page}",) -->
+	<!-- 최근 작성한 댓글 순으로 정렬 -->
+	<select id="getListWithPaging" resultType="org.project.domain.ReplyVO" parameterType="org.project.domain.Criteria">
+	    <![CDATA[
+	    SELECT rno, bno, reply, replyer, replyDate, updateDate
+	    FROM tbl_reply
+	    WHERE bno = #{bno}
+	    ORDER BY replyDate DESC
+	    LIMIT #{cri.itemsPerPage} OFFSET ${(cri.currentPageNum - 1) * cri.itemsPerPage}
+	    ]]>
+	</select>
+	
+	<!-- getList -->
+	<select id="getCountByBno" resultType="int">
+		<![CDATA[
+		SELECT count(rno) FROM tbl_reply WHERE bno = #{bno}
+		]]>
+	</select>
+
+
+	<!-- getList(@RequestMapping(method = { RequestMethod.PUT,) -->
+<!-- 	<update id="updateReplyCnt" parameterType="org.project.domain.ReplyPageDTO">
+		UPDATE tbl_board
+		SET replycnt = replycnt + #{itemsPerPage}
+		WHERE bno = #{bno}
+	</update> -->
+</mapper>

@@ -1,0 +1,3 @@
+post
+localhost:8080/replies/new
+{"bno":"47","reply":"ee","replyer":"user00"}

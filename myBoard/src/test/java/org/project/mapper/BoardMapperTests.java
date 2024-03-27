@@ -1,6 +1,7 @@
 package org.project.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,7 +32,7 @@ public class BoardMapperTests {
 //		Map<String, Map<String, String>> outerMap = new HashMap<>();
 //		outerMap.put("map", innerMap);
 //		
-//		List<BoardVO> MapToList = mapper.searchTest(outerMap);
+//		List<BoardVO> MapToList = mapper.searchTest(outerMap); //public List<BoardVO> searchTest(Map<String, Map<String, String>> innerMap); //getPostList(get)
 //		
 //		log.info(MapToList);
 //	}

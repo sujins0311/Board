@@ -27,9 +27,6 @@ import lombok.extern.log4j.Log4j;
 public class BoardController {
 
 	private BoardService service;
-	
-	// JSP 부트스트랩 적용하기
-	
 
 	// 목록
 	// http://localhost:8080/board/getPostList
