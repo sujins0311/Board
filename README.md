@@ -81,14 +81,14 @@
 graph TD;
 
     subgraph 개발서버
-        A((CentsOS)) -->|스프링 프로젝트|maven;
+        A((windows11)) -->|스프링 프로젝트|maven;
         maven -->|War 파일| Tomcat;
         Tomcat --> 애플리케이션;
         A --> DB서버(MariaDB);
     end
 
     subgraph 운영서버
-        B((windows11)) -->|웹 서버| Tomcat;
+        B((Linux:CentsOS)) -->|웹 서버| Tomcat;
         Tomcat --> 애플리케이션;
         B --> DB서버(MariaDB);
         B --> 공용_IP;
