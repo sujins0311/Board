@@ -77,38 +77,7 @@
 
 #### 🌐 배포 
 
-```mermaid
-graph TD;
-
-    subgraph 개발서버
-        A((windows11)) -->|스프링 프로젝트|maven;
-        maven -->|War 파일| Tomcat;
-        Tomcat --> 애플리케이션;
-        A --> DB서버(MariaDB);
-    end
-
-    subgraph 운영서버
-        B((Linux:CentsOS)) -->|웹 서버| Tomcat;
-        Tomcat --> 애플리케이션;
-        B --> DB서버(MariaDB);
-        B --> 공용_IP;
-        공용_IP --> 프로젝트;
-        공용_IP --> 도메인;
-    end
-
-    A --> GitHub[Github: Git];
-
-    style 개발서버 fill:#BFD7B5,stroke:#333,stroke-width:2px;
-    style 운영서버 fill:#F0F4C3,stroke:#333,stroke-width:2px;
-    style maven fill:#9CCC65,stroke:#333,stroke-width:2px;
-    style Tomcat fill:#E57373,stroke:#333,stroke-width:2px;
-    style 애플리케이션 fill:#fff,stroke:#333,stroke-width:2px;
-    style DB서버 fill:#fff,stroke:#333,stroke-width:2px;
-    style 공용_IP fill:#fff,stroke:#333,stroke-width:2px;
-    style 프로젝트 fill:#fff,stroke:#333,stroke-width:2px;
-    style 도메인 fill:#fff,stroke:#333,stroke-width:2px;
-    style GitHub fill:#fff,stroke:#333,stroke-width:2px;
-```
+![image](https://github.com/sujins0311/Board/assets/122525760/da22888f-4cec-49bb-bd0d-d7c8bbde7d27)
 
 <br>
 
