@@ -1,4 +1,4 @@
-# 🎯 [MyBoard.site] : 업데이트중입니다.
+# 🎯 [MyBoard.site]
 <!-- (http://MyBoard.site/) --> 
 <br>
 <br>
