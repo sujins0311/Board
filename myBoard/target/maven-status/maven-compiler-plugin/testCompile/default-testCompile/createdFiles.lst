@@ -1,4 +1,6 @@
 org\project\controller\BoardControllerTests.class
+org\project\mapper\ReplyMapperTests.class
 org\project\mapper\BoardMapperTests.class
+org\project\controller\ReplyControllerTests.class
 org\project\persistence\DataSouceTests.class
 org\project\persistence\JDBCTests.class
