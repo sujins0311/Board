@@ -82,7 +82,8 @@
 
 #### 🌐 배포 
 
-![image](https://github.com/sujins0311/Board/assets/122525760/56a71adb-6b25-4622-a28a-c639c19b8846)
+![image](https://github.com/sujins0311/Board/assets/122525760/796c7e25-814c-4d61-a812-2d86aa5c7ac7)
+
 
 
 <br>
