@@ -127,6 +127,8 @@ gantt
 🧲 [시퀀스다이어그램](https://github.com/sujins0311/Board/wiki/시퀀스다이어그램) <br>
 🧲 [Front](https://github.com/sujins0311/Board/wiki/화면설계)<br>
 
+
+
 <br>
 <!-- 
 ### 🧲 프로젝트 중점사항
