@@ -94,7 +94,7 @@
 
 ```mermaid
 gantt
-    title 2023.11.30 - 2024.01.31
+    title 2024.01.01 - 2024.04.00
     dateFormat X
     axisFormat %s
     section 기획
