@@ -15,35 +15,61 @@
 "form-group":폼요소를 감싸는 컨테이너, 
 "form-control":입력필트에 적용되어 부트스트랩 폼스타일 적용 -->
 
+<style>
+.reg-body {
+	width: 100%;
+}
+
+.context {
+	height: 200px;
+}
+
+@media (min-width: 768px) {
+	.reg-body {
+		width: 40%;
+	}
+	.context {
+		height: 200px;
+	}
+	
+	.title {
+		width: 100%;
+	}
+	
+	.writer {
+		width: 100%;
+	}
+}
+</style>
+
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">게시글 등록</h1>
+		<h3 class="page-header">게시글 등록</h3>
 	</div>
 </div>
 
-
-<div class="row">
+<div class="row reg-body">
 	<div class="col-lg-12">
 		<div class="panel panel-default">
-			<div class="panel-heading">게시글 등록</div>
+			<div class="panel-heading">게시글을 등록합니다.</div>
 			<div class="panel-body">
 				<form id="createPostForm" role="form" action=getCreatePost method="post">
 					<div class="form-group">
 						<label for="title">제목:</label> 
-						<input type="text" class="form-control" placeholder="제목을 입력하세요" id="title" name="title">
+						<input type="text" class="form-control title" placeholder="제목을 입력하세요" id="title" name="title">
 					</div>
 					<div class="form-group">
 						<label for="content">내용:</label>
-						<textarea class="form-control" placeholder="내용을 입력하세요" rows="3" id="content" name="content"></textarea>
+						<textarea class="form-control context" placeholder="내용을 입력하세요" rows="3" id="content" name="content"></textarea>
 					</div>
 					<div class="form-group">
 						<label for="writer">작성자:</label> 
-						<input type="text" class="form-control" id="writer" name="writer">
+						<input type="text" class="form-control writer" id="writer" name="writer">
 						<%-- <input type="text" class="form-control" id="writer" name="writer" value="${createPostResult.writer}" readonly="readonly"> --%>
 					</div>
-					<button id="submitBtn" type="button" class="btn btn-primary">등록</button>
+					<button id="submitBtn" type="button" class="btn common-btn" style="float:right;">등록</button>
 					<!-- <button id="submitBtn" type="submit" class="btn btn-primary">등록</button> -->
-					<button id="resetBtn" type="reset" class="btn btn-primary">Reset</button>
+					<button id="resetBtn" type="reset" class="btn common-btn">초기화</button>
 				</form>
 			</div>
 		</div>

@@ -35,7 +35,29 @@
       .attr("style","height:1px");
   });
 </script>
+<style>
+.footer {
+	height:100px; 
+	display: flex; 
+	align-items: center; 
+	justify-content:center; 
+	flex-direction: column-reverse; 
+	background-color:aliceblue;
+}
+</style>
 
+<body>
+<div class="footer">
+	<p>Copyright © 2024 SJ. All Rights Reserved.</p>
+	<div>
+		<a href="https://github.com/sujins0311/sujins0311" target="_blank">
+			<img src="/resources/images/github-mark.svg" style="width:25px"/>
+		</a>
+		<a href="https://sujinpad.tistory.com" target="_blank">
+			<img src="/resources/images/tistory-mark.svg" style="width:33px"/>
+		</a>
+ 	</div>
+</div>
 </body>
 
 </html>
