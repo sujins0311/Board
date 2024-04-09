@@ -9,7 +9,6 @@
 <!DOCTYPE html>
 <!-- JSP(JSTL) + Vanilla JS -->
 <html lang="en">
-<p>헤더 자리입니다.</p>
 <!--  JSP 페이지에서 다른 JSP 파일을 포함하고자 할 때 사용하는 지시자 -->
 <%-- <%@include file="../includes/header.jsp"%> --%>
 <!-- 정적인콘텐츠(해당 JSP파일은 컴파일시점에 포함) -->
@@ -20,28 +19,51 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>HOME</title>
+<style>
+* {
+	box-sizing: border-box;
+}
 
+html {
+	overflow-y: scroll;
+}
+
+.flex-col-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+</style>
 </head>
-	<hr><!-- 헤더 -->
 <body>
-	<a href="/board/getCreatePost">게시글 작성</a>
-	<a href="/board/getPostList">게시글 목록</a>
-	<a href="/board/getPost?bno=1">1번 게시글 조회</a>
-	<a href="/board/getModifyPost?bno=1">1번 게시글 수정</a>
-	<a href="/">처음으로</a>
-<h1>
-	MyBoard의 home화면입니다.
-</h1>
+<script>
+window.onload = function() {
+	var interval = setInterval(function() {
+		var countElement = document.getElementById("count");
+		var count = parseInt(countElement.innerHTML);
+		if(count == 1) {
+			clearInterval(interval);
+			location.href="/board/getPostList"
+			return;
+		}
+		countElement.innerHTML = --count;
+	}, 1000);
+}
+</script>
 
-
-<P>  The time on the server is ${serverTime}. </P>
-	<!-- Vanilla JavaScript 코드 -->
-	<script type="text/javascript">
-    </script>
+<div class="flex-col-center" style="margin-top: 100px;">
+	<h1>
+		Sujin's Hello World!
+	</h1>
+	<h3>제 사이트에 오신것을 환영합니다.</h3>
+	<h3><span id="count">5</span>초 후 게시판으로 진입합니다.</h3>
+	<p>서버시간: ${serverTime}</p>
+</div>
 </body>
-	<hr><!-- 푸터 -->
-	<footer>
-		<%-- <%@include file="../includes/footer.jsp"%> --%>
-		<p>푸터 자리입니다.</p>
+	<hr>
+	<footer class="flex-col-center">
+		<p>업데이트 이력</p>
+		<p>2024-04-09 CSS 업데이트</p>
 	</footer>
 </html>

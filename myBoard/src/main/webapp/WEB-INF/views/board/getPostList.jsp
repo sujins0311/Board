@@ -4,9 +4,32 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%><!-- 파일업로드,년월일 -->
 <!-- 헤더 + 바디 ------------------------------------------------------------------------------ -->
 <%@include file="../includes/header.jsp"%>
+
+<style>
+
+.page-contents {
+	text-align: center;
+}
+
+@media (max-width: 768px) {
+	
+	.navbar-toggle {
+		float: left;
+		margin-left: 10px;
+	}
+	.navbar-brand {
+		margin-left: -15px;
+	}
+	
+	.btn-search {
+		width: 100%;
+	}
+}
+</style>
+
 <div class="row">
-	<div class="col-lg-12">
-		<h1 class="page-header">전체 글</h1>
+	<div class="col-lg-10">
+		<h3 class="page-header">게시글 목록</h3>
 	</div>
 </div>
 
@@ -14,15 +37,15 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				Board List Page
-				<button id='regBtn' type="button" class="btn btn-xs pull-right">Register New Board</button>
+				게시글 목록을 보여줍니다.
+				<button id='regBtn' type="button" class="btn common-btn btn-xs pull-right">작성하기</button>
 			</div>
 
 			<div class="panel-body">
 				<table class="table table-striped table-borderded table-hover">
 					<thead>
 						<tr>
-							<th>#번호</th>
+							<th>No.</th>
 							<th>제목</th>
 							<th>작성자</th>
 							<th>작성일</th>
@@ -52,29 +75,27 @@
 	</div>
 
 	<!-- 검색 -->
-	<div class="row mt-3">
-	    <div class="col-lg-12">
-	        <form id='searchForm' action="/board/getPostList" method='get' class="form-inline" style="padding-left: 20px;">
+	<div class="col-lg-12">
+	        <form id='searchForm' action="/board/getPostList" method='get' class="form-inline" style="text-align: center;">
 	            <div class="form-group mr-2">
-	                <select class="form-control" name='type'> <!-- type이 null일떄(주소에 type이 없을때 type을 추가함  -->
-	                    <option value="" <c:out value="${pageMaker.cri.type == null?'selected':''}"/> >-- 선택 --</option>
+	                <select class="form-control" name='type' style="padding-right: 0px;"> <!-- type이 null일떄(주소에 type이 없을때 type을 추가함)  -->
+	                    <option value="" <c:out value="${pageMaker.cri.type == null?'selected':''}"/> >검색조건 선택</option>
 	                    <option value="T" <c:out value="${pageMaker.cri.type == 'T'?'selected':''}"/>>제목만</option>
-	                    <option value="C" <c:out value="${pageMaker.cri.type == 'C'?'selected':''}"/>>게시글만</option>
-	                    <option value="W" <c:out value="${pageMaker.cri.type == 'W'?'selected':''}"/>>글작성자만</option>
-	                    <option value="TC" <c:out value="${pageMaker.cri.type == 'TC'?'selected':''}"/>>제목+내용</option>
-	                    <option value="TW" <c:out value="${pageMaker.cri.type == 'TW'?'selected':''}"/>>제목+작성자</option>
-	                    <option value="TWC" <c:out value="${pageMaker.cri.type == 'TWC'?'selected':''}"/>>제목+내용+작성자</option>
+	                    <option value="C" <c:out value="${pageMaker.cri.type == 'C'?'selected':''}"/>>내용만</option>
+	                    <option value="W" <c:out value="${pageMaker.cri.type == 'W'?'selected':''}"/>>글작성자</option>
+	                    <option value="TC" <c:out value="${pageMaker.cri.type == 'TC'?'selected':''}"/>>제목 + 내용</option>
+	                    <option value="TW" <c:out value="${pageMaker.cri.type == 'TW'?'selected':''}"/>>제목 + 작성자</option>
+	                    <option value="TWC" <c:out value="${pageMaker.cri.type == 'TWC'?'selected':''}"/>>제목 + 내용 + 작성자</option>
 	                </select>
 	            </div>
 				<div class="form-group mr-2">
 					<input class="form-control" type="text" name='keyword'
-					value='<c:out value="${pageMaker.cri.keyword}"/> ' placeholder="검색어를 입력해주세요."> 
+					value='<c:out value="${pageMaker.cri.keyword}"/> ' placeholder="검색어를 입력해주세요"> 
 					<input type='hidden' name='currentPageNum' value='<c:out value="${pageMaker.cri.currentPageNum}"/> '>
 					<input type='hidden' name='itemsPerPage' value='<c:out value="${pageMaker.cri.itemsPerPage}"/> '> 
 				</div>
-				<button type="submit" class='btn btn-primary'>검색</button>
+				<button type="submit" class='btn common-btn btn-search'>검색</button>
 	        </form>
-	    </div>
 	</div>
 	<!-- /.검색 -->
 
@@ -119,7 +140,7 @@
 	</div> --%>
 	
 	<!-- 페이징, 버튼생성 -->
-	<div class='pull-right' style=" padding-right: 20px;">
+	<div class="page-contents">
 		<ul class="pagination">
 			<c:if test="${pageMaker.hasPrev}">
 				<li class="paginate_button previous"><a href="${pageMaker.startPageNum -1}">Previous</a></li>
@@ -238,7 +259,7 @@
 	    var keyword = searchForm.find("input[name='keyword']").val();
 	    
 	    if (!type || !keyword) {
-	        alert(!type ? "검색종류를 선택하세요" : "검색 할 내용을 입력하세요");
+	        alert(!type ? "검색조건을 선택하세요" : "키워드를 입력하세요");
 	        return false;
 	    }
 	});
@@ -286,4 +307,6 @@
 
 
 <!-- 푸터------------------------------------------------------------------------------ -->
-<%@include file="../includes/footer.jsp"%>
+<div>
+	<%@include file="../includes/footer.jsp"%>
+</div>
