@@ -1,5 +1,4 @@
-# 🎯 [MyBoard.site]
-<!-- (http://MyBoard.site/) --> 
+# 🎯 [MyBoard.site](http://ppoosumi.me/)
 <br>
 <br>
 <br>
@@ -90,30 +89,24 @@
 
 ### 📆 개발 일정 요약본
 
-<br>
-
 ```mermaid
 gantt
-    title 2024.01.01 - 2024.04.00
-    dateFormat X
-    axisFormat %s
+    title 프로젝트 일정 (2024년 01월 10일 - 2024년 4월 10일)
+    dateFormat YYYY-MM-DD
     section 기획
-        구상: 0, 5
+        구상: a1, 2024-01-10, 5d
+
     section 기능 구현
-        Develop: 5, 65
+        Develop: a2, after a1, 70d
+
     section 테스트
-        Test & BugFix: 65, 75
+        Test & BugFix: a3, after a2, 10d
+
     section 배포
-        가비아도메인: 75, 105
+        서비스: a4, 2024-04-03, 7d
 ```
 
 <br>
-<!-- 
-기획: 5일
-기능 구현: 60일
-테스트: 10일
-배포: 30일
--->
 
 #### 🧲DB ERD
 
@@ -144,3 +137,6 @@ gantt
 - Mysql Replication – AOP를 이용하여 Master/Slave로 데이터베이스 이중화
 - Nginx의 Reversed-Proxy를 이용하여 로드밸런싱
 -->
+
+
+  
