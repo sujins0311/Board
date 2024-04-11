@@ -30,7 +30,7 @@
       <div class="panel-body">
 
         <div class="form-group">
-          <label>#번호</label> 
+          <label>No.</label> 
           <input class="form-control" name='bno'
             value='<c:out value="${getPostResult.bno}"/>' readonly="readonly">
         </div>

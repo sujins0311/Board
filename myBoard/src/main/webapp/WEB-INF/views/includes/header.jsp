@@ -240,7 +240,7 @@ body {
                             	<!-- 아이콘 -->
                             	<img src="/resources/images/icons/link.ico" width=24px; height=24px;/>
                             	<span>관련 사이트</span>
-                            	<span class="fa arrow" style="padding-top:4px; font-size:15px;"></span>
+                            	<span class="fa arrow" style="padding-top:7px; font-size:15px;"></span>
                             </a>
                             <ul class="nav nav-second-level">
                                 <li>

@@ -12,7 +12,6 @@
 		</a>
 	</div>
 </div>
-
 <div class="row">
 	<div class="col-lg-12">
 		<div class="panel panel-default">
@@ -123,7 +122,7 @@
 	<div class="page-contents">
 		<ul class="pagination">
 			<c:if test="${pageMaker.hasPrev}">
-				<li class="paginate_button previous"><a href="${pageMaker.startPageNum -1}">Previous</a></li>
+				<li class="paginate_button previous"><a href="${pageMaker.startPageNum -1}">이전</a></li>
 			</c:if>
 
 			<c:forEach var="num" begin="${pageMaker.startPageNum}" end="${pageMaker.endPageNum}">
@@ -133,7 +132,7 @@
 
 			<c:if test="${pageMaker.hasNext}">
 				<li class="paginate_button next">
-				<a href="${pageMaker.endPageNum +1}">Next</a></li>
+				<a href="${pageMaker.endPageNum +1}">다음</a></li>
 			</c:if>
 		</ul>
 	</div>
