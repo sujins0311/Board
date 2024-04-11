@@ -1,6 +1,8 @@
 /bin/
 
-/target/*
+myBoard/target/
+
+.project
 
 # Created by https://www.gitignore.io/api/windows,eclipse,java,maven
 

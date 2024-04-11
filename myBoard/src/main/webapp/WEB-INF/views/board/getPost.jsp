@@ -7,7 +7,16 @@
 
 <div class="row">
   <div class="col-lg-12">
-    <h1 class="page-header">게시글 조회</h1>
+	<a class="page-header-link" 
+		href="/board/getPost?
+			currentPageNum=<c:out value='${cri.currentPageNum}'/>
+			&itemsPerPage=<c:out value='${cri.itemsPerPage}'/>
+			&type=<c:out value='${cri.type}'/>
+			&keyword=<c:out value='${cri.keyword}'/>
+			&bno=<c:out value='${getPostResult.bno}'/>"
+	/>
+		<h3 class="page-header">게시글 보기</h3>
+	</a>
   </div>
   <!-- /.col-lg-12 -->
 </div>
@@ -16,12 +25,12 @@
   <div class="col-lg-12">
     <div class="panel panel-default">
 
-      <div class="panel-heading">Board Read Page</div>
+      <div class="panel-heading">게시글을 확인합니다.</div>
       <!-- /.panel-heading -->
       <div class="panel-body">
 
         <div class="form-group">
-          <label>#번호</label> 
+          <label>No.</label> 
           <input class="form-control" name='bno'
             value='<c:out value="${getPostResult.bno}"/>' readonly="readonly">
         </div>
@@ -53,9 +62,8 @@
             value='<c:out value="${getPostResult.updatedDate}"/>' readonly="readonly">
         </div> --%>
 
-		<button data-oper='modify' class="btn btn-default" onclick="modifyPost(${getPostResult.bno})">수정/삭제</button>
-		<%-- <button class="btn btn-default" onclick="deletePost(${getPostResult.bno})">${getPostResult.bno} 번 게시글 삭제</button> --%>
-		<button data-oper='list' class="btn btn-info">게시글 목록</button>
+		<button data-oper='list' class="btn common-btn">목록</button>
+		<button data-oper='modify' class="btn common-btn" style="float:right;" onclick="modifyPost(${getPostResult.bno})">수정/삭제</button>
 
 
 		<form id='operForm' action="/board/getModifyPost" method="get">
