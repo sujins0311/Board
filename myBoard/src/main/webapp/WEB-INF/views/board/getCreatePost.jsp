@@ -26,7 +26,6 @@
 
 @media (min-width: 768px) {
 	.reg-body {
-		width: 40%;
 	}
 	.context {
 		height: 200px;
@@ -44,7 +43,9 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header">게시글 등록</h3>
+		<a class="page-header-link" href="/board/getCreatePost">
+			<h3 class="page-header">게시글 등록</h3>
+		</a>
 	</div>
 </div>
 
@@ -67,9 +68,8 @@
 						<input type="text" class="form-control writer" id="writer" name="writer">
 						<%-- <input type="text" class="form-control" id="writer" name="writer" value="${createPostResult.writer}" readonly="readonly"> --%>
 					</div>
-					<button id="submitBtn" type="button" class="btn common-btn" style="float:right;">등록</button>
-					<!-- <button id="submitBtn" type="submit" class="btn btn-primary">등록</button> -->
 					<button id="resetBtn" type="reset" class="btn common-btn">초기화</button>
+					<button id="submitBtn" type="button" class="btn common-btn" style="float:right;">등록</button>
 				</form>
 			</div>
 		</div>

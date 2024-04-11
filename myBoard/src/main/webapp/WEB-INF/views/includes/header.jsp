@@ -16,7 +16,7 @@
 <meta name="author" content="">
 
 <!-- 공통 스타일 -->
-<title>Dev Community</title>
+<title>안녕하세요!</title>
 
 <!-- BootStrap -->
 <!-- 부트스트랩은 재사용가능한 완성된 UI 컴포넌트를 제공 -->
@@ -44,7 +44,12 @@
 <link href="/resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
 <!-- 파비콘(탭 로고이미지)-->
-<link rel="shortcut icon" href="http://mail.nara.co.kr/mail/img/favicon.png" type="image/x-icon"/>
+<link rel="shortcut icon" href="/resources/images/icons/favicon.ico" type="image/x-icon"/>
+
+<!-- 아이콘 소스 -->
+<!-- 검색: https://www.freepik.com/search?format=search&last_filter=query&last_value=list&query=list&type=icon -->
+<!-- 클립보드 다운로드: https://www.paste.photos/ -->
+<!-- 변환: https://favicon.io/ -->
 
 <style type="text/css">
 /* 부트스트랩 기본값을 커스텀합니다.*/
@@ -65,20 +70,26 @@ body {
 
 
 /*GNB(General Navigation Bar), LNB(Local), SNB(Side), FNB(Foot)*/
-.gnb-btn {
+.snb-btn {
+	display: flex !important;
 	color: black;
 	font-weight: bold;
 	font-size: 12px;
 }
 
-.gnb-btn .icon {
-	font-size: 15px;
+.snb-btn > span {
+	padding-left: 10px;
+	padding-top: 5px;
 }
 
 .lnb-btn {
 	color: black;
 	font-weight: bold;
 	font-size: 12px;
+}
+
+.lnb-btn > span {
+	padding-left: 5px;
 }
 
 .navbar-default {
@@ -118,6 +129,18 @@ body {
 	outline: 0;
 }
 
+.page-contents {
+	text-align: center;
+}
+
+.page-header-link,
+.page-header-link:hover {
+	display: block;
+	width: 128px;
+	color: black;
+	text-decoration: none;
+}
+
 .pagination>.active>a, 
 .pagination>.active>a:focus, 
 .pagination>.active>a:hover, 
@@ -127,7 +150,7 @@ body {
     z-index: 3;
     color: black;
     cursor: pointer;
-    background-color: white;
+    background-color: blanchedalmond;
     border-color: lightgray;
 }
 
@@ -137,7 +160,7 @@ body {
     padding: 1px 6px;
     margin-left: -1px;
     line-height: 1.42857143;
-    color: white;
+    color: black;
     text-decoration: none;
     background-color: #fff;
     border: 1px solid #ddd;
@@ -152,9 +175,12 @@ body {
 	.navbar-brand {
 		margin-left: -15px;
 	}
+	
+	.btn-search {
+		width: 100%;
+	}
 }
 </style>
-
 
 </head>
 
@@ -189,42 +215,44 @@ body {
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a class="gnb-btn" href="/">
+                            <a class="snb-btn" href="/">
                             	<!-- 아이콘 -->
-                            	<i class="bi bi-house"></i>
-                            	Home
+                            	<img src="/resources/images/icons/home.ico" width=24px; height=24px;/>
+                            	<span>Home</span>
                             </a>
                         </li>
                         <li>
-                            <a class="gnb-btn" href="/board/getCreatePost">
+                            <a class="snb-btn" href="/board/getCreatePost">
                             	<!-- 아이콘 -->
-                            	<i class="fa fa-edit fa-fw"></i>
-                            	게시글 작성
+                            	<img src="/resources/images/icons/write.ico" width=24px; height=24px;/>
+                            	<span>게시글 작성</span>
                             </a>
                         </li>
                         <li>
-                            <a class="gnb-btn" href="/board/getPostList">
+                            <a class="snb-btn" href="/board/getPostList">
                             	<!-- 아이콘 -->
-                            	<i class="bi bi-card-list icon"></i>
-                            	게시글 목록
+                            	<img src="/resources/images/icons/list.ico" width=24px; height=24px;/>
+                            	<span>게시글 목록</span>
                             </a>
                         </li>
                         <li>
-                            <a class="gnb-btn" href="/getCreatePost">
+                            <a class="snb-btn" href="/getCreatePost">
                             	<!-- 아이콘 -->
-                            	<i class="fa fa-files-o fa-fw"></i>
-                            	관련 사이트
-                            	<span class="fa arrow"></span>
+                            	<img src="/resources/images/icons/link.ico" width=24px; height=24px;/>
+                            	<span>관련 사이트</span>
+                            	<span class="fa arrow" style="padding-top:4px; font-size:15px;"></span>
                             </a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a class="lnb-btn" href="https://github.com/sujins0311/sujins0311" target="_blank">
-                                    	<i class="fa fa-files-o fa-fw"></i> GIT HUB
+                                    	<img src="/resources/images/icons/page.ico" width=24px; height=24px;/> 
+                                    	<span>Github</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a class="lnb-btn" href="https://sujinpad.tistory.com/" target="_blank">
-                                    	<i class="fa fa-files-o fa-fw"></i> Tistory
+                                    	<img src="/resources/images/icons/page.ico" width=24px; height=24px;/> 
+                                    	<span>Tistory</span>
                                     </a>
                                 </li>
                             </ul>

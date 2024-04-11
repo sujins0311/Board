@@ -5,31 +5,11 @@
 <!-- 헤더 + 바디 ------------------------------------------------------------------------------ -->
 <%@include file="../includes/header.jsp"%>
 
-<style>
-
-.page-contents {
-	text-align: center;
-}
-
-@media (max-width: 768px) {
-	
-	.navbar-toggle {
-		float: left;
-		margin-left: 10px;
-	}
-	.navbar-brand {
-		margin-left: -15px;
-	}
-	
-	.btn-search {
-		width: 100%;
-	}
-}
-</style>
-
 <div class="row">
 	<div class="col-lg-10">
-		<h3 class="page-header">게시글 목록</h3>
+		<a class="page-header-link" href="/board/getPostList">
+			<h3 class="page-header">게시글 목록</h3>
+		</a>
 	</div>
 </div>
 

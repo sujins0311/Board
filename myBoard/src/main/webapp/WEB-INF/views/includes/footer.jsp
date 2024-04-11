@@ -47,7 +47,7 @@
 </style>
 
 <body>
-<div class="footer">
+<div class="footer" style="border-top: solid 1px #88b8ff;">
 	<p>Copyright © 2024 SJ. All Rights Reserved.</p>
 	<div>
 		<a href="https://github.com/sujins0311/sujins0311" target="_blank">
