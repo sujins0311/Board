@@ -1,6 +1,6 @@
 package org.project.mapper;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -43,7 +43,7 @@ public class ReplyMapperTests {
 	        vo.setReplyer("replyer" + j);
 	        
 	        // 댓글 생성일 설정 (현재 시간)
-	        vo.setReplyDate(LocalDateTime.now());
+	        vo.setReplyDate(new Date());
 	        
 	        // 데이터베이스에 댓글 추가
 	        mapper.insert(vo);
