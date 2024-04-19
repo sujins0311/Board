@@ -1,4 +1,4 @@
-# 🎯 [MyBoard.site](http://ppoosumi.me/)
+# 🎯 [https://ppoosumi.me](https://ppoosumi.me/)
 <br>
 <br>
 <br>
@@ -79,7 +79,7 @@
 
 <br>
 
-#### 🌐 배포 
+#### 🌐 개발 및 배포 구조도 
 
 ![image](https://github.com/sujins0311/Board/assets/122525760/796c7e25-814c-4d61-a812-2d86aa5c7ac7)
 
