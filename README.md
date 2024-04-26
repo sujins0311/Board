@@ -112,7 +112,8 @@ gantt
 
 <br>
 
-![MyBoard](https://github.com/sujins0311/Board/assets/122525760/0ca76f9d-0bea-43bc-b7cb-302cf8bf36bb)
+![image](https://github.com/sujins0311/Board/assets/122525760/1ab67205-9f92-47f4-bf70-542978b112d3)
+
 
 <br>
 
