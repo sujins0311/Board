@@ -54,7 +54,7 @@
 			<include refid="Criteria"></include>
 		</where>
         <![CDATA[
-        ORDER BY bno ASC
+        ORDER BY bno DESC
         LIMIT #{itemsPerPage} OFFSET ${(currentPageNum - 1) * itemsPerPage}
         ]]>
 	</select>
