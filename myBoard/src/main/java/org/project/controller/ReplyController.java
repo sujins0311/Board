@@ -3,6 +3,7 @@ package org.project.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +33,7 @@ public class ReplyController {
 	private ReplyService service;
 
 	// 등록
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping(value = "/new", // url
 				consumes = "application/json", // 요청타입 > json
 				produces = { MediaType.TEXT_PLAIN_VALUE }) // 응답타입 > text
@@ -78,12 +80,26 @@ public class ReplyController {
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
 	}
+	
+	// @DeleteMapping(value = "/{rno}", produces = { MediaType.TEXT_PLAIN_VALUE })
+	// public ResponseEntity<String> remove(@PathVariable("rno") Long rno) {
+	//
+	// log.info("remove: " + rno);
+	//
+	// return service.remove(rno) == 1 ? new ResponseEntity<>("success",
+	// HttpStatus.OK)
+	// : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	//
+	// }
 
 	// 삭제
-	@DeleteMapping(value = "/{rno}", produces = { MediaType.TEXT_PLAIN_VALUE })
-	public ResponseEntity<String> remove(@PathVariable("rno") Long rno) {
+	@PreAuthorize("principal.username == #vo.replyer")
+	@DeleteMapping("/{rno}")
+	public ResponseEntity<String> remove(
+			@RequestBody ReplyVO vo, @PathVariable("rno") Long rno) {
 
 		log.info("remove: " + rno);
+		log.info("replyer: " + vo.getReplyer());
 
 		return service.remove(rno) == 1 
 				? new ResponseEntity<>("success", HttpStatus.OK)

@@ -47,11 +47,16 @@
           <textarea class="form-control" rows="3" name='content'
             readonly="readonly"><c:out value="${getPostResult.content}" /></textarea>
         </div>
+        
+		<div class="form-group">
+          <label>작성자</label> <input class="form-control" name='writer'
+			value='<sec:authentication property="principal.username"/>' readonly="readonly">
+		</div>
 
-        <div class="form-group">
+<%--         <div class="form-group">
           <label>작성자</label> <input class="form-control" name='writer'
             value='<c:out value="${getPostResult.writer}"/>' readonly="readonly">
-        </div>
+        </div> --%>
         
 <%--         <div class="form-group">
           <label>작성일</label> <input class="form-control" name='createdDate'
@@ -70,7 +75,8 @@
 				<sec:authentication property="principal" var="pinfo" />
 				<sec:authorize access="isAuthenticated()"><!-- 본인이 작성한 글만 수정/삭제 버튼을 확인 -->
 					<c:if test="${pinfo.username eq getPostResult.writer}">
-						<button data-oper='modify' class="btn common-btn" style="float:right;" onclick="modifyPost(${getPostResult.bno})">수정/삭제</button>
+						<button data-oper='modify' class="btn common-btn" style="float:right;" 
+						onclick="modifyPost(${getPostResult.bno})">수정/삭제</button>
 					</c:if>
 				</sec:authorize>
 
@@ -100,7 +106,7 @@
         <i class="fa fa-comments fa-fw"></i> Reply
       </div> -->
 			<div class="panel-heading">
-				<i class="fa fa-comments fa-fw"></i> reply List Page
+				<i class="fa fa-comments fa-fw"></i> 댓글을 작성합니다.
 				<button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>댓글작성</button>
 			</div>
 			<!-- /.panel-heading -->
@@ -262,22 +268,40 @@ $(document).ready(function () {
 	    var modalRemoveBtn = $("#modalRemoveBtn");
 	    var modalRegisterBtn = $("#modalRegisterBtn");
 	    
+	    var replyer = null;
+	    
+	    <sec:authorize access="isAuthenticated()">	    
+	    	replyer = '<sec:authentication property="principal.username"/>';   	    
+		</sec:authorize>
+	 
+	    var csrfHeaderName ="${_csrf.headerName}"; 
+	    var csrfTokenValue="${_csrf.token}";
+	    
 	 	// 모달 닫기 버튼
 	    $("#modalCloseBtn").on("click", function(e){	    	
 	    	modal.modal('hide');
 	    });
 	    
 	 	// 댓글 작성 버튼
-	    $("#addReplyBtn").on("click", function(e){      
+	    $("#addReplyBtn").on("click", function(e){
+	      console.log(replyer);
+	      
 	      modal.find("input").val("");
 	      modalInputReplyDate.closest("div").hide();
 	      modal.find("button[id !='modalCloseBtn']").hide();
-	      
+	      modal.find("input[name='replyer']").val(replyer); // 댓글 작성자 필드에 replyer 변수 값 적용
+	      modal.find("input[name='replyer']").attr("readonly", "readonly"); // 댓글 작성자 필드를 읽기 전용으로 설정합니다.
 	      modalRegisterBtn.show();
 	      
 	      $(".modal").modal("show");
 	      
 	    });
+	 	
+	 	// AJAX 요청이 전송되기 전에 실행될 함수(AJAX 요청 헤더에 CSRF 토큰을 설정)
+	 	// 시큐리티 사용할때 POST방식은 CSRF 토큰을 꼭 추가해야함
+	    $(document).ajaxSend(function(e, xhr, options) { 
+	        xhr.setRequestHeader(csrfHeaderName, csrfTokenValue); 
+	      }); 
 	    
 		// 댓글등록버튼
 	    modalRegisterBtn.on("click",function(e){
@@ -292,8 +316,8 @@ $(document).ready(function () {
 	        alert(result);     
 	        modal.find("input").val("");
 	        modal.modal("hide");        
-	        showList(1); //등록 후 다시 페이지를 불러옴
-	        //showList(-1);   
+	        //showList(1); //등록 후 다시 페이지를 불러옴
+	        showList(-1);   
 	      });   
 	    });
 	    $(".chat").on("click", "li", function(e){	      
@@ -312,25 +336,82 @@ $(document).ready(function () {
 	    });
 	    
 	  	// 댓글수정버튼
-	    modalModBtn.on("click", function(e){   	  
-	   	  var reply = {rno:modal.data("rno"), reply: modalInputReply.val()};
-	   	  replyService.update(reply, function(result){   
-	   	    alert(result);
-	   	    modal.modal("hide");
-	   	    showList(pageNum);
-	   	  });
-	   	});
+modalModBtn.on("click", function(e){
+	
+	var originalReplyer = modalInputReplyer.val();
+	
+  var reply = {
+		      rno:modal.data("rno"), 
+		      reply: modalInputReply.val(),
+		      replyer: originalReplyer};
+  
+	if(!replyer){
+		 alert("로그인후 수정이 가능합니다.");
+		 modal.modal("hide");
+		 return;
+	}
+
+	console.log("Original Replyer: " + originalReplyer);
+	
+	if(replyer  != originalReplyer){
+	 
+		 alert("자신이 작성한 댓글만 수정이 가능합니다.");
+		 modal.modal("hide");
+		 return;
+	 
+	}
+	  
+	replyService.update(reply, function(result){
+	      
+	  alert(result);
+	  modal.modal("hide");
+	  showList(pageNum);
+	  
+	});
+  
+});
 	  	
 		// 댓글삭제버튼
-	   	modalRemoveBtn.on("click", function (e){
+	modalRemoveBtn.on("click", function (e){
+	   	  
 	   	  var rno = modal.data("rno");
-	   	  replyService.remove(rno, function(result){     
+
+	   	  console.log("RNO: " + rno);
+	   	  console.log("REPLYER: " + replyer);
+	   	  
+	   	  if(!replyer){
+	   		  alert("로그인후 삭제가 가능합니다.");
+	   		  modal.modal("hide");
+	   		  return;
+	   	  }
+	   	  
+	   	  var originalReplyer = modalInputReplyer.val();
+	   	  
+	   	  console.log("Original Replyer: " + originalReplyer);
+	   	  
+	   	  if(replyer  != originalReplyer){
+	   		  
+	   		  alert("자신이 작성한 댓글만 삭제가 가능합니다.");
+	   		  modal.modal("hide");
+	   		  return;
+	   		  
+	   	  }
+	   	  
+	   	  
+	   	  replyService.remove(rno, originalReplyer, function(result){
+	   	        
 	   	      alert(result);
 	   	      modal.modal("hide");
 	   	      showList(pageNum);
+	   	      
 	   	  });
+	   	  
 	   	});
+
+	 
 	});
+	
+
 
 	</script>
 <script>
