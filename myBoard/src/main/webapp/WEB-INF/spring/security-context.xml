@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security 
+	http://www.springframework.org/schema/security/spring-security.xsd
+	http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<bean id="customAccessDenied"
+		class="org.project.security.CustomAccessDeniedHandler"></bean>
+		
+	<bean id="customLoginSuccess" 
+	class="org.project.security.CustomLoginSuccessHandler"></bean>
+	
+	<bean id="bcryptPasswordEncoder" 
+	class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
+	
+	<bean id="customUserDetailsService"
+		class="org.project.security.CustomUserDetailsService"></bean>
+
+
+	
+	
+
+	<security:http>
+
+		<!-- **인가별분류페이지 -->
+		<!-- hasAnyRole = or -->
+		<security:intercept-url pattern="/auth/all" 
+		access="permitAll" />
+		
+		<security:intercept-url pattern="/auth/member" 
+		access="hasAnyRole('ROLE_MEMBER','ROLE_MANAGER','ROLE_ADMIN')" />
+		
+		<security:intercept-url pattern="/auth/manager" 
+		access="hasAnyRole('ROLE_MANAGER','ROLE_ADMIN')" />
+		
+		<security:intercept-url pattern="/auth/admin" 
+		access="hasRole('ROLE_ADMIN')" />
+
+
+		<!-- **인가에러페이지 -->
+		<!-- <security:access-denied-handler error-page="/accessError" /> -->
+		<security:access-denied-handler ref="customAccessDenied" />
+
+
+		<!-- **로그인/로그아웃 -->
+		<!-- <security:form-login/> --> <!-- 로그인 폼이 자동 생성 -->
+		<security:form-login login-page="/customLogin" 
+		authentication-success-handler-ref="customLoginSuccess" /> <!-- login-page= "" 로그인 리다이렉트 페이지 설정 -->
+		
+		<!-- 로그아웃 > invalidate-session="true" 세션 정보를 무효화-->
+		<!-- remember-me: 자동로그인 쿠키,JSESSION_ID: WAS가 발행한 쿠키 -->
+		<security:logout logout-url="/customLogout"
+			invalidate-session="true" delete-cookies="remember-me,JSESSION_ID" /> 
+			
+    	<!-- 자동로그인 -->
+		<security:remember-me 
+		data-source-ref="dataSource" 
+		token-validity-seconds="604800" />	
+	</security:http>
+
+
+
+	<!-- **인증 정보를 설정 -->
+	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="customUserDetailsService">
+
+			<security:password-encoder ref="bcryptPasswordEncoder" />
+
+		</security:authentication-provider>
+
+	</security:authentication-manager>
+	
+	
+	
+<!-- 	<security:authentication-manager>
+	
+		<security:authentication-provider>
+		
+			<security:jdbc-user-service 
+			data-source-ref="dataSource" />
+			
+			<security:password-encoder 
+			ref="bcryptPasswordEncoder" />
+			
+		</security:authentication-provider>
+		
+	</security:authentication-manager> -->
+	
+	
+<!-- 	<security:authentication-manager>
+		<security:authentication-provider>
+			<security:user-service>
+				<security:user 
+				name="user1" 
+				authorities="ROLE_MEMBER" 
+				password="$2a$10$01MN51JYRf72s2o4Vuxlo.8k/.tcvEt4QEJebrQo8qneYj5/as/OK" />
+				<security:user 
+				name="admin1" 
+				authorities="ROLE_MEMBER,ROLE_MANAGER,ROLE_ADMIN"
+				password="$2a$10$01MN51JYRf72s2o4Vuxlo.8k/.tcvEt4QEJebrQo8qneYj5/as/OK" />
+			</security:user-service>
+		</security:authentication-provider>
+	</security:authentication-manager> -->
+
+
+</beans>

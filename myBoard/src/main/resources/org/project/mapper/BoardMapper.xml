@@ -43,7 +43,6 @@
 		WHERE bno = #{bno}
 	</update>
 
-
 	<!-- getPostsByPage(get) -->
 	<!-- DB는 0번째부터 시작하므로 (currentPageNum - 1) -->
 	<select id="getListWithPaging" resultType="org.project.domain.BoardVO" parameterType="org.project.domain.Criteria">
@@ -59,6 +58,7 @@
         LIMIT #{itemsPerPage} OFFSET ${(currentPageNum - 1) * itemsPerPage}
         ]]>
 	</select>
+
 
 	<!-- getPostList(get) -->
 	<select id="getTotalCount" resultType="int">

@@ -64,6 +64,6 @@ window.onload = function() {
 	<hr>
 	<footer class="flex-col-center">
 		<p>업데이트 이력</p>
-		<p>2024-04-09 CSS 업데이트</p>
+		<p>2024-04-24 회원기능 업데이트</p>
 	</footer>
 </html>

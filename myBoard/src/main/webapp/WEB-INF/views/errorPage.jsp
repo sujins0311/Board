@@ -1,27 +1,54 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false" import="java.util.* "%> <!-- 세션을 사용하지 않는것을 명시해준다. -->
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
-
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <!-- HTTP의 header = http-equiv -->
-<title>ERORR</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>ERROR - 예기치 않은 오류가 발생했습니다.</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            padding-top: 50px;
+        }
+        h1 {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #dc3545;
+        }
+        p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            color: #6c757d;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+            text-align: left;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
-
 <body>
-	<h1>
-		Error Message:
-		<c:out value="${exception.getMessage()}"></c:out>
-	</h1>
-	<hr>
-	<h4>Stack Trace:</h4>
-	<ul>
-		<c:forEach items="${exception.getStackTrace()}" var="stack">
-			<li><c:out value="${stack}"></c:out></li>
-		</c:forEach>
-	</ul>
+    <h1>ERROR</h1>
+    <h2>예기치 않은 오류가 발생했습니다.</h2>
+    <p>오류가 계속되면 시스템 관리자에게 문의하세요.</p>
+
+    <h3>Error Message:</h3>
+    <h4><c:out value="${exception.getMessage()}"/></h4>
+    <hr>
+    <h3>Stack Trace:</h3>
+    <ul>
+        <c:forEach items="${exception.getStackTrace()}" var="stack">
+            <li><c:out value="${stack}"/></li>
+        </c:forEach>
+    </ul>
 </body>
 </html>

@@ -2,7 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%><!-- 함수 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%><!-- 파일업로드,년월일 -->
-<!-- 헤더 + 바디 ------------------------------------------------------------------------------ -->
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>    
+<!-- 헤더 + 바디 -------------------------------------------------------------------------------->
 <%@include file="../includes/header.jsp"%>
 
 	<!-- role: 시멘틱하지않은 요소에 추가설명을 위한 태그 -->
@@ -55,9 +56,9 @@
 			<div class="panel-heading">게시글을 등록합니다.</div>
 			<div class="panel-body">
 				<form id="createPostForm" role="form" action=getCreatePost method="post">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<div class="form-group">
-						<label for="title">제목:</label> 
-						<input type="text" class="form-control title" placeholder="제목을 입력하세요" id="title" name="title">
+						<label for="title">제목:</label> <input type="text" class="form-control title" placeholder="제목을 입력하세요" id="title" name="title">
 					</div>
 					<div class="form-group">
 						<label for="content">내용:</label>
@@ -65,7 +66,8 @@
 					</div>
 					<div class="form-group">
 						<label for="writer">작성자:</label> 
-						<input type="text" class="form-control writer" id="writer" name="writer">
+						<input type="text" class="form-control writer" id="writer" name="writer"
+						value='<sec:authentication property="principal.username"/>' readonly"readonly">
 						<%-- <input type="text" class="form-control" id="writer" name="writer" value="${createPostResult.writer}" readonly="readonly"> --%>
 					</div>
 					<button id="resetBtn" type="reset" class="btn common-btn">초기화</button>
