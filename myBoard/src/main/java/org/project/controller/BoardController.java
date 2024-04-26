@@ -3,6 +3,7 @@ package org.project.controller;
 import org.project.domain.BoardVO;
 import org.project.domain.PagingDTO;
 import org.project.service.BoardService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -70,7 +71,8 @@ public class BoardController {
 
 	// 삭제 > 조회 페이지에서 삭제버튼 > 모달창 > 게시글 목록페이지
 	// http://localhost:8080/board/deletePost?bno=1
-	// 현재 application/x-www-form-urlencoded를 받음 
+	// 현재 application/x-www-form-urlencoded를 받음
+	@PreAuthorize("principal.username == #writer")
 	@PostMapping("deletePost")
 	public String deletePost(@RequestParam("bno") Long bno, RedirectAttributes rttr, 
 			@ModelAttribute("cri") Criteria cri) {
@@ -126,6 +128,7 @@ public class BoardController {
 	
 	// 수정 > 조회 페이지에서 삭제 버튼 > 수정페이지 > 수정 후 게시글 목록페이지
 	// > 수정한 form을 받아 DB에 저장 > 모달창(수정완료) > 회원조회(RedirectAttributes)
+	@PreAuthorize("principal.username == #boardVO.writer")
 	@PostMapping("modifyPost")
 	public String modifyPost(BoardVO boardVO, RedirectAttributes rttr, 
 			@ModelAttribute("cri") Criteria cri) {
@@ -174,10 +177,12 @@ public class BoardController {
 	// 등록 > 모달창 > 게시글 목록페이지
 	// http://localhost:8080/board/getCreatePost
 	@GetMapping("getCreatePost") // getCreatePost.jsp
+	@PreAuthorize("isAuthenticated()")
 	public void getCreatePost() {
 	}
 
 	@PostMapping("getCreatePost") // getCreatePost.jsp
+	@PreAuthorize("isAuthenticated()") //인증된 사용자만 해당 메소드에 접근할 수 있다. //isAuthenticated()"는 현재 사용자가 인증되었는지를 확인하는 시큐리티 내장메소드
 	public String createPost(BoardVO boardVO, RedirectAttributes rttr) {
 		log.info("/getCreatePost" + rttr);
 

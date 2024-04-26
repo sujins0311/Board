@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -196,8 +197,18 @@ body {
                     <span class="icon-bar"></span>
                 </button>
             	<a class="navbar-brand" href="/">MyBoard</a>
-            	<div class="navbar-info">로그인 정보... 로그아웃</div>
-            </div>
+            	
+				<div class="navbar-info">
+				    <sec:authorize access="isAnonymous()">
+				        <a href="/customLogin">로그인</a>
+				    </sec:authorize>
+				    <sec:authorize access="isAuthenticated()">
+				        환영합니다. <sec:authentication property="principal.username"/> 님
+				       <a href="/auth/all">회원정보</a> |
+				        <a href="/customLogout">로그아웃</a>
+				    </sec:authorize>
+				</div><!-- 로그인 정보... 로그아웃 -->
+			</div>
             <!-- /.navbar-header -->
 
             <div class="navbar-default sidebar" role="navigation">

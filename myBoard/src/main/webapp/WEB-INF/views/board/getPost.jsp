@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%><!-- 함수 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%><!-- 파일업로드,년월일 -->
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!-- 헤더 + 바디 ------------------------------------------------------------------------------ -->
 <%@include file="../includes/header.jsp"%>
 
@@ -62,8 +63,16 @@
             value='<c:out value="${getPostResult.updatedDate}"/>' readonly="readonly">
         </div> --%>
 
-		<button data-oper='list' class="btn common-btn">목록</button>
-		<button data-oper='modify' class="btn common-btn" style="float:right;" onclick="modifyPost(${getPostResult.bno})">수정/삭제</button>
+
+				<button data-oper='list' class="btn common-btn">목록</button>
+		<%-- <button data-oper='modify' class="btn common-btn" style="float:right;" onclick="modifyPost(${getPostResult.bno})">수정/삭제</button> --%>
+
+				<sec:authentication property="principal" var="pinfo" />
+				<sec:authorize access="isAuthenticated()"><!-- 본인이 작성한 글만 수정/삭제 버튼을 확인 -->
+					<c:if test="${pinfo.username eq getPostResult.writer}">
+						<button data-oper='modify' class="btn common-btn" style="float:right;" onclick="modifyPost(${getPostResult.bno})">수정/삭제</button>
+					</c:if>
+				</sec:authorize>
 
 
 		<form id='operForm' action="/board/getModifyPost" method="get">

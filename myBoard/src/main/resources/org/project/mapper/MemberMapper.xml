@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.project.mapper.MemberMapper">
+
+
+	<resultMap type="org.project.domain.MemberVO" id="memberMap">
+		<id property="userid" column="userid" />
+		<result property="userid" column="userid" />
+		<result property="userpw" column="userpw" />
+		<result property="username" column="username" />
+		<result property="email" column="email" />	
+		<result property="regDate" column="regdate" />
+		<result property="updateDate" column="updatedate" />
+		<collection property="authList" resultMap="authMap">
+		</collection>
+	</resultMap>
+
+
+	<resultMap type="org.project.domain.AuthVO" id="authMap">
+		<result property="userid" column="userid" />
+		<result property="auth" column="auth" />
+	</resultMap>
+
+	<select id="read" resultMap="memberMap">
+		SELECT
+		mem.userid, mem.userpw, mem.username, mem.email, mem.status, mem.regdate, mem.updatedate, auth.auth
+		FROM member mem
+		LEFT OUTER JOIN
+		member_auth auth ON mem.userid = auth.userid
+		WHERE mem.userid = #{userid}
+	</select>
+
+</mapper>

@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%><!-- 함수 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%><!-- 파일업로드,년월일 -->
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!-- 헤더 + 바디 ------------------------------------------------------------------------------ -->
 <%@include file="../includes/header.jsp"%>
 
@@ -22,6 +23,9 @@
 			<div class="panel-body">
 
 				<form role="form" action="modifyPost" method="post">
+				
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>  
+			
 					<input type='hidden' name='currentPageNum' value='<c:out value="${cri.currentPageNum }"/>'> 
 					<input type='hidden' name='itemPerPage' value='<c:out value="${cri.itemsPerPage }"/>'>
 					<input type='hidden' name='type' value='<c:out value="${cri.type }"/>'>
@@ -42,12 +46,23 @@
 					</div>
 
 					<div class="form-group">
-						<label>작성자</label> <input class="form-control" name='writer' value='<c:out value="${getmodifyPostResult.writer}"/>' readonly="readonly">
+						<label>작성자</label> 
+						<input class="form-control" name='writer' value='<c:out value="${getmodifyPostResult.writer}"/>' readonly="readonly">
 					</div>
 
-					<button type="submit" data-oper='modify' class="btn btn-default">수정</button>
-					<button type="submit" data-oper='delete' class="btn btn-danger">삭제</button>
+					<!-- 게시물작성자만 수정/삭제버튼 확인 -->
+					<sec:authentication property="principal" var="pinfo" />
+					<sec:authorize access="isAuthenticated()">
+						<c:if test="${pinfo.username eq getmodifyPostResult.writer}">
+							<button type="submit" data-oper='modify' class="btn btn-default">수정</button>
+							<button type="submit" data-oper='remove' class="btn btn-danger">삭제</button>
+						</c:if>
+					</sec:authorize>
 					<button type="submit" data-oper='list' class="btn btn-info">목록</button>
+
+					<!-- <button type="submit" data-oper='modify' class="btn btn-default">수정</button>
+					<button type="submit" data-oper='delete' class="btn btn-danger">삭제</button>
+					<button type="submit" data-oper='list' class="btn btn-info">목록</button> -->
 				</form>
 			</div>
 			<!--  end panel-body -->
