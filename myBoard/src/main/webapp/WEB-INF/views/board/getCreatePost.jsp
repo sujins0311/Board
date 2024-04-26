@@ -67,7 +67,7 @@
 					<div class="form-group">
 						<label for="writer">작성자:</label> 
 						<input type="text" class="form-control writer" id="writer" name="writer"
-						value='<sec:authentication property="principal.username"/>' readonly"readonly">
+						value='<sec:authentication property="principal.username"/>' readonly="readonly">
 						<%-- <input type="text" class="form-control" id="writer" name="writer" value="${createPostResult.writer}" readonly="readonly"> --%>
 					</div>
 					<button id="resetBtn" type="reset" class="btn common-btn">초기화</button>
