@@ -51,16 +51,10 @@
 		</init-param>
 	</filter>
 
-
-<!-- 	<filter-mapping>
+	<filter-mapping>
 		<filter-name>encoding</filter-name>
-		<servlet-name>appServlet</servlet-name>
-	</filter-mapping> -->
-
-<!-- 	<filter-mapping>
-		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping> -->
+	</filter-mapping>
 
 	<!-- Security 필터 시작(한글이 깨질 수 있어 인코딩 필터 > 시큐리티 필터 순으로 선언) -->
 	<filter>
