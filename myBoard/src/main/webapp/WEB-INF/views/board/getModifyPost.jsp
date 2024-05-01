@@ -55,7 +55,7 @@
 					<sec:authorize access="isAuthenticated()">
 						<c:if test="${pinfo.username eq getmodifyPostResult.writer}">
 							<button type="submit" data-oper='modify' class="btn btn-default">수정</button>
-							<button type="submit" data-oper='remove' class="btn btn-danger">삭제</button>
+							<button type="submit" data-oper='delete' class="btn btn-danger">삭제</button>
 						</c:if>
 					</sec:authorize>
 					<button type="submit" data-oper='list' class="btn btn-info">목록</button>

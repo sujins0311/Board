@@ -41,7 +41,7 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	
-	<!-- UTF-8필터 -->
+	<!-- UTF-8필터(필터, 필터매핑 선언) -->
 	<filter>
 		<filter-name>encoding</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
