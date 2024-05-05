@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -199,14 +200,24 @@ body {
             	<a class="navbar-brand" href="/">MyBoard</a>
             	
 				<div class="navbar-info">
+				        
 				    <sec:authorize access="isAnonymous()">
+				    <a href="/auth/register">회원가입</a> |
 				        <a href="/customLogin">로그인</a>
 				    </sec:authorize>
 				    <sec:authorize access="isAuthenticated()">
 				        환영합니다. <sec:authentication property="principal.username"/> 님
 				       <a href="/auth/all">회원정보</a> |
-				        <a href="/customLogout">로그아웃</a>
+				        <!-- <a href="/customLogout">로그아웃</a> -->
+				        <!-- Spring Security와 같은 보안 프레임워크를 사용하는 경우 /logout URL로 접근하면 Spring Security가 해당 요청을 인터셉트하여 로그아웃 -->
+				        <!-- JSP 페이지로 이동하는 것이 아니라, Spring Security가 로그아웃을 처리 -->
+				        <!-- <a href="#" onclick="document.getElementById('logoutForm').submit();">로그아웃</a> -->
+				        <a href="#" onclick="confirmLogout()">로그아웃</a>
 				    </sec:authorize>
+
+					<form id="logoutForm" action="/customlogout" method="post">
+						<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}" />
+					</form>
 				</div><!-- 로그인 정보... 로그아웃 -->
 			</div>
             <!-- /.navbar-header -->
@@ -226,19 +237,31 @@ body {
                             <!-- /input-group -->
                         </li>
                         <li>
+                        <!-- 
+	                        id(#) : 엘리먼트를 식별
+	                        class(.) : css style을 적용하기 위한 엘리먼트를 식별 (여러개가 같은 값을 가지는 경우가 많음)
+	                        둘 다 식별자로서의 기능은 동일하기에
+	                        프로젝트에서 둘 중 어느 방식을 주 식별자로 할 건지 일관되게 정하는 것이 보통
+	                        단일 개체에 이벤트를 주려면 id로 식별자를 선택하거나 태그 내 이벤트 속성을 사용할 것
+                        -->
                             <a class="snb-btn" href="/">
                             	<!-- 아이콘 -->
                             	<img src="/resources/images/icons/home.ico" width=24px; height=24px;/>
                             	<span>Home</span>
                             </a>
                         </li>
+                        
+
                         <li>
-                            <a class="snb-btn" href="/board/getCreatePost">
+                            <a class="snb-btn" href="#" onclick="isWritingAllowed()">
                             	<!-- 아이콘 -->
                             	<img src="/resources/images/icons/write.ico" width=24px; height=24px;/>
                             	<span>게시글 작성</span>
                             </a>
                         </li>
+
+                        
+                        
                         <li>
                             <a class="snb-btn" href="/board/getPostList">
                             	<!-- 아이콘 -->
@@ -247,7 +270,7 @@ body {
                             </a>
                         </li>
                         <li>
-                            <a class="snb-btn" href="/getCreatePost">
+                            <a class="snb-btn">
                             	<!-- 아이콘 -->
                             	<img src="/resources/images/icons/link.ico" width=24px; height=24px;/>
                             	<span>관련 사이트</span>
@@ -274,9 +297,81 @@ body {
             </div>
             <!-- /.navbar-static-side -->
         </nav>
+
+		<!-- Modal -->
+		<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 1060;" >
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="loginModalLabel">알림</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">로그인이 필요합니다. 로그인을 하시겠습니까?</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+						<a href="/customLogin" class="btn btn-primary">로그인</a>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!-- /.modal -->
+		
+		
+
 	</div>
  	<div id="page-wrapper">
+ 	
+ 	
  </body>
 <!-- 공통 스크립트 -->
 <!--  jQuery 라이브러리의 3.6.4 버전 -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script type="text/javascript">
+
+	// jsp 및 servlet 의 scope 종류
+	// page : default scope
+	// request
+	// session
+	// application
+	// page < request < session < application
+	
+	// jsp 의 기본 오브젝트
+	// page, request, response pageContext, session, application, out, config, exception
+	
+	// empty 인지 여부
+	// 따라서 객체가 null이거나 '' 이면 true
+/* 	function isAuthenticated(e) {
+		if (${empty pageContext.request.userPrincipal.name}) {
+	        if (confirm('로그인이 필요합니다. 로그인하시겠습니까?')) {
+	            location.href="/customLogin";
+	        }
+		} else {
+			location.href="/board/createPost"	
+		}
+	}//header:게시글작성, getpost:작성하기 */
+	
+	function isWritingAllowed(e) {
+		if (${empty pageContext.request.userPrincipal.name}) {
+			$('#loginModal').modal('show');	
+		} else {
+			location.href="/board/createPost"	
+		}
+	}//header:게시글작성, getpost:작성하기
+	
+	
+	// 로그아웃 확인
+	function confirmLogout() {
+		if(confirm("로그아웃 하시겠습니까?")){
+			document.getElementById('logoutForm').submit();
+		}	
+	}
+	
+	// 뒤로가기
+	// location: 현재페이지조작
+	// history: 모든 페이지 기록조작
+	function back() {
+		history.back();
+	}
+</script>

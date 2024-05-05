@@ -52,7 +52,9 @@
 	<context:component-scan
 		base-package="org.project.service"></context:component-scan>
 	<context:component-scan
-		base-package="org.project.commons"></context:component-scan>	
+		base-package="org.project.commons"></context:component-scan>
+	<context:component-scan
+		base-package="org.project.exception"></context:component-scan>
 
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 

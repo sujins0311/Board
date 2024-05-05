@@ -40,6 +40,7 @@
     <h1>ERROR</h1>
     <h2>예기치 않은 오류가 발생했습니다.</h2>
     <p>오류가 계속되면 시스템 관리자에게 문의하세요.</p>
+    <a href="/" class="button">홈으로 돌아가기</a>
 
     <h3>Error Message:</h3>
     <h4><c:out value="${exception.getMessage()}"/></h4>

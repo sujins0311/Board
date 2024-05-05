@@ -3,45 +3,65 @@
 <%@include file="./includes/logHeader.jsp"%>
 
 
-	<div class="container">
-		<div class="row">
-			<div class="col-md-4 col-md-offset-4">
-				<div class="login-panel panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">ID 로그인</h3>
-					</div>
-					<div class="panel-body">
-						<form role="form" method='post' action="/login">
-							<fieldset>
-								<div class="form-group">
-									<input class="form-control" placeholder="아이디를 입력해 주세요." name="username" type="text" autofocus>
-								</div>
-								<div class="form-group">
-									<input class="form-control" placeholder="비밀번호를 입력해 주세요." name="password" type="password" value="">
-								</div>
-								<div class="checkbox">
-									<label> <input name="remember-me" type="checkbox">아이디 저장
-									</label>
-								</div>
-								<!-- Change this to a button or input when using this as a form -->
-								<a href="index.html" class="btn btn-lg btn-success btn-block">로그인</a>
-							</fieldset>
-							<!-- CSRF(Cross-Site Request Forgery)토큰은 서버가 브라우저에 전송한 토큰값과 비교해 처리하는 방식 > 세션 보관 -->
-							<!-- <input type="hidden" name="_csrf"
-						    value="c58c9d7a-a81e-4231-96dd-168c6662428a" /> -->
-							<!-- 스프링 시큐리티 > CSRF토큰 비활성화  -->
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-						</form>
+<div class="container">
+	<div class="row">
+		<div class="col-md-4 col-md-offset-4">
+			<div class="login-panel panel panel-default">
+			
+			
+				<a class="snb-btn" href="/"> <!-- 아이콘 --> 
+					<!-- <img src="/resources/images/icons/home.ico" width=24px; height=24px; />  -->
+					<span>Home</span> |
+				</a>
 
-					</div>
+                 <a class="snb-btn" href="/board/getPostList">
+                 	<!-- 아이콘 -->
+                 	<!-- <img src="/resources/images/icons/list.ico" width=24px; height=24px;/> -->
+                 	<span>게시글 목록</span> |
+                 </a>
+                 
+                 <a class="snb-btn" href="/auth/register">
+                 	<!-- 아이콘 -->
+                 	<!-- <img src="/resources/images/icons/list.ico" width=24px; height=24px;/> -->
+                 	<span>회원가입</span>
+                 </a>
+				
+				
+				<div class="panel-heading">
+					<h3 class="panel-title">ID 로그인</h3>
+				</div>
+				<div class="panel-body">
+					<form role="form" method='post' action="/login">
+						<fieldset>
+							<div class="form-group">
+								<input class="form-control" placeholder="아이디를 입력해 주세요." name="username" type="text" autofocus>
+							</div>
+							<div class="form-group">
+								<input class="form-control" placeholder="비밀번호를 입력해 주세요." name="password" type="password" value="">
+							</div>
+							<div class="checkbox">
+								<label> <input name="remember-me" type="checkbox">아이디 저장
+								</label>
+							</div>
+							<!-- Change this to a button or input when using this as a form -->
+							<a href="index.html" class="btn btn-lg btn-success btn-block">로그인</a>
+						</fieldset>
+						<!-- CSRF(Cross-Site Request Forgery)토큰은 서버가 브라우저에 전송한 토큰값과 비교해 처리하는 방식 > 세션 보관 -->
+						<!-- <input type="hidden" name="_csrf"
+						    value="c58c9d7a-a81e-4231-96dd-168c6662428a" /> -->
+						<!-- 스프링 시큐리티 > CSRF토큰 비활성화  -->
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+					</form>
+
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 
 
 
-	<!-- jQuery -->
+<!-- jQuery -->
 	<script src="/resources/vendor/jquery/jquery.min.js"></script>
 
 	<!-- Bootstrap Core JavaScript -->

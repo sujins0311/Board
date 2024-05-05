@@ -48,15 +48,15 @@
             readonly="readonly"><c:out value="${getPostResult.content}" /></textarea>
         </div>
         
-		<div class="form-group">
+<%-- 		<div class="form-group">
           <label>작성자</label> <input class="form-control" name='writer'
 			value='<sec:authentication property="principal.username"/>' readonly="readonly">
-		</div>
+		</div> --%>
 
-<%--         <div class="form-group">
+        <div class="form-group">
           <label>작성자</label> <input class="form-control" name='writer'
             value='<c:out value="${getPostResult.writer}"/>' readonly="readonly">
-        </div> --%>
+        </div>
         
 <%--         <div class="form-group">
           <label>작성일</label> <input class="form-control" name='createdDate'
@@ -73,18 +73,19 @@
 		<%-- <button data-oper='modify' class="btn common-btn" style="float:right;" onclick="modifyPost(${getPostResult.bno})">수정/삭제</button> --%>
 
 				<sec:authentication property="principal" var="pinfo" />
-				<sec:authorize access="isAuthenticated()"><!-- 본인이 작성한 글만 수정/삭제 버튼을 확인 -->
-					<c:if test="${pinfo.username eq getPostResult.writer}">
-						<button data-oper='modify' class="btn common-btn" style="float:right;" 
-						onclick="modifyPost(${getPostResult.bno})">수정/삭제</button>
-					</c:if>
+					<sec:authorize access="isAuthenticated()">
+						<c:if test="${pinfo.username eq getPostResult.writer || '[ROLE_ADMIN]' eq pinfo.authorities}">
+							<button data-oper='modify' class="btn common-btn" style="float:right;" 
+							onclick="modifyPost(${getPostResult.bno})">수정/삭제</button>
+						</c:if>
 				</sec:authorize>
 
 
-		<form id='operForm' action="/board/getModifyPost" method="get">
+
+		<form id='operForm' action="/board/modifyPost" method="get">
 		  <input type='hidden' id='bno' name='bno' value='<c:out value="${getPostResult.bno}"/>'>
-		  <input type='hidden' name='pageNum' value='<c:out value="${cri.currentPageNum}"/>'>
-		  <input type='hidden' name='amount' value='<c:out value="${cri.itemsPerPage}"/>'>
+		  <input type='hidden' name='currentPageNum' value='<c:out value="${cri.currentPageNum}"/>'>
+		  <input type='hidden' name='itemsPerPage' value='<c:out value="${cri.itemsPerPage}"/>'>
 		  <input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
 		  <input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>  
 		</form>
@@ -106,8 +107,13 @@
         <i class="fa fa-comments fa-fw"></i> Reply
       </div> -->
 			<div class="panel-heading">
-				<i class="fa fa-comments fa-fw"></i> 댓글을 작성합니다.
-				<button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>댓글작성</button>
+				<i class="fa fa-comments fa-fw"></i> 댓글목록을 보여줍니다.
+				<sec:authorize access="isAuthenticated()">
+				<c:if test="${pinfo.username eq getPostResult.writer || '[ROLE_ADMIN]' eq pinfo.authorities}">
+					<button id='addReplyBtn' class='btn btn-primary btn-xs pull-right' onclick="isAuthenticated()" >댓글작성</button>
+				</c:if>	
+				</sec:authorize>
+				
 			</div>
 			<!-- /.panel-heading -->
 			<div class="panel-body">
@@ -306,7 +312,7 @@ $(document).ready(function () {
 		// 댓글등록버튼
 	    modalRegisterBtn.on("click",function(e){
 		 	  //*********디버그
-		      debugger;
+		      //debugger;
 	      var reply = {
 	            reply: modalInputReply.val(),
 	            replyer:modalInputReplyer.val(),
@@ -316,8 +322,8 @@ $(document).ready(function () {
 	        alert(result);     
 	        modal.find("input").val("");
 	        modal.modal("hide");        
-	        //showList(1); //등록 후 다시 페이지를 불러옴
-	        showList(-1);   
+	        showList(1); //등록 후 다시 페이지를 불러옴
+	        //showList(-1);   
 	      });   
 	    });
 	    $(".chat").on("click", "li", function(e){	      
@@ -506,7 +512,7 @@ modalModBtn.on("click", function(e){
 		  var operForm = $("#operForm"); 
 		  
 		  $("button[data-oper='modify']").on("click", function(e){
-		    operForm.attr("action","/board/getModifyPost")
+		    operForm.attr("action","/board/modifyPost")
 		    operForm.submit(); 
 		  });
 

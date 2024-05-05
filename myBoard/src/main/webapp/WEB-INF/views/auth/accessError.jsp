@@ -63,8 +63,8 @@
         <p>감사합니다.</p>
 
         <!-- Spring Security 403 에러 메시지 출력 -->
-        <c:if test="${not empty SPRING_SECURITY_403_EXCEPTION.getMessage()}">
-            <h2><c:out value="${SPRING_SECURITY_403_EXCEPTION.getMessage()}"/></h2>
+        <c:if test="${not empty SPRING_SECURITY_403_EXCEPTION}">
+            <h2><c:out value="${SPRING_SECURITY_403_EXCEPTION.message}"/></h2>
         </c:if>
 
         <!-- 결과 출력 -->

@@ -21,7 +21,7 @@
 </head>
 
 <body>
-	<a href="/board/getCreatePost">게시글 작성</a>
+	<a href="/board/createPost">게시글 작성</a>
 	<a href="/">처음으로</a>
 
 	<!-- 게시글 목록을 나타내는 테이블 HTML -->
