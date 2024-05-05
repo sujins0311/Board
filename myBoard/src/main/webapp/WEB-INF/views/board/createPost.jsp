@@ -44,7 +44,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<a class="page-header-link" href="/board/getCreatePost">
+		<a class="page-header-link" href="/board/createPost">
 			<h3 class="page-header">게시글 등록</h3>
 		</a>
 	</div>
@@ -55,7 +55,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">게시글을 등록합니다.</div>
 			<div class="panel-body">
-				<form id="createPostForm" role="form" action=getCreatePost method="post">
+				<form id="createPostForm" role="form" action=createPost method="post">
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<div class="form-group">
 						<label for="title">제목:</label> <input type="text" class="form-control title" placeholder="제목을 입력하세요" id="title" name="title">
@@ -144,6 +144,7 @@
 		});
 
 	});
+
 </script>
 
 

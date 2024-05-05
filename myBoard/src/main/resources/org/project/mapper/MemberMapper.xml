@@ -23,6 +23,7 @@
 		<result property="auth" column="auth" />
 	</resultMap>
 
+	<!-- 회원정보(로그인) -->
 	<select id="read" resultMap="memberMap">
 		SELECT
 		mem.userid, mem.userpw, mem.username, mem.email, mem.status, mem.regdate, mem.updatedate, auth.auth
@@ -31,5 +32,17 @@
 		member_auth auth ON mem.userid = auth.userid
 		WHERE mem.userid = #{userid}
 	</select>
+	
+    <!-- 회원 가입 -->
+    <insert id="register" parameterType="org.project.domain.MemberVO">
+        <!-- 회원 정보 입력 -->
+        INSERT INTO member (userid, userpw, username, email)
+        VALUES (#{userid}, #{userpw}, #{username}, #{email});
 
+        <!-- 권한 정보 입력 -->
+        <foreach collection="authList" item="auth" separator=";">
+            INSERT INTO member_auth (userid, auth)
+            VALUES (#{userid}, #{auth});
+        </foreach>
+    </insert>
 </mapper>

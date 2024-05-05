@@ -27,10 +27,17 @@ public class ReplyVO {
     public void setUpdatedDate() {
         this.updateDate = new Date();
     }
-
+    
     public String getReplyDate() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return dateFormat.format(this.replyDate);
+//    	NullPointerException이 뜬다는 것은 
+//    	null을 반환해서 뜬 것이 아니고 값이 null이라서 뜬 것도 아니고
+//    	null을 참조해서 뭔가 행위를 하려고 할 떄 뜬다.
+    	if(this.replyDate != null) {
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	        return dateFormat.format(this.replyDate);
+    	} else {
+    		return null;
+    	}
     }
 
 }

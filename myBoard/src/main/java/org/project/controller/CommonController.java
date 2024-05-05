@@ -1,10 +1,6 @@
 package org.project.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +20,9 @@ public class CommonController {
 		model.addAttribute("result", "Access Denied");
 	}
 
+	// 로그인 페이지에서 로그아웃을 요청할때 String logout
 	@GetMapping("/customLogin")
-	public void loginInput(String error, String logout, Model model) {
+	public void loginPage(String error, String logout, Model model) {
 		
 		log.info("-------custom Login-------");
 
@@ -39,28 +36,22 @@ public class CommonController {
 			log.info("logout: " + logout);
 		}
 	}
-
-	@GetMapping("/customLogout")
-	public void logoutGET() {
-
-		log.info("-------custom logout-------");
-	}
-
-	@PostMapping("/customLogout")
-	public void logoutPost() {
-
-		log.info("-------post custom logout-------");
-	}
 	
-//	@PostMapping("/customLogout")
-//	public String logoutPost(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-//	    log.info("post custom logout");
-//	    
-//	    // 세션 무효화
-//	    new SecurityContextLogoutHandler().logout(request, response, authentication);
-//	    
-//	    // 로그아웃 후 리다이렉트
-//	    return "redirect:/customLogin?logout";
+//	@GetMapping("/customLogout")
+//	public String logoutPage() {
+//		
+//		log.info("-------custom Login-------");
+//		
+//		return "redirect:/"; // 로그아웃 페이지로 이동하면 홈 페이지로 리다이렉트
 //	}
+
+
+//    @PostMapping("/customLogout") //핸들러가 있으니 없어도됨
+//    public String logout() {
+//    	log.info("--------------------------------------------post logout");
+//        // 로그아웃 처리를 위해 추가적인 작업이 필요하지 않음
+//        return "redirect:/"; // 로그아웃 후 홈 페이지로 리다이렉트
+//    }
+
 
 }

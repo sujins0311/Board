@@ -17,7 +17,9 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				게시글 목록을 보여줍니다.
-				<button id='regBtn' type="button" class="btn common-btn btn-xs pull-right">작성하기</button>
+				<button class="btn common-btn btn-xs pull-right" type="button" onclick="isWritingAllowed()">작성하기</button>
+				<!-- onclick="isAuthenticated() header.jsp 전역으로 선언 -->
+				<!-- <button id='regBtn' type="button" class="btn common-btn btn-xs pull-right">작성하기</button> -->
 			</div>
 
 			<div class="panel-body">
@@ -34,17 +36,17 @@
 
 					<tbody>
 						<!-- JSTL을 이용한 Board데이터 렌더링 -->
-						<c:forEach items="${getPostListResult}" var="getPostList">
+						<c:forEach items="${list}" var="post">
 							<!-- controller에서 K,V값 확인 -->
-							<!-- c:forEach는 list값을 순회함 model.addAttribute("getPostListResult", service.getPostList()); -->
+							<!-- c:forEach는 list값을 순회함 model.addAttribute("list", service.getPostList()); -->
 							<tr>
-								<td><c:out value="${getPostList.bno}" /></td>
-								<%-- <td><a href='/board/getPost?bno=${getPostList.bno}'>${getPostList.title}</a></td> --%>
-								<td><a class="toGetPost" href='<c:out value="${getPostList.bno}"/>'> 
-								<c:out value="${getPostList.title}" /></a></td>
-								<td><c:out value="${getPostList.writer}" /></td>
-								<td><c:out value="${getPostList.createdDate}" /></td>
-								<td><c:out value="${getPostList.updatedDate}" /></td>
+								<td><c:out value="${post.bno}" /></td>
+								<%-- <td><a href='/board/getPost?bno=${post.bno}'>${post.title}</a></td> --%>
+								<td><a class="toGetPost" href='<c:out value="${post.bno}"/>'> 
+								<c:out value="${post.title}" /></a></td>
+								<td><c:out value="${post.writer}" /></td>
+								<td><c:out value="${post.createdDate}" /></td>
+								<td><c:out value="${post.updatedDate}" /></td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -69,7 +71,7 @@
 	            </div>
 				<div class="form-group mr-2">
 					<input class="form-control" type="text" name='keyword'
-					value='<c:out value="${pageMaker.cri.keyword}"/> ' placeholder="검색어를 입력해주세요"> 
+					value='<c:out value="${pageMaker.cri.keyword}"/>' placeholder="검색어를 입력해주세요"> 
 					<input type='hidden' name='currentPageNum' value='<c:out value="${pageMaker.cri.currentPageNum}"/> '>
 					<input type='hidden' name='itemsPerPage' value='<c:out value="${pageMaker.cri.itemsPerPage}"/> '> 
 				</div>
@@ -142,8 +144,8 @@
 	<form id='paginate_button_actionForm' action="/board/getPostList" method='get'>
 		<input type='hidden' name='currentPageNum' value='<c:out value="${pageMaker.cri.currentPageNum}"/>'> 
 		<input type='hidden' name='itemsPerPage' value='<c:out value="${pageMaker.cri.itemsPerPage}"/>'>
-		<input type='hidden' name='type' value='<c:out value="${ pageMaker.cri.type }"/>'>
-		<input type='hidden' name='keyword' value='<c:out value="${ pageMaker.cri.keyword }"/>'>
+		<input type='hidden' name='type' value='<c:out value="${pageMaker.cri.type}"/>'>
+		<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'>
 <%-- 		<input type='hidden' name='titleKeyword' value='<c:out value="${ pageMaker.cri.titleKeyword }"/>'>
 		<input type='hidden' name='contentKeyword' value='<c:out value="${ pageMaker.cri.contentKeyword }"/>'>
 		<input type='hidden' name='writerKeyword' value='<c:out value="${ pageMaker.cri.writerKeyword }"/>'> --%>
@@ -155,7 +157,7 @@
 
 
 	<!-- Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 1050;">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -182,7 +184,7 @@
 	/* 게시글작성 성공 > 게시글 목록 Modal */
 	// Modal addAttribute로 bno 받음
 	$(function() {
-		var result = '<c:out value="${getCreatePostResult}"/>';
+		var result = '<c:out value="${createPostResult}"/>';
 		checkModal(result);
 		history.replaceState({}, null, null); // windows.history속 데이터 지우기
 		function checkModal(result) {
@@ -199,10 +201,10 @@
 		}
 		/*/.게시글작성 성공 > 게시글 목록 Modal */
 		
-		/* 게시글작성으로 이동 */
-		$("#regBtn").on("click", function() {
-			self.location = "/board/getCreatePost";
-		});
+		/* 게시글작성으로 이동 > 시큐리티 추가로 onclick="isAuthenticated() 으로수정 */
+/* 		$("#regBtn").on("click", function() {
+			self.location = "/board/createPost";
+		}); */
 		/*/.게시글작성으로 이동 */
 
 		/* 페이징 */
@@ -253,7 +255,7 @@
 	
 	$(function() {
 	    // 수정 결과 확인
-	    var modifyResult = '<c:out value="${getModifyPostResult}"/>';
+	    var modifyResult = '<c:out value="${modifyPostResult}"/>';
 	    checkResult(modifyResult, "게시글 수정에 성공했습니다.", "게시글 수정에 실패했습니다.");
 	
 	    function checkResult(result, successMessage, failureMessage) {

@@ -57,13 +57,13 @@ window.onload = function() {
 		Sujin's Hello World!
 	</h1>
 	<h3>제 사이트에 오신것을 환영합니다.</h3>
-	<h3><span id="count">5</span>초 후 게시판으로 진입합니다.</h3>
+	<h3><span id="count">2</span>초 후 게시판으로 진입합니다.</h3>
 	<p>서버시간: ${serverTime}</p>
 </div>
 </body>
 	<hr>
 	<footer class="flex-col-center">
 		<p>업데이트 이력</p>
-		<p>2024-04-24 회원기능 업데이트</p>
+		<p>2024-05-02 회원기능 업데이트</p>
 	</footer>
 </html>
