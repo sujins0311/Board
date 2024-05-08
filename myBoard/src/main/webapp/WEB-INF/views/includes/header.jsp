@@ -299,12 +299,14 @@ body {
         </nav>
 
 		<!-- Modal -->
-		<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 1060;" >
+		<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" 
+		aria-labelledby="myModalLabel" aria-hidden="true" >
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" 
+						aria-hidden="true">&times;</button>
 						<h4 class="modal-title" id="loginModalLabel">알림</h4>
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					</div>
 					<div class="modal-body">로그인이 필요합니다. 로그인을 하시겠습니까?</div>
 					<div class="modal-footer">
