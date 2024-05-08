@@ -41,7 +41,8 @@
 > 회원 정보 수정 기능: 사용자는 자신의 개인 정보를 수정할 수 있는 기능을 제공받습니다.<br>
 > 회원 탈퇴 기능: 사용자가 회원 탈퇴를 원할 경우, 회원 탈퇴 기능을 제공하여 사용자의 정보를 안전하게 삭제합니다.<br>
 
-### 권한<br>
+#### 권한<br>
+
 | 기능        | 비회원 | 회원  |
 |----------|-----|-----|
 | 게시글(작성, 수정, 삭제) | ❌️  | ⭕️  |
@@ -52,33 +53,33 @@
 <br>
 <br>
 <br>
--->
 
-### 📚 Skill Stack
----
-
+<details>
+   <summary><h3>📚 Skill Stack </h3></summary>   
+    
 #### 📜 FRONT-END
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 ![JSP](https://img.shields.io/badge/jsp-%2300A8D9.svg?style=for-the-badge&logo=jsp&logoColor=white)
-
+    
 <br>
-
+    
 #### 🛠️ BACK-END
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
-
+    
 <br>
-
+    
 #### 📀 DB
 ![MariaDB](https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white)
-
+    
 <br>
-
+    
 #### ✂️ Tool
 ![STS](https://img.shields.io/badge/STS-6DB33F.svg?style=for-the-badge&logo=Spring&logoColor=white)
 
+</details>   
 <br>
 
 #### 🌐 개발 및 배포 구조도 
@@ -122,10 +123,9 @@ gantt
 
 <br>
 
-#### 🎯 프로젝트 개발 일지
 
 <details>
-<summary><b>1차</b></summary>
+<summary><h3> 🎯 프로젝트 개발 일지</h3></summary>
 
 - **1차**
     - 게시판 생성,읽기,수정,삭제 -- 완료
