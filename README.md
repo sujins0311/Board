@@ -1,11 +1,11 @@
 [![image](https://github.com/sujins0311/Board/assets/122525760/fe89585d-68f5-4150-afa3-e22baa120c35)](https://ppoosumi.me/)
 
-# 🎯 [https://ppoosumi.me](https://ppoosumi.me/)
+# [https://ppoosumi.me](https://ppoosumi.me/)
 <br>
 <br>
 <br>
 
-### 🌈 개요 및 목적
+### 💡 개요 및 목적
 > 이번 프로젝트는 "게시판을 통한 백엔드 구조 실습"입니다.<br>
 > 이 프로젝트는 백엔드 개발 과정을 체계적으로 이해하고 익히기 위한 실습을 목적으로 합니다.<br>
 > 프로젝트는 백엔드 개발에서 배포까지의 구조와 프로세스의 이해도를 높이는 것을 목적으로 시작했습니다.<br>
@@ -21,11 +21,11 @@
 <br>
 
 ### 🚀 서비스
->주요기능은 현재 게시글관리, 댓글관리가 있으며 업데이트 중입니다.
+>주요기능은 현재 게시글관리, 댓글관리, 회원관리가 있으며, 업데이트 중입니다.
 <br>
 <br>
 
-> 게시판:<br>
+◾게시판:<br>
 > 게시물 작성 기능: 사용자가 텍스트와 사진을 포함한 게시물을 작성할 수 있습니다.<br>
 > 게시물 목록 페이지: 모든 게시물의 간단한 내용을 목록 형태로 보여주는 페이지를 제공합니다.<br>
 > 상세보기 기능: 개별 게시물의 상세 내용과 해당 글의 모든 댓글을 볼 수 있는 페이지를 구현합니다.<br>
@@ -35,7 +35,7 @@
 <br>
 
 <!--
-> 회원관리:<br>
+> ◾회원관리:<br>
 > 회원 가입 기능: 새로운 사용자가 서비스에 가입할 수 있도록 회원 가입 기능을 구현합니다.<br>
 > 로그인 기능: 이미 가입한 사용자가 서비스에 로그인하여 자신의 정보를 관리하고 서비스를 이용할 수 있도록 합니다.<br>
 > 회원 정보 수정 기능: 사용자는 자신의 개인 정보를 수정할 수 있는 기능을 제공받습니다.<br>
@@ -85,11 +85,9 @@
 
 ![image](https://github.com/sujins0311/Board/assets/122525760/796c7e25-814c-4d61-a812-2d86aa5c7ac7)
 
-
-
 <br>
 
-### 📆 개발 일정 요약본
+#### 📆 개발 일정 요약본
 
 ```mermaid
 gantt
@@ -110,36 +108,57 @@ gantt
 
 <br>
 
-#### 🧲DB ERD
+#### 🗃️ DB ERD
 
 <br>
 
 ![image](https://github.com/sujins0311/Board/assets/122525760/1ab67205-9f92-47f4-bf70-542978b112d3)
 
+<br>
+
+ [Use Case](https://github.com/sujins0311/Board/wiki/UseCase) <br>
+ [시퀀스다이어그램](https://github.com/sujins0311/Board/wiki/시퀀스다이어그램) <br>
+ [Front](https://github.com/sujins0311/Board/wiki/화면설계)<br>
 
 <br>
 
-🧲 [Use Case](https://github.com/sujins0311/Board/wiki/UseCase) <br>
-🧲 [시퀀스다이어그램](https://github.com/sujins0311/Board/wiki/시퀀스다이어그램) <br>
-🧲 [Front](https://github.com/sujins0311/Board/wiki/화면설계)<br>
+#### 🎯 프로젝트 개발 일지
+
+<details>
+<summary><b>1차</b></summary>
+
+- **1차**
+    - 게시판 생성,읽기,수정,삭제 -- 완료
+    - 검색 -- 완료
+    - 페이징 -- 완료
+    - https 적용 -- 완료
+    - UI/UX 1차 업데이트 -- 완료
+    - 로그인, 권한, 접근제어 -- 완료
+    - 회원가입, 회원정보 수정 -- 작업 중
+    - 첨부파일 업로드 및 다운로드 -- 작업 예정
+    - 상세검색 -- 작업 예정
+    - 에디터 연동 -- 작업 예정
+    - 본문이미지 -- 작업 예정
+    - 이메일인증 -- 작업 예정
+    - 패스워드 찾기 및 변경 -- 작업 예정
+    - UI/UX 2차 업데이트 -- 작업 예정
+    - 새 글 알림 (websocket) -- 작업 예정
+    - 구글 OTP 연동 -- 작업 예정
+    - 다국어 -- 작업 예정
+    - 관리자챗 (websocket) -- 작업 예정
+    - oauth2 연동 -- 작업 예정
+    - CI/CD -- 작업 예정
+    - 웹서버 적용, 이중화, 세션통합관리 -- 작업 예정
+    - 각 기능 고도화 및 리팩토링 -- 작업 예정
+    - 백엔드 테스트 케이스 작성 -- 작업 예정
+
+</details>
 
 
 
-<br>
-<!-- 
-### 🧲 프로젝트 중점사항
-- 버전관리
-- 문서화
-- 공통되는 기능은 AOP로 분리
 
 
-- 로그인 기능 추상화 
-- 스프링의 @Transactional 이용하여 ㅇㅇ 과 ㅇㅇ 로직 구현
-- github를 사용하여 CI/CD 환경 구축
-- Docker를 이용하여 CD 구현
-- Mysql Replication – AOP를 이용하여 Master/Slave로 데이터베이스 이중화
-- Nginx의 Reversed-Proxy를 이용하여 로드밸런싱
--->
+
 
 
   
