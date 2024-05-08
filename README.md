@@ -55,7 +55,7 @@
 <br>
 
 <details>
-   <summary><h3>📚 Skill Stack </h3></summary>   
+   <summary><b>📚 Skill Stack </b></summary>   
     
 #### 📜 FRONT-END
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
@@ -117,15 +117,86 @@ gantt
 
 <br>
 
- [Use Case](https://github.com/sujins0311/Board/wiki/UseCase) <br>
- [시퀀스다이어그램](https://github.com/sujins0311/Board/wiki/시퀀스다이어그램) <br>
- [Front](https://github.com/sujins0311/Board/wiki/화면설계)<br>
+
+<details>
+   <summary><b>*️⃣ 시퀀스다이어그램 </b></summary>
+   
+   
+   #### 게시글 전체 조회
+   ![image](https://github.com/sujins0311/Board/assets/122525760/16e4fe44-6a75-4deb-bac5-63210047bfef)
+
+   <br>
+
+   #### 게시글 수정
+   ![image](https://github.com/sujins0311/Board/assets/122525760/5085d715-7c42-44f0-94ee-4a2e781277e5)
+
+   <br>
+   
+   #### 게시글 검색
+   ![image](https://github.com/sujins0311/Board/assets/122525760/13fed6c8-882e-4c6e-84cf-173414b37ede)
+
+   <br>
+
+</details>
 
 <br>
 
+<details>
+   <summary><b>*️⃣ Front </b></summary>
+   
+
+</details>
+
+<br>
 
 <details>
-<summary><h3> 🎯 프로젝트 개발 일지</h3></summary>
+   <summary><b>*️⃣ Use Case </b></summary> 
+   <br>
+
+   ## User
+
+   **회원 가입 기능:**
+   - 사용자는 회원으로 가입하기 위해 필요한 정보를 입력합니다.
+   - 회원으로 가입하기 위해 필요한 정보는 아이디, 비밀번호, 전화번호, 이메일, 주소입니다.
+   - 사용자가 입력한 아이디는 중복되지 않아야 합니다.
+   
+   **로그인 기능:**
+   - 이미 가입한 사용자는 서비스에 로그인하여 자신의 정보를 관리하고 서비스를 이용할 수 있습니다.
+   
+   **회원 정보 수정 기능:**
+   - 사용자는 자신의 개인 정보를 수정할 수 있습니다.
+   
+   **비밀번호 변경 기능:**
+   - 사용자는 자신의 계정 비밀번호를 변경할 수 있습니다.
+   
+   **회원 탈퇴 기능:**
+   - 사용자가 회원 탈퇴를 원할 경우, 회원 정보를 안전하게 삭제하고 회원 탈퇴합니다.
+   
+   <br>
+   
+   ## Board
+   **게시물 작성 기능:**
+   - 사용자는 텍스트와 사진을 포함한 게시물을 작성할 수 있습니다.
+   
+   **게시물 목록 페이지:**
+   - 모든 게시물의 간단한 내용을 목록 형태로 보여줍니다.
+   - 페이지마다 일정한 개수의 게시물이 표시되며, 다음 페이지로 이동할 수 있는 페이징 기능이 제공됩니다.
+   
+   **상세보기 기능:**
+   - 개별 게시물의 상세 내용과 해당 글의 모든 댓글을 볼 수 있습니다.
+   
+   **댓글 작성 기능:**
+   - 사용자는 게시물에 댓글을 작성하고 답글을 달 수 있습니다.
+   
+   **검색 기능:**
+   - 게시물을 검색하는 기능을 제공하여 사용자가 원하는 내용을 쉽게 찾을 수 있습니다.
+
+</details> 
+
+<br>
+
+<details>
+<summary><b> 🎯 프로젝트 개발 일지</b></summary>
 
 - **1차**
     - 게시판 생성,읽기,수정,삭제 -- 완료
