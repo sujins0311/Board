@@ -22,7 +22,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
     log.error("------Access Denied Handler 403------");
 
-    response.sendRedirect("accessError");
+    response.sendRedirect(request.getContextPath() + "/accessError");
 
   }
 

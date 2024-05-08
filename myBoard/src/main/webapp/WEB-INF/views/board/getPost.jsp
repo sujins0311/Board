@@ -110,7 +110,7 @@
 				<i class="fa fa-comments fa-fw"></i> 댓글목록을 보여줍니다.
 				<sec:authorize access="isAuthenticated()">
 				<c:if test="${pinfo.username eq getPostResult.writer || '[ROLE_ADMIN]' eq pinfo.authorities}">
-					<button id='addReplyBtn' class='btn btn-primary btn-xs pull-right' onclick="isAuthenticated()" >댓글작성</button>
+					<button id='addReplyBtn' class='btn btn-primary btn-xs pull-right' >댓글작성</button>
 				</c:if>	
 				</sec:authorize>
 				
