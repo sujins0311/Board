@@ -44,7 +44,7 @@
 
         <div class="form-group">
           <label>내용</label>
-          <textarea class="form-control" rows="3" name='content'
+          <textarea class="form-control content" rows="3" name='content'
             readonly="readonly"><c:out value="${getPostResult.content}" /></textarea>
         </div>
         
@@ -99,7 +99,7 @@
 <!-- /.row -->
 
 
-<div class='row'>
+<div class='row reply'>
 	<div class="col-lg-12">
 		<!-- /.panel -->
 		<div class="panel panel-default">
@@ -129,14 +129,14 @@
 </div>
 
 <!-- 댓글 작성 Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" 
+<div class="modal fade" id="replyModal" tabindex="-1" role="dialog" 
 aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" 
 				aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel">댓글 작성</h4>
+				<h4 class="modal-title" id="myModalLabel">댓글</h4>
 			</div>
 
 			<!-- 댓글 작성 양식 -->
@@ -147,7 +147,7 @@ aria-labelledby="myModalLabel" aria-hidden="true">
 				</div>
 				<div class="form-group">
 					<label>작성자</label> 
-					<input class="form-control" name='replyer' value='replyer'>
+					<input class="form-control" name='replyer' value='replyer' readonly>
 				</div>
 				<div class="form-group">
 					<label>작성일</label> 
@@ -207,6 +207,9 @@ $(document).ready(function () {
 	           str +="<li class='left clearfix' data-rno='"+list[i].rno+"'>";
 	           str +="  <div><div class='header'><strong class='primary-font'>["
 	        	   +list[i].rno+"] "+list[i].replyer+"</strong>"; 
+	        	   // 로그인한 사용자의 댓글인 경우만 버튼이 보이도록
+	           str +="	<button class='common-btn btn' style='padding:1px 5px; font-size:12px; font-weight:normal;'>수정</button>"; 
+	           str +="	<button class='common-btn btn' style='padding:1px 5px; font-size:12px; font-weight:normal;'>삭제</button>"; 
 	           str +="    <small class='pull-right text-muted'>"
 	               +replyService.displayTime(list[i].replyDate)+"</small></div>";
 	           str +="    <p>"+list[i].reply+"</p></div></li>";
@@ -238,7 +241,7 @@ $(document).ready(function () {
 	      var str = "<ul class='pagination pull-right'>";
 	      
 	      if(prev){
-	        str+= "<li class='page-item'><a class='page-link' href='"+(startNum -1)+"'>Previous</a></li>";
+	        str+= "<li class='page-item'><a class='page-link' href='"+(startNum -1)+"'>이전</a></li>";
 	      }
 	      
 	      for(var i = startNum ; i <= endNum; i++){
@@ -247,7 +250,7 @@ $(document).ready(function () {
 	      }
 	      
 	      if(next){
-	        str+= "<li class='page-item'><a class='page-link' href='"+(endNum + 1)+"'>Next</a></li>";
+	        str+= "<li class='page-item'><a class='page-link' href='"+(endNum + 1)+"'>다음</a></li>";
 	      }
 	      
 	      str += "</ul></div>";  
@@ -265,7 +268,7 @@ $(document).ready(function () {
 	        showList(pageNum);
 	      });     
 
-	    var modal = $(".modal");
+	    var modal = $("#replyModal"); //header의
 	    var modalInputReply = modal.find("input[name='reply']");
 	    var modalInputReplyer = modal.find("input[name='replyer']");
 	    var modalInputReplyDate = modal.find("input[name='replyDate']");
@@ -299,7 +302,7 @@ $(document).ready(function () {
 	      modal.find("input[name='replyer']").attr("readonly", "readonly"); // 댓글 작성자 필드를 읽기 전용으로 설정합니다.
 	      modalRegisterBtn.show();
 	      
-	      $(".modal").modal("show");
+	      $("#replyModal").modal("show");
 	      
 	    });
 	 	
@@ -337,7 +340,7 @@ $(document).ready(function () {
 	        modal.find("button[id !='modalCloseBtn']").hide();
 	        modalModBtn.show();
 	        modalRemoveBtn.show();    
-	        $(".modal").modal("show");      
+	        $("#replyModal").modal("show");      
 	      });
 	    });
 	    

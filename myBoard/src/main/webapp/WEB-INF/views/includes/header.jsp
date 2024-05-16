@@ -168,12 +168,31 @@ body {
     border: 1px solid #ddd;
 }
 
+.content {
+	height: 200px !important;
+}
+
+.reply .panel-footer {
+	display: flex;
+	justify-content: center;
+	padding: 5px 15px;
+}
+
+.reply .pagination {
+	margin: 0;
+}
+
 /* 반응형 웹사이트를 만드는 @media query */
 @media (max-width: 768px) {
 	.navbar-toggle {
 		float: left;
 		margin-left: 10px;
 	}
+	
+	.navbar-toggle:focus {
+		background-color: transparent !important;
+	}
+	
 	.navbar-brand {
 		margin-left: -15px;
 	}
@@ -270,11 +289,11 @@ body {
                             </a>
                         </li>
                         <li>
-                            <a class="snb-btn">
+                            <a class="snb-btn" style="cursor:pointer;">
                             	<!-- 아이콘 -->
                             	<img src="/resources/images/icons/link.ico" width=24px; height=24px;/>
                             	<span>관련 사이트</span>
-                            	<span class="fa arrow" style="padding-top:7px; font-size:15px;"></span>
+                            	<span class="fa arrow" style="padding-top:5px; font-size:15px;"></span>
                             </a>
                             <ul class="nav nav-second-level">
                                 <li>
@@ -294,13 +313,14 @@ body {
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->
+              
             </div>
             <!-- /.navbar-static-side -->
         </nav>
 
 		<!-- Modal -->
 		<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" 
-		aria-labelledby="myModalLabel" aria-hidden="true" >
+		aria-labelledby="loginModalLabel" aria-hidden="true" >
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -360,7 +380,7 @@ body {
 		} else {
 			location.href="/board/createPost"	
 		}
-	}//header:게시글작성, getpost:작성하기
+	}//header:게시글작성
 	
 	
 	// 로그아웃 확인
