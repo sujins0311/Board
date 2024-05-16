@@ -373,6 +373,8 @@ body {
 			location.href="/board/createPost"	
 		}
 	}//header:게시글작성, getpost:작성하기 */
+    var loginer = "${pageContext.request.userPrincipal.name}";
+    console.log("loginer:" + loginer);
 	
 	function isWritingAllowed(e) {
 		if (${empty pageContext.request.userPrincipal.name}) {

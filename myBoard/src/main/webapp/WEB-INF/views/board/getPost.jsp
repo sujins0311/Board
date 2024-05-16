@@ -116,6 +116,8 @@
 				
 			</div>
 			<!-- /.panel-heading -->
+			
+			<!-- 댓글목록 -->
 			<div class="panel-body">
 				<ul class="chat">
 				</ul>
@@ -128,7 +130,7 @@
 	<!-- ./ end row -->
 </div>
 
-<!-- 댓글 작성 Modal -->
+<!-- 댓글작성 Modal -->
 <div class="modal fade" id="replyModal" tabindex="-1" role="dialog" 
 aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -178,10 +180,10 @@ $(document).ready(function () {
 	  var bnoValue = '<c:out value="${getPostResult.bno}"/>';
 	  var replyUL = $(".chat");
 	  
-		// 댓글 목록 표시 함수 호출
+		// 댓글목록 표시 함수 호출
 	    showList(1);
 	    
-	 	// 댓글 목록을 표시하는 함수
+	 	// 댓글목록을 표시하는 함수
 	    function showList(page){
 	    	console.log("show list " + page);
 	        
@@ -190,6 +192,7 @@ $(document).ready(function () {
 	        console.log("replyCnt: "+ replyCnt );
 	        console.log("list: " + list);
 	        console.log(list);
+
 	        
 	        if(page == -1){
 	          pageNum = Math.ceil(replyCnt/10.0);
@@ -207,9 +210,13 @@ $(document).ready(function () {
 	           str +="<li class='left clearfix' data-rno='"+list[i].rno+"'>";
 	           str +="  <div><div class='header'><strong class='primary-font'>["
 	        	   +list[i].rno+"] "+list[i].replyer+"</strong>"; 
-	        	   // 로그인한 사용자의 댓글인 경우만 버튼이 보이도록
+	        	   // 권한검사(로그인유저 = 댓글작성자) 
+				console.log("댓글 작성자:", list[i].replyer);
+				console.log("로그인유저:", loginer);  
+	        	   if(list[i].replyer = loginer){
 	           str +="	<button class='common-btn btn' style='padding:1px 5px; font-size:12px; font-weight:normal;'>수정</button>"; 
 	           str +="	<button class='common-btn btn' style='padding:1px 5px; font-size:12px; font-weight:normal;'>삭제</button>"; 
+	        	   }
 	           str +="    <small class='pull-right text-muted'>"
 	               +replyService.displayTime(list[i].replyDate)+"</small></div>";
 	           str +="    <p>"+list[i].reply+"</p></div></li>";
@@ -223,7 +230,7 @@ $(document).ready(function () {
 	    var pageNum = 1;
 	    var replyPageFooter = $(".panel-footer");
 	    
-	 	// 댓글 페이지를 표시하는 함수
+	 	// 댓글페이지를 표시하는 함수
 	    function showReplyPage(replyCnt){
 	      var endNum = Math.ceil(pageNum / 10.0) * 10;  
 	      var startNum = endNum - 9; 	      
@@ -268,7 +275,7 @@ $(document).ready(function () {
 	        showList(pageNum);
 	      });     
 
-	    var modal = $("#replyModal"); //header의
+	    var modal = $("#replyModal");
 	    var modalInputReply = modal.find("input[name='reply']");
 	    var modalInputReplyer = modal.find("input[name='replyer']");
 	    var modalInputReplyDate = modal.find("input[name='replyDate']");
@@ -329,8 +336,12 @@ $(document).ready(function () {
 	        //showList(-1);   
 	      });   
 	    });
-	    $(".chat").on("click", "li", function(e){	      
-	      var rno = $(this).data("rno");	      
+	    var rno = list[i].rno;
+		// 댓글목록
+	    $(".chat").on("click", "button", function(e){	      
+	      var rno = $(this).data("rno"); //button에서 rno를 가져와 저장
+	      //console.log("rno1: ",rno);
+	      //console.log("rno2: ",$("li").data("rno"));
 	      replyService.get(rno, function(reply){    
 	        modalInputReply.val(reply.reply);
 	        modalInputReplyer.val(reply.replyer);
@@ -343,7 +354,22 @@ $(document).ready(function () {
 	        $("#replyModal").modal("show");      
 	      });
 	    });
-	    
+		
+	    $(".chat").on("click", "button", function(e){	      
+		    var rno = $(this).closest("li").data("rno"); // 클릭된 버튼의 부모인 <li> 요소에서 rno를 가져와 변수에 저장
+		    console.log("rno: ", rno); // 확인을 위해 콘솔에 출력
+		    replyService.get(rno, function(reply){    
+		        modalInputReply.val(reply.reply);
+		        modalInputReplyer.val(reply.replyer);
+		        modalInputReplyDate.val(replyService.displayTime(reply.replyDate))
+		        .attr("readonly","readonly");
+		        modal.data("rno", reply.rno);      
+		        modal.find("button[id !='modalCloseBtn']").hide();
+		        modalModBtn.show();
+		        modalRemoveBtn.show();    
+		        $("#replyModal").modal("show");      
+		      });
+		    });
 	  	// 댓글수정버튼
 modalModBtn.on("click", function(e){
 	
@@ -354,11 +380,12 @@ modalModBtn.on("click", function(e){
 		      reply: modalInputReply.val(),
 		      replyer: originalReplyer};
   
-	if(!replyer){
+  	// 로그인유저검증 후 > 댓글수정모달
+/* 	if(!replyer){
 		 alert("로그인후 수정이 가능합니다.");
 		 modal.modal("hide");
 		 return;
-	}
+	} */
 
 	console.log("Original Replyer: " + originalReplyer);
 	
