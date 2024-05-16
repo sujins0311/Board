@@ -17,20 +17,8 @@
 "form-control":입력필트에 적용되어 부트스트랩 폼스타일 적용 -->
 
 <style>
-.reg-body {
-	width: 100%;
-}
-
-.context {
-	height: 200px;
-}
 
 @media (min-width: 768px) {
-	.reg-body {
-	}
-	.context {
-		height: 200px;
-	}
 	
 	.title {
 		width: 100%;
@@ -50,7 +38,7 @@
 	</div>
 </div>
 
-<div class="row reg-body">
+<div class="row">
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">게시글을 등록합니다.</div>
@@ -62,7 +50,7 @@
 					</div>
 					<div class="form-group">
 						<label for="content">내용:</label>
-						<textarea class="form-control context" placeholder="내용을 입력하세요" rows="3" id="content" name="content"></textarea>
+						<textarea class="form-control content" placeholder="내용을 입력하세요" rows="3" id="content" name="content"></textarea>
 					</div>
 					<div class="form-group">
 						<label for="writer">작성자:</label> 
