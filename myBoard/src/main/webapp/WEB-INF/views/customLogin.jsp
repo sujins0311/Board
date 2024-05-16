@@ -7,28 +7,8 @@
 	<div class="row">
 		<div class="col-md-4 col-md-offset-4">
 			<div class="login-panel panel panel-default">
-			
-			
-				<a class="snb-btn" href="/"> <!-- 아이콘 --> 
-					<!-- <img src="/resources/images/icons/home.ico" width=24px; height=24px; />  -->
-					<span>Home</span> |
-				</a>
-
-                 <a class="snb-btn" href="/board/getPostList">
-                 	<!-- 아이콘 -->
-                 	<!-- <img src="/resources/images/icons/list.ico" width=24px; height=24px;/> -->
-                 	<span>게시글 목록</span> |
-                 </a>
-                 
-                 <a class="snb-btn" href="/auth/register">
-                 	<!-- 아이콘 -->
-                 	<!-- <img src="/resources/images/icons/list.ico" width=24px; height=24px;/> -->
-                 	<span>회원가입</span>
-                 </a>
-				
-				
 				<div class="panel-heading">
-					<h3 class="panel-title">ID 로그인</h3>
+					<h3 class="panel-title">로그인이 필요합니다.</h3>
 				</div>
 				<div class="panel-body">
 					<form role="form" method='post' action="/login">
@@ -54,6 +34,24 @@
 					</form>
 
 				</div>
+							
+				<div style="display: flex; justify-content: center;">
+					<a class="snb-btn" href="/"> <!-- 아이콘 --> 
+					<!-- <img src="/resources/images/icons/home.ico" width=24px; height=24px; />  -->
+					<button class="common-btn btn">HOME</button>
+					</a>
+	                <a class="snb-btn" href="/board/getPostList">
+	                	<!-- 아이콘 -->
+	                	<!-- <img src="/resources/images/icons/list.ico" width=24px; height=24px;/> -->
+	                	<button class="common-btn btn">게시글 목록</button>
+	                </a>
+	                <a class="snb-btn" href="/auth/register">
+	                	<!-- 아이콘 -->
+	                	<!-- <img src="/resources/images/icons/list.ico" width=24px; height=24px;/> -->
+	                	<span></span>
+	                	<button class="common-btn btn">회원가입</button>
+	                </a>
+				</div>	
 			</div>
 		</div>
 	</div>

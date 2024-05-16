@@ -64,7 +64,7 @@
 					<button type="submit" data-oper='delete' class="btn btn-danger">삭제</button>
 					<button type="submit" data-oper='list' class="btn btn-info">목록</button> -->
 				</form>
-				<button class="btn btn-info" onclick="back()" style="display: inline;" >뒤로가기</button>
+				<button class="btn btn-info" onclick="back()" style="display: inline;" >취소</button>
 			</div>
 			<!--  end panel-body -->
 

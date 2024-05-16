@@ -4,7 +4,7 @@
 <!-- 헤더 + 바디 ------------------------------------------------------------------------------ -->
 <%@include file="../includes/header.jsp"%>
 
-<h1>/auth/all page</h1>
+<h1>회원정보</h1>
 
 <!-- principal = customUser객체 -->
 <p>principal : <sec:authentication property="principal"/></p>
