@@ -336,12 +336,12 @@ $(document).ready(function () {
 	        //showList(-1);   
 	      });   
 	    });
-	    var rno = list[i].rno;
+
 		// 댓글목록
 	    $(".chat").on("click", "button", function(e){	      
-	      var rno = $(this).data("rno"); //button에서 rno를 가져와 저장
-	      //console.log("rno1: ",rno);
-	      //console.log("rno2: ",$("li").data("rno"));
+	    	var rno = $(this).closest("li").data("rno"); //button에서 rno를 가져와 저장
+	    	console.log("rno: ", rno);
+	    	
 	      replyService.get(rno, function(reply){    
 	        modalInputReply.val(reply.reply);
 	        modalInputReplyer.val(reply.replyer);
