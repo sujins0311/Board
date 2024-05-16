@@ -184,6 +184,11 @@ body {
 
 /* 반응형 웹사이트를 만드는 @media query */
 @media (max-width: 768px) {
+
+	.sidebar-widget {
+		display: none;
+	}
+	
 	.navbar-toggle {
 		float: left;
 		margin-left: 10px;
@@ -221,11 +226,13 @@ body {
 				<div class="navbar-info">
 				        
 				    <sec:authorize access="isAnonymous()">
-				    <a href="/auth/register">회원가입</a> |
-				        <a href="/customLogin">로그인</a>
+				    <a href="/auth/register"><button class="common-btn btn">회원가입</button></a>
+				    <a href="/customLogin"><button class="common-btn btn">로그인</button></a>
+				    
+				        
 				    </sec:authorize>
 				    <sec:authorize access="isAuthenticated()">
-				        환영합니다. <sec:authentication property="principal.username"/> 님
+				       <sec:authentication property="principal.username"/> 님
 				       <a href="/auth/all">회원정보</a> |
 				        <!-- <a href="/customLogout">로그아웃</a> -->
 				        <!-- Spring Security와 같은 보안 프레임워크를 사용하는 경우 /logout URL로 접근하면 Spring Security가 해당 요청을 인터셉트하여 로그아웃 -->
@@ -313,7 +320,19 @@ body {
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->
-              
+              	<div class="sidebar-widget" style="margin-top:500px;">
+              		<p><b>최근 댓글 보기(작업중)</b></p>
+              		<p><a>최근 댓글 및 링크 1</a></p>
+              		<p><a>최근 댓글 및 링크 2</a></p>
+              		<p><a>최근 댓글 및 링크 3</a></p>
+              		<p><a>최근 댓글 및 링크 4</a></p>
+              		<p style=''><a>최근 댓글 및 링크 5</a></p>
+              		<!-- <![CDATA[ 문자열 ]]> 표현식 : XML 에서 문자열을 escape 할 수 있다. 
+              		태그나 특수기호 등 언어나 예약어로 파싱되는게 아닌 일반 문자로 인식되어야 할 때 사용 ex) mybatis sql에서 사용가능 -->
+              		<!-- &nbsp; &lt; &gt; 등의 표현식 : HTML에서 문자열 escape를 하는 방법.
+              		각각이 의미하는 문자가 존재하며 특히 HTML에서 띄어쓰기는 여러번들어가도 한칸밖에 인식이 안되는데 이 떄 &nbsp;를 사용  -->
+              		<a>&lt;</a>&nbsp;&nbsp;<a>&gt;</a>
+              	</div>
             </div>
             <!-- /.navbar-static-side -->
         </nav>

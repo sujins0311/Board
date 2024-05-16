@@ -59,8 +59,8 @@
 	<div class="col-lg-12">
 	        <form id='searchForm' action="/board/getPostList" method='get' class="form-inline" style="text-align: center;">
 	            <div class="form-group mr-2">
-	                <select class="form-control" name='type' style="padding-right: 0px;"> <!-- type이 null일떄(주소에 type이 없을때 type을 추가함)  -->
-	                    <option value="" <c:out value="${pageMaker.cri.type == null?'selected':''}"/> >검색조건 선택</option>
+	                <select class="form-control" name='type' style="padding-right: 0px; appearance: none;"> <!-- type이 null일떄(주소에 type이 없을때 type을 추가함)  -->
+	                    <option value="" <c:out value="${pageMaker.cri.type == null?'selected':''}"/> >검색조건 선택 &nbsp; ▼</option>
 	                    <option value="T" <c:out value="${pageMaker.cri.type == 'T'?'selected':''}"/>>제목만</option>
 	                    <option value="C" <c:out value="${pageMaker.cri.type == 'C'?'selected':''}"/>>내용만</option>
 	                    <option value="W" <c:out value="${pageMaker.cri.type == 'W'?'selected':''}"/>>글작성자</option>
