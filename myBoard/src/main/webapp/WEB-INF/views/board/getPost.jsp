@@ -336,7 +336,7 @@ $(document).ready(function () {
 	        //showList(-1);   
 	      });   
 	    });
-
+	    var rno = list[i].rno;
 		// 댓글목록
 	    $(".chat").on("click", "button", function(e){	      
 	    	var rno = $(this).closest("li").data("rno"); //button에서 rno를 가져와 저장

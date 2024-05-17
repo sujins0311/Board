@@ -1,15 +1,74 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>페이지 수정 중</title>
-</head>
-<body>
-    <div style="text-align: center; margin-top: 50px;">
-        <h1>현재 페이지는 개발 중입니다.</h1>
-        <p>좀 더 나은 경험을 제공하기 위해 노력하고 있습니다. 조금만 기다려주세요.</p>
-        <img src="${pageContext.request.contextPath}/resources/images/thinking.jpg" alt="Thinking Image" style="width: 300px; height: auto;">
-    </div>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><!-- JSP 페이지 설정: Java 언어 사용, 문자 인코딩은 UTF-8 -->
+<!-- 헤더 + 바디 ------------------------------------------------------------------------------ -->
+<%@include file="../includes/logHeader.jsp"%>
+<title>회원가입</title>
+<style>
+
+@media (min-width: 768px) {
+
+
+}
+
+</style>
+<div class="container">
+	<div class="row">
+		<div class="col-md-4 col-md-offset-4">
+				<h3 class="page-header text-center"><b>회원정보 입력</b></h3>
+			</a>
+		</div>
+	</div>
+	<div class="row">
+	    <div class="col-md-4 col-md-offset-4">
+	        <div class="register-panel panel panel-default">
+	            <!-- <div class="panel-heading">계정 만들기</div> -->
+	            <div class="panel-body"> 
+	                <form id="registerForm" role="form" action="/auth/register" method="post">
+	                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> <!-- CSRF 토큰 추가 -->
+	                    <div class="form-group">
+	                        <label for="userid">아이디:</label> 
+	                        <input type="text" class="form-control" id="userid" name="userid" placeholder="아이디를 입력하세요" required>
+	                    </div>
+	                    <div class="form-group">
+	                        <label for="userpw">비밀번호:</label> 
+	                        <input type="password" class="form-control" id="userpw" name="userpw" placeholder="비밀번호를 입력하세요" required>
+	                    </div>
+	                    <div class="form-group">
+	                        <label for="username">이름:</label> 
+	                        <input type="text" class="form-control" id="username" name="username" placeholder="이름을 입력하세요" required>
+	                    </div>
+	                    <div class="form-group">
+	                        <label for="email">이메일:</label> 
+	                        <input type="email" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요" required>
+	                    </div>
+	                    <!-- <button id="resetBtn" type="reset" class="btn btn-secondary">초기화</button> -->
+	                    <button id="registerSubmitBtn" type="submit" class="btn btn-lg btn-success btn-block">가입하기</button>
+	                </form>
+	            </div>
+	            <div class="text-center">
+	                <p>이미 계정이 있으신가요? <a href="/customLogin"> 로그인</a>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	</div>
+<!-- 여기에 필요한 JavaScript 코드를 포함할 수 있습니다. -->
+
 </body>
 </html>
+<!--  jQuery 라이브러리의 3.6.4 버전 -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script type="text/javascript">
+$(function() {
+
+
+  $("#registerSubmitBtn").on("click", function(e){
+	  e.preventDefault();
+	  debugger; 
+
+    $("#registerForm").submit();
+    
+  });
+});
+</script>
+<!-- 푸터------------------------------------------------------------------------------ -->
+<%@include file="../includes/logFooter.jsp"%>
