@@ -1,14 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><!-- JSP 페이지 설정: Java 언어 사용, 문자 인코딩은 UTF-8 -->
 <!-- 헤더 + 바디 ------------------------------------------------------------------------------ -->
 <%@include file="./includes/logHeader.jsp"%>
-
+<title>로그인</title>
 
 <div class="container">
 	<div class="row">
 		<div class="col-md-4 col-md-offset-4">
+			<h3 class="page-header text-center">
+				<a href="/"><b>HOME(이미지삽입예정)</a></b>
+			</h3>
+			</a>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4 col-md-offset-4 ">
 			<div class="login-panel panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">로그인이 필요합니다.</h3>
+					<h3 class="panel-title text-center"><b>로그인이 필요합니다.</b></h3>
 				</div>
 				<div class="panel-body">
 					<form role="form" method='post' action="/login">
@@ -32,26 +40,16 @@
 						<!-- 스프링 시큐리티 > CSRF토큰 비활성화  -->
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					</form>
-
 				</div>
-							
-				<div style="display: flex; justify-content: center;">
-					<a class="snb-btn" href="/"> <!-- 아이콘 --> 
-					<!-- <img src="/resources/images/icons/home.ico" width=24px; height=24px; />  -->
+			</div>
+			<div style="display: flex; justify-content: center;">
+				<a class="snb-btn" href="/"> <!-- 아이콘 --> <!-- <img src="/resources/images/icons/home.ico" width=24px; height=24px; />  -->
 					<button class="common-btn btn">HOME</button>
-					</a>
-	                <a class="snb-btn" href="/board/getPostList">
-	                	<!-- 아이콘 -->
-	                	<!-- <img src="/resources/images/icons/list.ico" width=24px; height=24px;/> -->
-	                	<button class="common-btn btn">게시글 목록</button>
-	                </a>
-	                <a class="snb-btn" href="/auth/register">
-	                	<!-- 아이콘 -->
-	                	<!-- <img src="/resources/images/icons/list.ico" width=24px; height=24px;/> -->
-	                	<span></span>
-	                	<button class="common-btn btn">회원가입</button>
-	                </a>
-				</div>	
+				</a> <a class="snb-btn" href="/board/getPostList"> <!-- 아이콘 --> <!-- <img src="/resources/images/icons/list.ico" width=24px; height=24px;/> -->
+					<button class="common-btn btn">게시글 목록</button>
+				</a> <a class="snb-btn" href="/auth/register"> <!-- 아이콘 --> <!-- <img src="/resources/images/icons/list.ico" width=24px; height=24px;/> --> <span></span>
+					<button class="common-btn btn">회원가입</button>
+				</a>
 			</div>
 		</div>
 	</div>

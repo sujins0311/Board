@@ -41,34 +41,34 @@ public class MemberContoller {
     }
     
     
-//	@PostMapping("register")
-//	public String register(MemberVO memberVO, RedirectAttributes rttr) {
-//		log.info("register" + rttr);
-//		service.register(memberVO); // 회원가입(DB)
-//		rttr.addFlashAttribute("register",memberVO.getUserid());// 유저의 id 전달 > 모달창 띄워 완료
-//		return "redirect:/auth/register";	
-//	}
+	@PostMapping("register")
+	public String register(MemberVO memberVO, RedirectAttributes rttr) {
+		log.info("register" + rttr);
+		service.register(memberVO); // 회원가입(DB)
+		rttr.addFlashAttribute("register",memberVO.getUserid());// 유저의 id 전달 > 모달창 띄워 완료
+		return "redirect:/customLogin";	
+	}
 
     
     
-	@PostMapping(value = "/register", // url
-				consumes = "application/json", // 요청타입 > json
-				produces = { MediaType.TEXT_PLAIN_VALUE }) // 응답타입 > text
-	public ResponseEntity<String> register(@RequestBody MemberVO memberVO) { 
-		// @RequestBody MemberVO -> 요청본문을 자바객체로 변환
-		// ResponseEntity<String> -> text로 반환하므로 string
-		
-		 // 회원가입 로직 수행
-        try {
-        	service.register(memberVO);
-        	log.info("MemberVO: ***** " + memberVO);
-            return new ResponseEntity<>("success", HttpStatus.OK);
-        } catch (Exception e) {
-            // 회원가입 실패 시
-            log.info("회원가입실패/register");
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-	}
+//	@PostMapping(value = "/register", // url
+//				consumes = "application/json", // 요청타입 > json
+//				produces = { MediaType.TEXT_PLAIN_VALUE }) // 응답타입 > text
+//	public ResponseEntity<String> register(@RequestBody MemberVO memberVO) { 
+//		// @RequestBody MemberVO -> 요청본문을 자바객체로 변환
+//		// ResponseEntity<String> -> text로 반환하므로 string
+//		
+//		 // 회원가입 로직 수행
+//        try {
+//        	service.register(memberVO);
+//        	log.info("MemberVO: ***** " + memberVO);
+//            return new ResponseEntity<>("success", HttpStatus.OK);
+//        } catch (Exception e) {
+//            // 회원가입 실패 시
+//            log.info("회원가입실패/register");
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//	}
 	
     
     

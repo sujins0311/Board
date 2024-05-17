@@ -33,16 +33,44 @@
 		WHERE mem.userid = #{userid}
 	</select>
 	
+	<insert id="registerMember" parameterType="org.project.domain.MemberVO">
+    <!-- 회원 정보 입력 -->
+    INSERT INTO member (userid, userpw, username, email)
+    VALUES (#{userid}, #{userpw}, #{username}, #{email});
+	</insert>
+	
+	<insert id="registerMemberAuth" parameterType="java.util.List">
+	    <!-- 회원 권한 정보 입력 -->
+	    <foreach collection="list" item="auth" separator=";">
+	        INSERT INTO member_auth (userid, auth)
+	        VALUES (#{auth.userid}, #{auth.auth});
+	    </foreach>
+	</insert>
+	
     <!-- 회원 가입 -->
-    <insert id="register" parameterType="org.project.domain.MemberVO">
-        <!-- 회원 정보 입력 -->
-        INSERT INTO member (userid, userpw, username, email)
-        VALUES (#{userid}, #{userpw}, #{username}, #{email});
+<!-- 	<insert id="registerMember" parameterType="org.project.domain.MemberVO">
+		INSERT INTO member (userid, userpw, username, email)
+		VALUES (#{userid}, #{userpw}, #{username}, #{email});
+		
+	<foreach collection="authList" item="auth" separator=";">
+		INSERT INTO member_auth (userid, auth)
+		VALUES (#{userid}, ROLE_USER);
+	</foreach>
+	</insert> -->
 
-        <!-- 권한 정보 입력 -->
-        <foreach collection="authList" item="auth" separator=";">
-            INSERT INTO member_auth (userid, auth)
-            VALUES (#{userid}, #{auth});
-        </foreach>
-    </insert>
+		<!-- 권한 정보 입력 -->
+<!-- 	<insert id="registerMemberAuth" parameterType="String">
+		INSERT INTO member_auth (userid, auth)
+		VALUES (#{userid}, #{auth});
+	</insert> -->
+
+	<!-- 시큐리티 > 권한 디폴트 적용 후 삭제예정 -->
+<!-- 		<if test="authList != null and authList.size() > 0">
+			<foreach collection="authList" item="auth" separator=";">
+				INSERT INTO member_auth (userid, auth)
+				VALUES (#{userid}, #{auth});
+			</foreach>
+		</if> -->
+
+
 </mapper>

@@ -1,10 +1,14 @@
 package org.project.mapper;
 
+import java.util.List;
+
+import org.project.domain.AuthVO;
 import org.project.domain.MemberVO;
 
 public interface MemberMapper {
 	
 	public MemberVO read(String userid);
-	public void insert(MemberVO vo); //register(post)
+	public void registerMember(MemberVO memberVO); //register(post)
+	public void registerMemberAuth(List<AuthVO> list);
 
 }

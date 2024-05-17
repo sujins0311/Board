@@ -12,7 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>SB Admin 2 - Bootstrap Admin Theme</title>
+
 
 <!-- Bootstrap Core CSS -->
 <link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -25,40 +25,39 @@
 
 <!-- Custom Fonts -->
 <link href="/resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
     
 
 <style type="text/css">
 /* 부트스트랩 기본값을 커스텀합니다.*/
-.panel-heading {
-    background-color: rgba(94,66,161,0.1); /* 로그인 패널의 헤더 색상 */
+.custom-panel-heading {
+    background-color: rgba(255, 255, 255, 1); /* 패널의 헤더 색상 */
 }
-/* .panel-title {
-    color: rgba(94,66,161,0.8); /* 로그인 패널의 헤더 제목 색상 */
-} */
-.panel-body {
-    background-color: rgba(94,66,161,0.05); /* 로그인 패널의 바디 색상 */
-}
-.login-panel {
-    border-color: rgba(94,66,161,0.2); /* 로그인 패널의 테두리 색상 */
-}
+
 .btn-success {
-    background-color: rgba(94,66,161,1); /* 로그인 버튼의 배경색 */
-    border-color: rgba(94,66,161,1); /* 로그인 버튼의 테두리색 */
+    background-color: rgba(94,66,161,1); /* 버튼의 배경색 */
+    border-color: rgba(94,66,161,1); /* 버튼의 테두리색 */
 }
 .btn-success:hover {
-    background-color: rgba(94,66,161,0.8); /* 로그인 버튼에 마우스 호버 시 배경색 */
-    border-color: rgba(94,66,161,0.8); /* 로그인 버튼에 마우스 호버 시 테두리색 */
+    background-color: rgba(94,66,161,0.8); /* 버튼에 마우스 호버 시 배경색 */
+    border-color: rgba(94,66,161,0.8); /*버튼에 마우스 호버 시 테두리색 */
 }
+
+
+/*  body {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     flex-direction: column;
+ } */
+
+/*   .login-panel {
+    padding: 20px 15px;
+    background: #ffffff;
+    border-radius: 15px;
+    border: 1px solid #E2E2E2;
+ } */
+
+
 </style>
     
 
-</head>
-
-<body>
