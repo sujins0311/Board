@@ -21,6 +21,9 @@
 	
 	<bean id="customUserDetailsService"
 		class="org.project.security.CustomUserDetailsService"></bean>
+		
+	<bean id="userSessionUtils"
+		class="org.project.security.UserSessionUtils"></bean>
 
 
 	

@@ -22,7 +22,7 @@
 	        <div class="register-panel panel panel-default">
 	            <!-- <div class="panel-heading">계정 만들기</div> -->
 	            <div class="panel-body"> 
-	                <form id="registerForm" role="form" action="/auth/register" method="post">
+	                <form id="registerForm" role="form" action="/auth/member/register" method="post">
 	                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> <!-- CSRF 토큰 추가 -->
 	                    <div class="form-group">
 	                        <label for="userid">아이디:</label> 
@@ -51,24 +51,20 @@
 	    </div>
 	</div>
 	</div>
-<!-- 여기에 필요한 JavaScript 코드를 포함할 수 있습니다. -->
 
 </body>
 </html>
 <!--  jQuery 라이브러리의 3.6.4 버전 -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script type="text/javascript">
-$(function() {
 
-
-  $("#registerSubmitBtn").on("click", function(e){
-	  e.preventDefault();
-	  debugger; 
-
-    $("#registerForm").submit();
-    
-  });
-});
+	$(function() {
+		$("#registerSubmitBtn").on("click", function(e) {
+			e.preventDefault();
+			$("#registerForm").submit();
+			alret("www.ppoosumi.me 회원가입에 성공하셨습니다.")
+		});
+	});
 </script>
 <!-- 푸터------------------------------------------------------------------------------ -->
 <%@include file="../includes/logFooter.jsp"%>

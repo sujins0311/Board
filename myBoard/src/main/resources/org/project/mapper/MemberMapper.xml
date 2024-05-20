@@ -46,6 +46,13 @@
 	        VALUES (#{auth.userid}, #{auth.auth});
 	    </foreach>
 	</insert>
+
+	<!-- modifyPost(update) -->
+	<update id="update" parameterType="org.project.domain.MemberVO">
+		UPDATE member
+		SET username = #{username}, email = #{email}, updateDate = #{updateDate}
+		WHERE userid = #{userid}
+	</update>
 	
     <!-- 회원 가입 -->
 <!-- 	<insert id="registerMember" parameterType="org.project.domain.MemberVO">
@@ -54,7 +61,7 @@
 		
 	<foreach collection="authList" item="auth" separator=";">
 		INSERT INTO member_auth (userid, auth)
-		VALUES (#{userid}, ROLE_USER);
+		VALUES (#{userid}, ROLE_MEMBER);
 	</foreach>
 	</insert> -->
 

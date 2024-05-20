@@ -73,7 +73,7 @@
 		<%-- <button data-oper='modify' class="btn common-btn" style="float:right;" onclick="modifyPost(${getPostResult.bno})">수정/삭제</button> --%>
 
 				<sec:authentication property="principal" var="pinfo" />
-					<sec:authorize access="isAuthenticated()">
+					<sec:authorize access="isAuthenticated()"> <!-- pinfo.username: 로그인 한 유저와 작성자, 관리자만 수정 -->
 						<c:if test="${pinfo.username eq getPostResult.writer || '[ROLE_ADMIN]' eq pinfo.authorities}">
 							<button data-oper='modify' class="btn common-btn" style="float:right;" 
 							onclick="modifyPost(${getPostResult.bno})">수정/삭제</button>
@@ -109,7 +109,8 @@
 			<div class="panel-heading">
 				<i class="fa fa-comments fa-fw"></i> 댓글목록을 보여줍니다.
 				<sec:authorize access="isAuthenticated()">
-				<c:if test="${pinfo.username eq getPostResult.writer || '[ROLE_ADMIN]' eq pinfo.authorities}">
+				<%-- <c:if test="${pinfo.username eq getPostResult.writer || '[ROLE_ADMIN]' eq pinfo.authorities}"> --%>
+				<c:if test="${'[ROLE_MEMBER]' eq pinfo.authorities || '[ROLE_ADMIN]' eq pinfo.authorities}">
 					<button id='addReplyBtn' class='btn btn-primary btn-xs pull-right' >댓글작성</button>
 				</c:if>	
 				</sec:authorize>
@@ -175,6 +176,17 @@ aria-labelledby="myModalLabel" aria-hidden="true">
 
 <script type="text/javascript" src="/resources/js/reply.js"></script>
 <script type="text/javascript">
+// $(document).ready // 제이쿼리 방식
+// window.onload = function() {} // 기본 JS 방식
+
+// HTML에는 생명주기(lifecycle)가 존재한다.
+// DOMContentLoaded  : Browser에서 HTML이 완전히 로드되고 DOM tree가 만들어 질 때 발생하는 이벤트
+// load  : 문서의 모든 콘텐츠(images,script,css, etc)가 로드된 후 발생하는 이벤트
+// beforeunload / unload  : 사용자가 페이지를 벗어날 때 일어나는 이벤트
+
+// window.onload 가 load 생명주기 때 실행되는 이벤트 함수이며
+// $(document).ready는 jquery가 onload를 래핑한 함수이다.
+
 $(document).ready(function () {
 	  
 	  var bnoValue = '<c:out value="${getPostResult.bno}"/>';
@@ -209,11 +221,12 @@ $(document).ready(function () {
 	         for (var i = 0, len = list.length || 0; i < len; i++) {
 	           str +="<li class='left clearfix' data-rno='"+list[i].rno+"'>";
 	           str +="  <div><div class='header'><strong class='primary-font'>["
-	        	   +list[i].rno+"] "+list[i].replyer+"</strong>"; 
-	        	   // 권한검사(로그인유저 = 댓글작성자) 
-				console.log("댓글 작성자:", list[i].replyer);
-				console.log("로그인유저:", loginer);  
-	        	   if(list[i].replyer = loginer){
+	        	   +list[i].rno+"] "+list[i].replyer+"</strong>";
+	        	   
+	        	// 권한검사(로그인유저 == 댓글작성자) 
+				console.log("REPLYER: ", list[i].replyer);
+				console.log("LOGINER:", loginer);  
+	        	   if(list[i].replyer == loginer){
 	           str +="	<button class='common-btn btn' style='padding:1px 5px; font-size:12px; font-weight:normal;'>수정</button>"; 
 	           str +="	<button class='common-btn btn' style='padding:1px 5px; font-size:12px; font-weight:normal;'>삭제</button>"; 
 	        	   }
@@ -336,7 +349,9 @@ $(document).ready(function () {
 	        //showList(-1);   
 	      });   
 	    });
-	    var rno = list[i].rno;
+		
+		
+	    
 		// 댓글목록
 	    $(".chat").on("click", "button", function(e){	      
 	    	var rno = $(this).closest("li").data("rno"); //button에서 rno를 가져와 저장
@@ -370,15 +385,16 @@ $(document).ready(function () {
 		        $("#replyModal").modal("show");      
 		      });
 		    });
+	    
 	  	// 댓글수정버튼
-modalModBtn.on("click", function(e){
-	
-	var originalReplyer = modalInputReplyer.val();
-	
-  var reply = {
-		      rno:modal.data("rno"), 
-		      reply: modalInputReply.val(),
-		      replyer: originalReplyer};
+		modalModBtn.on("click", function(e){
+			
+		 var originalReplyer = modalInputReplyer.val();
+			
+		 var reply = {
+				      rno:modal.data("rno"), 
+				      reply: modalInputReply.val(),
+				      replyer: originalReplyer};
   
   	// 로그인유저검증 후 > 댓글수정모달
 /* 	if(!replyer){
@@ -407,7 +423,7 @@ modalModBtn.on("click", function(e){
   
 });
 	  	
-		// 댓글삭제버튼
+	// 댓글삭제버튼
 	modalRemoveBtn.on("click", function (e){
 	   	  
 	   	  var rno = modal.data("rno");
@@ -555,5 +571,5 @@ modalModBtn.on("click", function(e){
 		});
 
 </script>
-<!-- 푸터------------------------------------------------------------------------------ -->
+<!-- 푸터--------------------------------------------------------------------------------->
 <%@include file="../includes/footer.jsp"%>

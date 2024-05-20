@@ -17,7 +17,7 @@ public interface BoardMapper {
 	public void insert(BoardVO board); //createPost(post)
 	public BoardVO read(Long bno); //getPost(get)
 	public int delete(Long bno); //deletePost(delete)
-	public int modify(BoardVO boardVO); // modifyPost(update)
+	public int modify(BoardVO boardVO); // modifyPost(post)
 	
 	public void updateReplyCnt(@Param("bno") Long bno, @Param("itemsPerPage") int itemsPerPage);
 	}
