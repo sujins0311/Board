@@ -64,12 +64,12 @@ public class MemberTests {
         if(i <80) {
           
           pstmt.setString(1, "user"+i);
-          pstmt.setString(2,"ROLE_USER");
+          pstmt.setString(2,"ROLE_MEMBER");
           
         }else if (i <90) {
           
           pstmt.setString(1, "manager"+i);
-          pstmt.setString(2,"ROLE_MEMBER");
+          pstmt.setString(2,"ROLE_MANAGER");
           
         }else {
           

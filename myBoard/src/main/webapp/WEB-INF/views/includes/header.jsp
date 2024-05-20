@@ -229,11 +229,12 @@ body {
 				    <a href="/auth/register"><button class="common-btn btn">회원가입</button></a>
 				    <a href="/customLogin"><button class="common-btn btn">로그인</button></a>
 				    
-				        
+				      
 				    </sec:authorize>
 				    <sec:authorize access="isAuthenticated()">
 				       <sec:authentication property="principal.username"/> 님
-				       <a href="/auth/all">회원정보</a> |
+				       <a href="/auth/member/read">마이페이지</a> |
+				       <!-- <a href="/auth/all">회원정보</a> | -->
 				        <!-- <a href="/customLogout">로그아웃</a> -->
 				        <!-- Spring Security와 같은 보안 프레임워크를 사용하는 경우 /logout URL로 접근하면 Spring Security가 해당 요청을 인터셉트하여 로그아웃 -->
 				        <!-- JSP 페이지로 이동하는 것이 아니라, Spring Security가 로그아웃을 처리 -->

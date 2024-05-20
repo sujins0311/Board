@@ -10,5 +10,7 @@ public interface MemberMapper {
 	public MemberVO read(String userid);
 	public void registerMember(MemberVO memberVO); //register(post)
 	public void registerMemberAuth(List<AuthVO> list);
+	public String delete(String username);
+	public int update(MemberVO member); // update(post)
 
 }
