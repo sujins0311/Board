@@ -1,20 +1,25 @@
 package org.project.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
 
 @Data
-public class MemberVO {
+public class MemberVO implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String userid; // PK, loginID
 	private String userpw;
 	private String username;
 	
 	private String email;
 	
-	private boolean status;
+	private boolean enabled;
 	
 	private Date regDate;
 	private Date updateDate;

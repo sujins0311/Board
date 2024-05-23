@@ -55,44 +55,88 @@
 	</div>
 </div>
 
+<!-- 회원가입성공모달 -->
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">성공 메시지</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="successModalBody"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="successModalBtnToLogIn" data-dismiss="modal">확인</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--  jQuery 라이브러리의 3.6.4 버전 -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script type="text/javascript">
+
+	// 회원가입 모달
+	$(function() {
+		var registerMember = '${registerMember}';
+		
+		console.log(registerMember);
+		checkModal(registerMember);
+		
+		// parseInt() 함수는 문자열을 정수로 변환하는 JavaScript의 내장 함수
+		// $(".modal-body").html("<p>모달에 추가할 HTML 형식의 텍스트</p>");
+		// $(".modal-body").text("모달에 추가할 텍스트");
+		function checkModal(registerMember) {
+		    if (!registerMember || registerMember === '' 
+		    		|| registerMember === null) { // 공백이거나 null이면 모달종료 
+		        return;
+		    }else{
+				$("#successModalBody").html(
+						"[ID :" + registerMember + "] 회원가입에 성공하셨습니다.");
+				}
+			$("#successModal").modal("show");
+		}
+	});
+	
+	// 비밀번호수정 성공모달, 회원탈퇴 성공모달
+	$(function() {
+	    var successMessage = "${success}";
+	    
+	    checkResult(successMessage);
+
+	    function checkResult(successMessage) {
+	        if (!successMessage || successMessage.trim() === '') {// 공백이거나 null이면 모달종료 
+	            return;
+	        }else{
+	        	$("#successModalBody").html(successMessage);
+	        }
+	        $("#successModal").modal("show");
+	    }
+	});
+
+	
+	//로그인버튼
+	$(".btn-success").on("click", function(e) {
+
+		e.preventDefault();
+		$("form").submit();
+
+	});
+	
+</script>
 
 
-<!-- jQuery -->
-	<script src="/resources/vendor/jquery/jquery.min.js"></script>
-
-	<!-- Bootstrap Core JavaScript -->
-	<script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
-
-	<!-- Metis Menu Plugin JavaScript -->
-	<script src="/resources/vendor/metisMenu/metisMenu.min.js"></script>
-
-	<!-- Custom Theme JavaScript -->
-	<script src="/resources/dist/js/sb-admin-2.js"></script>
+<c:if test="${param.logout != null}">
 	<script>
-  
-  
-  
-  
-  $(".btn-success").on("click", function(e){
-    
-    e.preventDefault();
-    $("form").submit();
-    
-  });
-  
-  </script>
-
-	<c:if test="${param.logout != null}">
-		<script>
-      $(document).ready(function(){
-      	alert("로그아웃하였습니다.");
-      });
-      </script>
-	</c:if>
+		$(document).ready(function() {
+			alert("로그아웃하였습니다.");
+		});
+	</script>
+</c:if>
 
 </body>
-
 </html>
 
-<!-- 푸터------------------------------------------------------------------------------ -->
+<!-- 푸터--------------------------------------------------------------------------------->
 <%@include file="./includes/logFooter.jsp"%>

@@ -1,31 +1,13 @@
 package org.project.controller;
 
-
-import org.project.domain.Criteria;
 import org.project.domain.MemberVO;
-import org.project.domain.ReplyVO;
-import org.project.security.CustomUserDetailsService;
 import org.project.security.UserSessionUtils;
-import org.project.security.domain.CustomUser;
-import org.project.service.BoardService;
 import org.project.service.MemberService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.AllArgsConstructor;
@@ -67,15 +49,15 @@ public class MemberContoller {
 		}
 	}
 	
-	
+	// 회원정보수정
 	@PostMapping("member/update") // getPost.jsp
 	public String update(MemberVO memberVO, RedirectAttributes rttr) {
 		
-		log.info("**************************memberVO" + memberVO);
-		//INFO : org.project.controller.MemberContoller - **************************memberVOMemberVO(userid=admin99, userpw=null, username=관리자99ssdsd, email=admin99@example.com, status=false, regDate=null, updateDate=null, authList=null)
+		log.info("memberVO: " + memberVO);
+		//INFO : org.project.controller.MemberContoller - **************************memberVOMemberVO(userid=admin99, userpw=null, username=관리자99ssdsd, email=admin99@example.com, enabled=false, regDate=null, updateDate=null, authList=null)
 
 		// UserSessionUtils를 사용하여 세션에 저장된 사용자 정보를 가져옴
-		// INFO : org.project.security.UserSessionUtils - Current member in session: MemberVO(userid=admin99, userpw=$2a$10$KKahc9s0tz5wtEPj7OrZr.iDfcaLVLjabbrYqG1Y/w5v7TUEj66MC, username=관리자99, email=admin99@example.com, status=false, regDate=Thu Apr 25 17:29:48 KST 2024, updateDate=Thu Apr 25 17:29:48 KST 2024, authList=[AuthVO(userid=admin99, auth=ROLE_ADMIN)])
+		// INFO : org.project.security.UserSessionUtils - Current member in session: MemberVO(userid=admin99, userpw=$2a$10$KKahc9s0tz5wtEPj7OrZr.iDfcaLVLjabbrYqG1Y/w5v7TUEj66MC, username=관리자99, email=admin99@example.com, enabled=false, regDate=Thu Apr 25 17:29:48 KST 2024, updateDate=Thu Apr 25 17:29:48 KST 2024, authList=[AuthVO(userid=admin99, auth=ROLE_ADMIN)])
 		
 		MemberVO currentMember  = userSessionUtils.getCurrentMemberVO();
 		
@@ -88,26 +70,106 @@ public class MemberContoller {
 			// 업데이트 된 사용자 정보를 세션에 저장
 			//INFO : org.project.security.UserSessionUtils - 
 			// Updated member in session: MemberVO(userid=admin99, userpw=$2a$10$KKahc9s0tz5wtEPj7OrZr.iDfcaLVLjabbrYqG1Y/w5v7TUEj66MC, 
-			// username=null, email=admin99@example.com, status=false, regDate=Thu Apr 25 17:29:48 KST 2024, updateDate=Thu Apr 25 17:29:48 KST 2024, authList=[AuthVO(userid=admin99, auth=ROLE_ADMIN)])
+			// username=null, email=admin99@example.com, enabled=false, regDate=Thu Apr 25 17:29:48 KST 2024, updateDate=Thu Apr 25 17:29:48 KST 2024, authList=[AuthVO(userid=admin99, auth=ROLE_ADMIN)])
 
 			currentMember.setUsername(memberVO.getUsername());
 			currentMember.setEmail(memberVO.getEmail());
 			
 			userSessionUtils.updateCurrentUser(currentMember);
-			// INFO : org.project.controller.MemberContoller - Update current user in session: MemberVO(userid=admin99, userpw=$2a$10$KKahc9s0tz5wtEPj7OrZr.iDfcaLVLjabbrYqG1Y/w5v7TUEj66MC, username=관리자99ssdsd, email=admin99@example.com, status=false, regDate=Thu Apr 25 17:29:48 KST 2024, updateDate=Thu Apr 25 17:29:48 KST 2024, authList=[AuthVO(userid=admin99, auth=ROLE_ADMIN)])
+			// INFO : org.project.controller.MemberContoller - Update current user in session: MemberVO(userid=admin99, userpw=$2a$10$KKahc9s0tz5wtEPj7OrZr.iDfcaLVLjabbrYqG1Y/w5v7TUEj66MC, username=관리자99ssdsd, email=admin99@example.com, enabled=false, regDate=Thu Apr 25 17:29:48 KST 2024, updateDate=Thu Apr 25 17:29:48 KST 2024, authList=[AuthVO(userid=admin99, auth=ROLE_ADMIN)])
 
 			log.info("Update current user in session: " + currentMember);
 			
-			if(service.update(currentMember)) { //boolean
-			// 업데이트 된 세션을 회원정보조회로 반환함 currentMember.getUsername()
-			rttr.addFlashAttribute("member",currentMember);
+			if(service.update(memberVO)) { //boolean
+				// 업데이트 된 세션을 회원정보조회로 반환함 member.getUsername()
+				rttr.addFlashAttribute("success", "회원 정보 수정에 성공했습니다.");
+				rttr.addFlashAttribute("member",currentMember);
+			} else {
+			    // 업데이트가 실패한 경우
+			    rttr.addFlashAttribute("error", "회원 정보 수정에 실패했습니다.");
 			}
 			return "redirect:/auth/member/read";
 		}
 	}
+	
+	// 비밀번호수정	
+	@GetMapping("member/updatePassword")
+	public void updatePassword(Model model) {
+		MemberVO memberVO = userSessionUtils.getCurrentMemberVO();
+		log.info("Retrieved member: " + memberVO);
+		log.info("member/updatePassword ");
+		if (memberVO != null) {
+			model.addAttribute("member", memberVO);
+		}
+	}
+	
+	// 비밀번호수정	
+	@PostMapping("member/updatePassword") // getPost.jsp
+	public String updatePassword(MemberVO memberVO, RedirectAttributes rttr) {
+
+		// member의 pw의 유효성검증
+	    if (!service.checkPassword(memberVO.getUserpw(), memberVO.getUserid())) {
+	        log.error("비밀번호가 일치하지 않습니다. 확인 후 다시 입력해주세요.");
+	        rttr.addFlashAttribute("error", "비밀번호가 일치하지 않습니다. 확인 후 다시 입력해주세요.");
+	        return "redirect:/auth/member/updatePassword";
+	    }
+
+		service.updatePassword(memberVO);
+		// 세션에 pw인코더 된 것을 저장 해야할까? >로그아웃 하면 갱신되지 않을까? >로그아웃을 시키자>성공 메시지 확인 및 모달 표시: 확인버튼 > 로그아웃
+		rttr.addFlashAttribute("success", "비밀번호가 성공적으로 변경되었습니다. 새로운 비밀번호로 재로그인해주세요.");
+		return "redirect:/customLogin";
+
+	}
+	
+
     
     
     // 회원정보삭제
+	@GetMapping("member/delete")
+	public void delete(Model model) {
+		MemberVO memberVO = userSessionUtils.getCurrentMemberVO();
+		log.info("Retrieved member: " + memberVO);
+		log.info("member/delete ");
+		if (memberVO != null) {
+			model.addAttribute("member", memberVO);
+		}
+	}
+	
+	// 회원정보삭제
+	@PostMapping("member/delete")
+	public String delete(MemberVO memberVO, RedirectAttributes rttr) {
+	    // 로그인한 사용자의 정보 가져오기
+	    //MemberVO currentMember = userSessionUtils.getCurrentMemberVO();
+
+	    // 비밀번호 일치 여부 확인
+	    if (!service.checkPassword(memberVO.getUserpw(), memberVO.getUserid())) {
+	        log.error("비밀번호가 일치하지 않습니다. 확인 후 다시 입력해주세요.");
+	        rttr.addFlashAttribute("error", "비밀번호가 일치하지 않습니다. 확인 후 다시 입력해주세요.");
+	        return "redirect:/auth/member/delete";
+	    }
+		// 비밀번호가 일치할 때의 처리
+		service.delete(memberVO.getUserid());
+		rttr.addFlashAttribute("success", "회원 탈퇴가 성공적으로 이루어졌습니다. 메인 화면으로 이동합니다.");
+		return "redirect:/board/getPostList";
+	}
+	
+//	@PostMapping("member/delete")
+//	public void delete(MemberVO memberVO, RedirectAttributes rttr) {
+//	    // 로그인한 사용자의 정보 가져오기
+//	    MemberVO currentMember = userSessionUtils.getCurrentMemberVO();
+//
+//	    // 비밀번호 일치 여부 확인
+//	    if (!service.checkPassword(memberVO.getUserpw(), currentMember.getUserid())) {
+//	        log.error("비밀번호가 일치하지 않습니다. 확인 후 다시 입력해주세요.");
+//	        rttr.addFlashAttribute("error", "비밀번호가 일치하지 않습니다. 확인 후 다시 입력해주세요.");
+//	        //return "redirect:/auth/member/delete";
+//	    }
+//		// 비밀번호가 일치할 때의 처리
+//		service.delete(memberVO.getUserpw());
+//		rttr.addFlashAttribute("success", "회원 탈퇴가 성공적으로 이루어졌습니다. 메인 화면으로 이동합니다.");
+//
+//		//return "redirect:/board/getPostList";
+//	}
 
     
     
@@ -131,7 +193,7 @@ public class MemberContoller {
 	public String register(MemberVO memberVO, RedirectAttributes rttr) {
 		log.info("register" + rttr);
 		service.register(memberVO); // 회원가입(DB)
-		rttr.addFlashAttribute("register",memberVO.getUserid());// 유저의 id 전달 > 모달창 띄워 완료
+		rttr.addFlashAttribute("registerMember",memberVO.getUserid());// 유저의 id 전달 > 모달창 띄워 완료
 		return "redirect:/customLogin";	
 	}
 

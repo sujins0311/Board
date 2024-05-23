@@ -14,7 +14,7 @@ import lombok.Getter;
 @Getter
 public class ReplyPageDTO {
 
-	// 댓글 수와 댓굴의 전체 목록을 전달해 페이징
+	// 댓글 수와 댓글의 전체 목록을 전달해 페이징
 	private int replyCnt; //댓글 수
 	private List<ReplyVO> list; // 댓글 목록
 	

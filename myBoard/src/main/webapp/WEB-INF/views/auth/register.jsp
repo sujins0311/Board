@@ -22,7 +22,7 @@
 	        <div class="register-panel panel panel-default">
 	            <!-- <div class="panel-heading">계정 만들기</div> -->
 	            <div class="panel-body"> 
-	                <form id="registerForm" role="form" action="/auth/member/register" method="post">
+	                <form id="registerForm" role="form" action="/auth/register" method="post">
 	                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> <!-- CSRF 토큰 추가 -->
 	                    <div class="form-group">
 	                        <label for="userid">아이디:</label> 
@@ -57,14 +57,33 @@
 <!--  jQuery 라이브러리의 3.6.4 버전 -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script type="text/javascript">
+	$(document).ready(function() {
 
-	$(function() {
 		$("#registerSubmitBtn").on("click", function(e) {
 			e.preventDefault();
-			$("#registerForm").submit();
-			alret("www.ppoosumi.me 회원가입에 성공하셨습니다.")
+
+			var useridValue = $("#userid").val();
+			var userpwtValue = $("#userpw").val();
+			var usernameValue = $("#username").val();
+			var emailValue = $("#email").val();
+
+			// 필드값 검증
+			if (useridValue !== "" 
+					&& userpwtValue !== ""
+					&& usernameValue !== "" 
+					&& emailValue !== "") {
+				// 값이 유효한 폼제출
+				console.log("userid:", useridValue);
+				console.log("userpw:", userpwtValue);
+				console.log("username:", usernameValue);
+				console.log("email:", emailValue);
+				$("#registerForm").submit();
+				//$("#successModal").modal("show"); //오류주의...!submit은 return과 같다고 생각하기
+				}else{
+					alert("비어있는 내용이 있습니다.");
+				}
+			});
 		});
-	});
 </script>
 <!-- 푸터------------------------------------------------------------------------------ -->
 <%@include file="../includes/logFooter.jsp"%>
