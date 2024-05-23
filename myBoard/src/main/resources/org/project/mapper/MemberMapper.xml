@@ -26,58 +26,55 @@
 	<!-- 회원정보(로그인) -->
 	<select id="read" resultMap="memberMap">
 		SELECT
-		mem.userid, mem.userpw, mem.username, mem.email, mem.status, mem.regdate, mem.updatedate, auth.auth
+		mem.userid, mem.userpw, mem.username, mem.email, mem.enabled, mem.regdate, mem.updatedate, auth.auth
 		FROM member mem
 		LEFT OUTER JOIN
 		member_auth auth ON mem.userid = auth.userid
 		WHERE mem.userid = #{userid}
 	</select>
 	
-	<insert id="registerMember" parameterType="org.project.domain.MemberVO">
-    <!-- 회원 정보 입력 -->
-    INSERT INTO member (userid, userpw, username, email)
-    VALUES (#{userid}, #{userpw}, #{username}, #{email});
+	<insert id="register" parameterType="org.project.domain.MemberVO">
+    <!-- 회원가입 -->
+    INSERT INTO member (userid, userpw, username, email, enabled, regDate)
+    VALUES (#{userid}, #{userpw}, #{username}, #{email}, #{enabled}, #{regDate});
 	</insert>
 	
-	<insert id="registerMemberAuth" parameterType="java.util.List">
-	    <!-- 회원 권한 정보 입력 -->
+	<insert id="registerAuth" parameterType="java.util.List">
 	    <foreach collection="list" item="auth" separator=";">
 	        INSERT INTO member_auth (userid, auth)
 	        VALUES (#{auth.userid}, #{auth.auth});
 	    </foreach>
 	</insert>
 
-	<!-- modifyPost(update) -->
+	<!-- 회원정보수정 -->
+	<!-- <update id="update" parameterType="org.project.domain.MemberVO"> -->
 	<update id="update" parameterType="org.project.domain.MemberVO">
 		UPDATE member
 		SET username = #{username}, email = #{email}, updateDate = #{updateDate}
 		WHERE userid = #{userid}
 	</update>
 	
-    <!-- 회원 가입 -->
-<!-- 	<insert id="registerMember" parameterType="org.project.domain.MemberVO">
-		INSERT INTO member (userid, userpw, username, email)
-		VALUES (#{userid}, #{userpw}, #{username}, #{email});
-		
-	<foreach collection="authList" item="auth" separator=";">
-		INSERT INTO member_auth (userid, auth)
-		VALUES (#{userid}, ROLE_MEMBER);
-	</foreach>
-	</insert> -->
-
-		<!-- 권한 정보 입력 -->
-<!-- 	<insert id="registerMemberAuth" parameterType="String">
-		INSERT INTO member_auth (userid, auth)
-		VALUES (#{userid}, #{auth});
-	</insert> -->
-
-	<!-- 시큐리티 > 권한 디폴트 적용 후 삭제예정 -->
-<!-- 		<if test="authList != null and authList.size() > 0">
-			<foreach collection="authList" item="auth" separator=";">
-				INSERT INTO member_auth (userid, auth)
-				VALUES (#{userid}, #{auth});
-			</foreach>
-		</if> -->
+	<!-- 회원정보수정(비밀번호) -->
+	<update id="updatePassword" parameterType="org.project.domain.MemberVO">
+	    UPDATE member
+	    SET userpw = #{userpw}
+	    WHERE userid = #{userid}
+	</update>
+	
+	<!-- 회원정보삭제-비밀번호검증(checkPassword) -->
+    <select id="getPassword" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT userpw FROM member WHERE userid = #{userid}
+    </select>
+	
+	<!-- 회원정보삭제 -->
+	<delete id="delete" parameterType="java.lang.String">
+		DELETE FROM member WHERE userid = #{userid}
+	</delete>
+	
+	<!-- 회원권한삭제 -->
+	<delete id="deleteAuth" parameterType="java.lang.String">
+		DELETE FROM member_auth WHERE userid = #{userid}
+	</delete>
 
 
 </mapper>

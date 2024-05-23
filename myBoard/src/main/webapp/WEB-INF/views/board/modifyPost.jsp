@@ -85,7 +85,7 @@ $(document).ready(function() {
 	  // 원인을 찾기가 힘들어질 수 있다.
 	  $('button[type="submit"]').on("click", function(e){
 		    e.preventDefault();     
-		    var operation = $(this).data("oper");    
+		    var operation = $(this).data("oper"); //data-oper를 사용해 수정 , 목록으로 이동   
 		    console.log(operation);    
 		    if(operation === 'delete'){
 		      formObj.attr("action", "/board/deletePost");

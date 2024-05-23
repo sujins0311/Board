@@ -30,7 +30,7 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler  {
 				String username = user.getUsername();//[a, d, m, i, n, 9, 9]
 				log.info("--------------------------------------User " + username + " has been logged out successfully.");
 				response.setStatus(HttpServletResponse.SC_OK);
-				response.sendRedirect("/board/getPostList");
+				response.sendRedirect("/customLogin");
 			} catch (IOException e) {
 				log.error("------------------------------------------Error handling logout", e);
 				e.printStackTrace();

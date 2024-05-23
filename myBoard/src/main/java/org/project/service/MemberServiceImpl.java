@@ -18,23 +18,65 @@ public class MemberServiceImpl implements MemberService {
 	private MemberMapper mapper;
 	private PasswordEncoder passwordEncoder;
 	
+	
 	// 회원정보수정, 비밀번호수정
 	@Transactional
 	@Override
-	public boolean update(MemberVO member) {
+	public boolean update(MemberVO memberVO) {
+		
+//		if (member.getUserpw() != null && !member.getUserpw().isEmpty()) {
+//			member.setUserpw(passwordEncoder.encode(member.getUserpw()));
+//		}
 		// 비밀번호가 변경된 경우 인코딩
-		if (member.getUserpw() != null && !member.getUserpw().isEmpty()) {
-			member.setUserpw(passwordEncoder.encode(member.getUserpw()));
+		memberVO.setUpdatedDate();
+		return mapper.update(memberVO) == 1;
+	}
+	
+	// 비밀번호수정
+	@Transactional
+	@Override
+	public boolean updatePassword(MemberVO memberVO) {
+		// 비밀번호가 변경된 경우 인코딩
+		if (memberVO.getUserpw() != null && !memberVO.getUserpw().isEmpty()) {
+			memberVO.setUserpw(passwordEncoder.encode(memberVO.getUserpw()));
 		}
-		member.setUpdatedDate();
-		return mapper.update(member) == 1;
+		memberVO.setUpdatedDate();
+		return mapper.updatePassword(memberVO) == 1;
+	}
+	
+	// 회원정보삭제
+	@Transactional
+	@Override
+	public boolean checkPassword(String userpw, String userid) {
+	    // 저장된 비밀번호를 가져옴
+	    String savedPassword = mapper.getPassword(userid);
+	    
+	    // 저장된 비밀번호가 null인지 확인
+	    if (savedPassword == null) {
+	        log.error("사용자의 비밀번호를 가져올 수 없습니다.");
+	        return false;
+	    }
+
+	    // 비밀번호 일치 여부 확인
+	    boolean passwordsMatch = passwordEncoder.matches(userpw, savedPassword);
+	    log.info("비밀번호 일치 여부를 true 또는 false로 반환합니다 :"+ passwordsMatch);
+	    
+	    return passwordsMatch; //true 또는 false 반환
 	}
 
 	// 회원정보삭제
 	@Transactional
 	@Override
-	public void delete(String username) {
-		mapper.delete(username);
+	public void delete(String userid) {
+		
+        // 외래 키로 묶인 member_auth 테이블의 데이터 삭제
+		int deletedAuthCount = mapper.deleteAuth(userid);
+        
+		// member테이블의 데이터 삭제
+		int deleteMemberCount = mapper.delete(userid);
+		
+		log.info("회원권한이 삭제된 행의 수를 반환합니다 :"+ deletedAuthCount);
+		log.info("회원정보가 삭제된 행의 수를 반환합니다 :"+ deleteMemberCount);
 	}
 
 	// 회원정보조회
@@ -55,9 +97,11 @@ public class MemberServiceImpl implements MemberService {
         }else {
             // 회원정보등록
         	memberVO.setRegDate();
+        	memberVO.setEnabled(true); // memberVO.setEnabled("1"); //enabled CHAR(1) DEFAULT '1'
+
         	// 비밀번호인코딩
         	memberVO.setUserpw(passwordEncoder.encode(memberVO.getUserpw()));
-    		mapper.registerMember(memberVO);
+    		mapper.register(memberVO);
     		
 		
 			// 권한정보등록
@@ -65,7 +109,7 @@ public class MemberServiceImpl implements MemberService {
 			authVO.setUserid(memberVO.getUserid());
 			authVO.setAuth("ROLE_MEMBER"); // 사용자의 초기 권한을 ROLE_USER로 설정
 			memberVO.setAuthList(Collections.singletonList(authVO));
-			mapper.registerMemberAuth(memberVO.getAuthList());
+			mapper.registerAuth(memberVO.getAuthList());
 			
 			log.info("register......" + memberVO);
         }

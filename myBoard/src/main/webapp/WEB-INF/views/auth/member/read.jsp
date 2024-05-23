@@ -12,13 +12,20 @@
 				<a class="snb-btn" href="/auth/member/update">
 					<button class="common-btn btn">개인정보수정</button>
 				</a>
-				<button class="common-btn btn" id="updatePWBtn">비밀번호 변경(예정)</button>
-				<button class="common-btn btn" id="deleteAccountBtn">탈퇴하기(예정)</button>
-				<button class="common-btn btn">내글모아보기동(예정)</button>
+				<a class="snb-btn" href="/auth/member/updatePassword">
+					<button class="common-btn btn">비밀번호수정</button>
+				</a>
+				<a class="snb-btn">
+					<button class="common-btn btn">나의활동:작성글모아보기(예정)</button>
+				</a>
+				<a class="snb-btn" href="/auth/member/delete">
+					<button class="common-btn btn">탈퇴하기</button>
+				</a>
 			</div>
 		</div>
 	</div>
 </div>
+
 
 <sec:authorize access="isAuthenticated()">
         <div class="row">
@@ -33,44 +40,15 @@
             </div>
         </div>
 	</sec:authorize>
+	
 <%@include file="./memberModal.jsp"%>
+
 </body>
 </html>
 <!--  jQuery 라이브러리의 3.6.4 버전 -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script type="text/javascript">
 
-$(document).ready(function() {
-	// 회원탈퇴
-	$("#deleteAccountBtn").click(function() {
-	    $("#deleteAccountModal").modal("show");
-	});
-	
-	// 비밀번호수정
-	$("#updatePWBtn").click(function() {
-	    $("#updatePWModal").modal("show");
-	});
-
-
-	$("#confirmSubmitBtn").on("click", function(event) {
-		event.preventDefault();
-        var currentPassword = $("#currentPassword").val();
-        var newPassword = $("#newPassword").val();
-        var confirmNewPassword = $("#confirmNewPassword").val();
-        
-        if(newPassword !== confirmNewPassword){
-        	aler("새 비밀번호가 일치하지 않습니다. 다시 확인해 주세요.")
-        	return;
-        }
-            // 비밀번호 변경 성공시 모달 닫기
-            $("#updatePWModal").modal("hide");
-	});
-	
-	$('#confirmSubmitBtn').on("click", function(event) {
-		$("#updateForm").submit();
-		$("#updateForm")[0].reset();
-	});
-});
 
 </script>
 <%@include file="../../includes/footer.jsp"%>
