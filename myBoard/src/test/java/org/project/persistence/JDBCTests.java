@@ -21,8 +21,17 @@ public class JDBCTests {
             e.printStackTrace();
         }
     }
+	
+	@Test// 이미지 파일인지 확인 여부
+	public void testRegExp() {
+		String suffix = "jpeg";
+		
+		String regExp = "^(jpg|jpeg|JPG|JPEG|png|PNG|gif|GIF|bmp|BMP)";
+		
+		System.out.println(suffix.matches(regExp));
+	}
 
-    @Test
+
     public void testConnection() {
         try (Connection con = DriverManager.getConnection(
                 // MariaDB 데이터베이스에 연결

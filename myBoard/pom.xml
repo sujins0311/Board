@@ -255,6 +255,15 @@
 			<version>5.0.7.RELEASE</version>
 		</dependency>
 		<!-- spring-security 관련 라이브러리 추가 끝 -->
+		<!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
+		
+		<!-- 파일업로드_섬네일 -->
+		<dependency>
+		    <groupId>net.coobird</groupId>
+		    <artifactId>thumbnailator</artifactId>
+		    <version>0.4.20</version>
+		</dependency>
+		
 
 	</dependencies>
 	<build>

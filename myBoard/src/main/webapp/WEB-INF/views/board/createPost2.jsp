@@ -43,12 +43,10 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">게시글을 등록합니다.</div>
 			<div class="panel-body">
-				<form id="createPostForm" role="form" action=createPost method="post" 
-				enctype="multipart/form-data"><!-- 파일업로드 -->
+				<form id="createPostForm" role="form" action=createPost method="post">
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<div class="form-group">
-						<label for="title">제목:</label> 
-						<input type="text" class="form-control title" placeholder="제목을 입력하세요" id="title" name="title">
+						<label for="title">제목:</label> <input type="text" class="form-control title" placeholder="제목을 입력하세요" id="title" name="title">
 					</div>
 					<div class="form-group">
 						<label for="content">내용:</label>
@@ -60,12 +58,8 @@
 						value='<sec:authentication property="principal.username"/>' readonly="readonly">
 						<%-- <input type="text" class="form-control" id="writer" name="writer" value="${createPostResult.writer}" readonly="readonly"> --%>
 					</div>
-					<div class="form-group">
-						<label for="files">파일첨부</label> 
-						<input type="file" class="form-control files" id="files" name="files" multiple="multiple"> <!-- multiple="multiple" 첨부파일 여러개 선택할수있는 속성 -->
-					</div>
 					<button id="resetBtn" type="reset" class="btn common-btn">초기화</button>
-					<button id="submitBtn" type="submit" class="btn common-btn" style="float:right;">등록</button>
+					<button id="submitBtn" type="button" class="btn common-btn" style="float:right;">등록</button>
 				</form>
 			</div>
 		</div>
@@ -94,49 +88,6 @@
 	<!-- /.modal -->
 
 <script type="text/javascript">
-	// 파일업로드
-	const formObj = document.querySelector("#createPostForm");
-	
-	document.querySelector("#submitBtn").addEventListener("click", e => {
-		 //button type="submit"
-	    e.stopPropagation(); // 현재 이벤트가 상위 요소로 전파되지 않도록 막음
-	    e.preventDefault(); // 페이지가 새로 고침되는 것을 막고, 대신 자바스크립트로 폼 제출을 처리
-	
-	    const fileRegExp = /(.*?)\.(jpg|jpeg|JPG|JPEG|png|PNG|gif|GIF|bmp|BMP)$/;
-	    
-	
-	    // file suffix check(파일 확장자로 외부 공격을 막음)
-        // 파일 확장자를 검사하여 허용된 이미지 파일만 업로드할 수 있게 합니다.
-    	// 이는 악성 스크립트나 다른 공격을 포함할 수 있는 허용되지 않은 파일의 업로드를 방지하여 보안성을 높입니다.
-	    const fileInput = document.querySelector("input[name='files']");
-	    
-	    
-	    // <input type="file" class="form-control files" id="files" name="files" multiple="multiple">
-	    console.dir(fileInput); // dir 속성> files > file의 list를 볼 수 있음
-	    console.log(fileInput);
-	    
-/* 	    if (fileInput && !fileRegExp.test(fileInput.value)) {
-	        alert("Invalid file type");
-	        return;
-	    } */
-
-	    
-	    const fileArr = fileInput.files;
-	    
-	    if(fileArr && fileArr.length > 0) { // 0보다 크다는 건 첨부 파일이 있다.
-	    	for(const file of fileArr) {
-	    		if(file.name.match(fileRegExp)){ // 첨부파일에 올린 파일과 fileRegExp내가 허용한 파일 확장자(이미지)를 match를 한다.
-	    			alert("첨부 확장자 위반")
-	    			break;
-	    		}
-	    		return;
-	    	}
-	    }
-	    
-	    //formObj.submit();
-	}, false);
-
-	
 	// 값이 전달이되는 지 확인하기위해 log 추가
 	$(function() {
 		// = $(document).ready(function() {

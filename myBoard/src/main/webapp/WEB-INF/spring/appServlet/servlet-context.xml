@@ -22,11 +22,16 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<!-- 파일업로드관련(id="multipartResolver는 고정하기) -->
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
+	</beans:bean>
+	
 	<!-- <context:component-scan base-package="org.project.*" /> -->
 	<!-- 컨트롤러 / 예외처리 -->
 	<context:component-scan base-package="org.project.controller" />
 	<context:component-scan base-package="org.project.exception" />
-	
+	<context:component-scan base-package="org.project.util" />
 	
 	
 </beans:beans>
