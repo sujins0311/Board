@@ -20,12 +20,10 @@
 	<!-- Processes application requests -->
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet
-		</servlet-class>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml
-			</param-value>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
 		
 		<!-- ERORR 404 예외처리 -->
@@ -34,6 +32,15 @@
 			<param-value>true</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		
+		<!-- 파일업로드 -->
+		<multipart-config>
+			<location>C:\\upload\\tmp</location> <!-- 저장경로 -->
+			<max-file-size>20971520</max-file-size> <!--최대크기 1MB * 20 -->
+			<max-request-size>41943040</max-request-size><!-- 1MB * 40 -->
+			<file-size-threshold>20971520</file-size-threshold> <!-- 1MB * 20 -->
+		</multipart-config>
+		
 	</servlet>
 		
 	<servlet-mapping>

@@ -1,8 +1,12 @@
 package org.project.controller;
 
+import java.nio.file.Files;
+import java.util.Arrays;
+
 import org.project.domain.BoardVO;
 import org.project.domain.PagingDTO;
 import org.project.service.BoardService;
+import org.project.util.UpDownUtile;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.project.domain.Criteria;
 
@@ -28,11 +33,15 @@ import lombok.extern.log4j.Log4j;
 public class BoardController {
 
 	private BoardService service;
+	private UpDownUtile upDownUtile; //파일업로드
 
-	// 목록
+	// 게시글목록
 	// http://localhost:8080/board/getPostList
 	@GetMapping("/getPostList")
-	public void getPostList(Criteria cri, Model model) {
+	public void getPostList(
+			Criteria cri, 
+			Model model) {
+		
 		log.info("Criteria: " + cri);
 
 		model.addAttribute("list", service.getPostList(cri)); //게시글목록
@@ -42,42 +51,32 @@ public class BoardController {
 		model.addAttribute("pageMaker", new PagingDTO(cri, total)); //페이징
 	}
 	
-	
-//	// 등록 + 파일업로드 (작성중)
-//	@GetMapping("Upload") // getUpload.jsp
-//	public void Upload() {
-//		log.info("/Upload");		
-//	}
-//
-//	// 등록 + 파일업로드 (작성중)
-//	@PostMapping("/Upload") // Upload.jsp
-//	public String createPost1(BoardVO boardVO, RedirectAttributes rttr) {
-//		log.info("/createPost1" + boardVO);
-//
-//		service.createPost(boardVO); // 게시글 등록(DB)
-//		rttr.addFlashAttribute("createPostResult", boardVO.getBno()); // 게시글 번호 전달(jsp에서 중복 확인)
-//		return "redirect:/board/getPostList";
-//	}
-	
 
-	// 조회페이지
+	// 게시글조회
 	// http://localhost:8080/board/getPost?bno=1
 	@GetMapping("getPost") // getPost.jsp
-	public void getPost(@RequestParam("bno") Long bno,Model model,
+	public void getPost(
+			@RequestParam("bno") Long bno,
+			Model model,
 			@ModelAttribute("cri") Criteria cri) {
+		
 		log.info("getPost");
 		model.addAttribute("getPostResult", service.getPost(bno));
 	}
 	
 
-	// 삭제 > 조회 페이지에서 삭제버튼 > 모달창 > 게시글 목록페이지
+	// 게시글삭제 (> 조회 페이지에서 삭제버튼 > 모달창 > 게시글 목록페이지)
 	// http://localhost:8080/board/deletePost?bno=1
 	// 현재 application/x-www-form-urlencoded를 받음
 	@PreAuthorize("hasAnyRole('principal.username == #boardVO.writer','ROLE_ADMIN')")
 	@PostMapping("deletePost")
-	public String deletePost(@RequestParam("bno") Long bno, RedirectAttributes rttr, 
+	public String deletePost(
+			@RequestParam("bno") Long bno, 
+			RedirectAttributes rttr, 
 			@ModelAttribute("cri") Criteria cri) {
-		log.info("/deletePostResult" + bno);
+		
+		log.info("deletePost: " + bno);
+		
 		if(service.deletePost(bno)) {
 			rttr.addFlashAttribute("deletePostResult", bno);
 		}
@@ -117,12 +116,15 @@ public class BoardController {
 //	}
 	
 	
-	// 수정페이지
+	// 게시글수정
 	// http://localhost:8080/board/modifyPost?bno=10
 	@PreAuthorize("hasAnyRole('principal.username == #boardVO.writer','ROLE_ADMIN')")
-	@GetMapping({"modifyPost"}) // modifyPost.jsp
-	public void modifyPost(@RequestParam("bno") Long bno,Model model, 
+	@GetMapping({"modifyPost"})
+	public void modifyPost(
+			@RequestParam("bno") Long bno, 
+			Model model, 
 			@ModelAttribute("cri") Criteria cri) {
+		
 		log.info("modifyPost");
 		model.addAttribute("modifyPostResult", service.getPost(bno));
 	}
@@ -132,9 +134,12 @@ public class BoardController {
 	// > 수정한 form을 받아 DB에 저장 > 모달창(수정완료) > 회원조회(RedirectAttributes)
 	@PreAuthorize("hasAnyRole('principal.username == #boardVO.writer','ROLE_ADMIN')")
 	@PostMapping("modifyPost")
-	public String modifyPost(BoardVO boardVO, RedirectAttributes rttr, 
+	public String modifyPost(
+			BoardVO boardVO, 
+			RedirectAttributes rttr, 
 			@ModelAttribute("cri") Criteria cri) {
-		log.info("/modifyPost" + boardVO);
+		
+		log.info("boardVO: " + boardVO);
 		
 		if (service.modifyPost(boardVO)) {
 			rttr.addFlashAttribute("modifyPostResult", boardVO.getBno());
@@ -183,14 +188,29 @@ public class BoardController {
 	public void createPost() {
 	}
 
+	
+
 	@PostMapping("createPost") // createPost.jsp
 	@PreAuthorize("isAuthenticated()") //인증된 사용자만 해당 메소드에 접근할 수 있다. //isAuthenticated()"는 현재 사용자가 인증되었는지를 확인하는 시큐리티 내장메소드
-	public String createPost(BoardVO boardVO, RedirectAttributes rttr) {
-		log.info("/createPost" + rttr);
-
-		service.createPost(boardVO); // 게시글 등록(DB)
-		rttr.addFlashAttribute("createPostResult", boardVO.getBno()); // 게시글 번호 전달(jsp에서 중복 확인)
-		log.info("/게시글전달 bno" + boardVO.getBno());
+	public String createPost(
+			BoardVO boardVO,
+			@RequestParam(
+					value = "files", // inputTypeName: files
+					required = false // 파일이 없을 수도 있다.
+					) MultipartFile[] multipartFiles,
+			RedirectAttributes rttr) {
+		
+		log.info("boardVO: " + boardVO);
+		
+		log.info("----------------------------------------------");
+		log.info(Arrays.toString(multipartFiles)); //MultipartFile[]이 배열이고, to String 으로 받음
+		
+		upDownUtile.uploadFormPost(multipartFiles);
+		
+//		service.createPost(boardVO); // 게시글 등록(DB)
+//		log.info("/게시글전달 bno" + boardVO.getBno());
+//		rttr.addFlashAttribute("createPostResult", boardVO.getBno()); // 게시글 번호 전달(jsp에서 중복 확인)
+		
 		return "redirect:/board/getPostList";
 	}
 	
