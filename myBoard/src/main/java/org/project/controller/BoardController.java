@@ -2,7 +2,9 @@ package org.project.controller;
 
 import java.nio.file.Files;
 import java.util.Arrays;
+import java.util.List;
 
+import org.project.domain.AttachVO;
 import org.project.domain.BoardVO;
 import org.project.domain.PagingDTO;
 import org.project.service.BoardService;
@@ -200,16 +202,19 @@ public class BoardController {
 					) MultipartFile[] multipartFiles,
 			RedirectAttributes rttr) {
 		
-		log.info("boardVO: " + boardVO);
+		log.info("boardVO: " + boardVO);//INFO : org.project.controller.BoardController - boardVO: BoardVO(bno=null, title=5, content=5, writer=ppoosumi, createdDate=null, updatedDate=null, replyCnt=0, attachVOList=null)
 		
 		log.info("----------------------------------------------");
-		log.info(Arrays.toString(multipartFiles)); //MultipartFile[]이 배열이고, to String 으로 받음
+		log.info(Arrays.toString(multipartFiles)); // MultipartFile[]이 배열이고, to String 으로 받음
 		
-		upDownUtile.uploadFormPost(multipartFiles);
+		// 브라우저 업로드 파일이 서버로 전달 된 것을 받아 > upDownUtile로 전달
+		// List타압의 attachVOList에 담아 > boardVO의 AttachVOList에 할당
+		List<AttachVO> attachVOList = upDownUtile.uploadFormPost(multipartFiles); //jpg //[AttachVO(ano=null, bno=null, uuid=a2e52153-afd0-45c8-86a1-a10ba0738ec1, fileName=a2e52153-afd0-45c8-86a1-a10ba0738ec1_토끼1.jpg)]
+		boardVO.setAttachVOList(attachVOList);//BoardVO(bno=null, title=5, content=5, writer=ppoosumi, createdDate=null, updatedDate=null, replyCnt=0, attachVOList=[AttachVO(ano=null, bno=null, uuid=a2e52153-afd0-45c8-86a1-a10ba0738ec1, fileName=a2e52153-afd0-45c8-86a1-a10ba0738ec1_토끼1.jpg)])
 		
-//		service.createPost(boardVO); // 게시글 등록(DB)
-//		log.info("/게시글전달 bno" + boardVO.getBno());
-//		rttr.addFlashAttribute("createPostResult", boardVO.getBno()); // 게시글 번호 전달(jsp에서 중복 확인)
+		service.createPost(boardVO); // 게시글 등록(DB) + 파일 업로드가 추가됨
+		log.info("/게시글전달 bno" + boardVO.getBno());
+		rttr.addFlashAttribute("createPostResult", boardVO.getBno()); // 게시글 번호 전달(jsp에서 중복 확인)
 		
 		return "redirect:/board/getPostList";
 	}

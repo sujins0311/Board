@@ -3,6 +3,7 @@ package org.project.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.project.domain.AttachVO;
 import org.project.domain.BoardVO;
 import org.project.domain.Criteria;
 
@@ -14,10 +15,12 @@ public interface BoardMapper {
 	public List<BoardVO> getListWithPaging(Criteria cri); //getPostList(get)
 	public int getTotalCount(Criteria cri); // getPostList(get)
 	
-	public void insert(BoardVO board); //createPost(post)
+	public int insert(BoardVO boardVO); //createPost(post)
 	public BoardVO read(Long bno); //getPost(get)
 	public int delete(Long bno); //deletePost(delete)
 	public int modify(BoardVO boardVO); // modifyPost(post)
 	
 	public void updateReplyCnt(@Param("bno") Long bno, @Param("itemsPerPage") int itemsPerPage);
+	
+	public int insertAttach(AttachVO attachVO);
 	}

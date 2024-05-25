@@ -2,9 +2,11 @@ package org.project.service;
 
 import java.util.List;
 
+import org.project.domain.AttachVO;
 import org.project.domain.BoardVO;
 import org.project.mapper.BoardMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.project.domain.Criteria;
 
 import lombok.AllArgsConstructor;
@@ -17,12 +19,36 @@ public class BoardServiceImpl implements BoardService {
 
 	private BoardMapper mapper;
 	
+	@Transactional
 	@Override
-	public void createPost(BoardVO boardVO) {
+	public Long createPost(BoardVO boardVO) {
 		boardVO.setCreatedDate();
 		log.info("createPost......" + boardVO);
 		mapper.insert(boardVO);
+		Long bno = boardVO.getBno();
+		
+		List<AttachVO> attachVOList = boardVO.getAttachVOList();
+//		if(attachVOList != null && attachVOList.isEmpty()) {
+//			// attachVOList가 null이 아니고 비어있지 않은 경우에만 실행
+//			for(AttachVO attachVO: attachVOList) {
+//				attachVO.setBno(bno);
+//				mapper.insertAttach(attachVO);
+//			}
+//		}
+	    if(attachVOList != null && attachVOList.size() > 0){
+	        for (AttachVO attachVO: attachVOList) {
+	        	attachVO.setBno(bno);
+	          mapper.insertAttach(attachVO);
+	        }
+	      }
+		return bno;
 	}
+	
+//	public void createPost(BoardVO boardVO) {
+//		boardVO.setCreatedDate();
+//		log.info("createPost......" + boardVO);
+//		mapper.insert(boardVO);
+//	}
 
 	@Override
 	public BoardVO getPost(Long bno) {

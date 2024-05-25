@@ -53,3 +53,14 @@ CREATE TABLE persistent_logins (
     last_used TIMESTAMP NOT NULL
 );
 
+
+CREATE TABLE attach (
+    ano BIGINT PRIMARY KEY AUTO_INCREMENT,
+    bno BIGINT not null,
+    uuid VARCHAR(50) NOT NULL,
+    fileName VARCHAR(100) NOT NULL,
+  CONSTRAINT fk_attach_board FOREIGN KEY (bno) REFERENCES tbl_board (bno)
+) DEFAULT CHARSET = utf8;
+
+create index IDEX_attach on attach (bno desc, ano ASC);
+
