@@ -12,7 +12,7 @@ public interface BoardService {
 	public List<BoardVO> getPostList(Criteria cri); //get(페이징ㅇ)
 	public int getTotal(Criteria cri); //get(페이징ㅇ)
 	
-	public void createPost(BoardVO boardVO); //post
+	public Long createPost(BoardVO boardVO); //post
 	public BoardVO getPost(Long bno); //get
 	public boolean deletePost(Long bno); //delete
 	public boolean modifyPost(BoardVO boardVO); //update
