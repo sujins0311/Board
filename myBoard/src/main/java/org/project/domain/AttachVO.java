@@ -13,5 +13,13 @@ public class AttachVO {
 	//private boolean fileType;
 
 	//private Long bno;
+	
+	// FullName
+//	public String getFullName() {
+//		if(ano == null) {
+//			return null;
+//		}
+//		return uuid + "_" + fileName;
+//	}
 
 }
