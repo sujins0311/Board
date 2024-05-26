@@ -18,7 +18,7 @@ import net.coobird.thumbnailator.Thumbnails;
 
 @Component
 @Log4j
-public class UpDownUtile {
+public class UpDownUtil {
 
 	private final String UPLOAD = "C:\\upload\\tmp";
 
@@ -95,4 +95,18 @@ public class UpDownUtile {
 		return list; // 사용자업로드파일 > attachVO > list > DB로 return
 	}
 
+	public void deleteFiles(String[] fileNames) {
+		
+		if(fileNames == null || fileNames.length == 0) {// null이거나 비어 있으면 아무 작업도 수행하지 않고 메서드를 종료
+			return;
+		}
+		
+		for(String fileName: fileNames) {
+			
+			File orgFile = new File(UPLOAD +  File.separator + fileName);
+			File thumbFile = new File(UPLOAD +  File.separator + "s_" + fileName);
+			
+		}//end for
+		
+	}
 }
