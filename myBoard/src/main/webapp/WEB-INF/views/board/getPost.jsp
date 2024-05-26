@@ -58,6 +58,26 @@
             value='<c:out value="${getPostResult.writer}"/>' readonly="readonly">
         </div>
         
+        <div class="form-group">
+	        <label>첨부파일</label>
+			<div class="attachList d-flex flex-column">
+			    <c:if test="${not empty getPostResult.attachVOList}">
+				    <c:forEach items="${getPostResult.attachVOList}" var="attach">
+				    	<c:if test="${attach.ano != null}" > 
+				    	<!-- 첨부파일이 null일경우 = 첨부파일이 없을 경우 출력 x AttachVO(ano=null, bno=159, uuid=null, fileName=null)-->
+				        	<%-- <div>${attach}</div> --%>
+				        	<%-- <div>${attach.fullName}</div> --%>
+				        	<a href="/files/${attach.fileName}" target="_blank"> <!-- a태그의 속성 target을 사용하여 새탭을 띄워 원본파일을 띄운다. -->
+				        		<img src="/files/s_${attach.fileName}" class="img-fluid" alt="첨부 이미지"> <!-- 섬네일이미지 보여주기 -->
+				        	</a>
+				        </c:if>
+				    </c:forEach>
+			    </c:if>
+			</div>
+		</div>
+		
+		
+        
 <%--         <div class="form-group">
           <label>작성일</label> <input class="form-control" name='createdDate'
             value='<c:out value="${getPostResult.createdDate}"/>' readonly="readonly">
@@ -79,6 +99,8 @@
 							onclick="modifyPost(${getPostResult.bno})">수정/삭제</button>
 						</c:if>
 				</sec:authorize>
+
+
 
 
 
@@ -176,6 +198,7 @@ aria-labelledby="myModalLabel" aria-hidden="true">
 
 <script type="text/javascript" src="/resources/js/reply.js"></script>
 <script type="text/javascript">
+
 // $(document).ready // 제이쿼리 방식
 // window.onload = function() {} // 기본 JS 방식
 

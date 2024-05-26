@@ -61,9 +61,13 @@ public class BoardController {
 			@RequestParam("bno") Long bno,
 			Model model,
 			@ModelAttribute("cri") Criteria cri) {
-		
 		log.info("getPost");
+		
+		BoardVO boardVO = service.getPost(bno);
+		log.info("boardVO: " + boardVO);
+		
 		model.addAttribute("getPostResult", service.getPost(bno));
+		log.info(service.getPost(bno));
 	}
 	
 

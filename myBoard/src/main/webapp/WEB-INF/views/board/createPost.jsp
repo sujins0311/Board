@@ -94,27 +94,21 @@
 	<!-- /.modal -->
 
 <script type="text/javascript">
- const formObj = document.querySelector("#createPostForm")
 
 	// button type="submit"
 	// e.stopPropagation() 현재 이벤트가 상위 요소로 전파되지 않도록 막음
 	// e.preventDefault() 페이지가 새로 고침되는 것을 막고, 대신 자바스크립트로 폼 제출을 처리
-	document.querySelector(".submitBtn").addEventListener("click", e => {
+/* 	document.querySelector(".submitBtn").addEventListener("click", e => {
 	    e.stopPropagation();
-	    e.preventDefault();
-	
+	    e.preventDefault(); */
+	    
+    // 파일 업로드 파일 확장자 검사
+    function checkFileExtensions(fileInput) {
 	    const fileReg = /(.*?)\.(gif|png|jpg|jpeg|bmp)$/;
-	
-	    // file suffix check(파일 확장자로 외부 공격을 막음)
-	    // 파일 확장자를 검사하여 허용된 이미지 파일만 업로드할 수 있게 합니다.
-	   	// 이는 악성 스크립트나 다른 공격을 포함할 수 있는 허용되지 않은 파일의 업로드를 방지하여 보안성을 높입니다.
-	    const fileInput = document.querySelector("input[name='files']");
-	
+	    debugger;
 	    // dir 속성> files > file의 list를 볼 수 있음
 	    const fileArr = fileInput.files;
 	    
-
-	
 	    if(fileArr && fileArr.length > 0){ // 0보다 크다는 건 첨부 파일이 있다.
 	        for (const file of fileArr) {
 	            if(!file.name.match(fileReg)) { // 첨부파일에 올린 파일과 fileRegExp내가 허용한 파일 확장자(이미지)를 match를 한다.
@@ -123,10 +117,9 @@
 	            }
 	        }
 	    }
-	
-	    formObj.submit();
-	
-	},false)
+	    return;
+	}
+
 
 		
  		// 값이 전달이되는 지 확인하기위해 log 추가
@@ -138,23 +131,35 @@
 			$("#submitBtn").on("click", function(event) {
 				var titleValue = $("#title").val();
 				var contentValue = $("#content").val();
-				
-				if (titleValue !== "" && contentValue !== "") {
+				debugger;
+				if (titleValue === "" && contentValue === "") { // 제목 또는 내용이 비어 있는 경우
+					alert("제목 또는 내용이 비어 있습니다.");
+					return;
+				}
 			        // 값이 유효한 경우 모달 열기
 			        console.log("제목:", titleValue);
 			        console.log("내용:", contentValue);
-					 
-					}else{
-					alert("제목 또는 내용이 비어 있습니다.");
-				}
-				
-				$('#confirmModal').modal('show');
+			        
+			        // 파일업로드_파일 확장자 검사하는 유틸리티 함수 호출
+					// file suffix check(파일 확장자로 외부 공격을 막음)
+				    // 파일 확장자를 검사하여 허용된 이미지 파일만 업로드할 수 있게 한다.
+				   	// 이는 악성 스크립트나 다른 공격을 포함할 수 있는 허용되지 않은 파일의 업로드를 방지하여 보안성을 높인다.
+		            const fileInput = document.querySelector("input[name='files']");
+			        
+		            if (!checkFileExtensions(fileInput)) {
+		            	return; // 올바르지 않은 파일 확장자이므로 종료
+		            }
+		            
+		            $('#confirmModal').modal('show');
+
 			});
 			
 
 		
 		// 모달창에서 확인 버튼을 누르면 클릭이벤트
 		$("#confirmSubmitBtn").on("click", function() {
+			debugger;
+
 	        //모달 숨김 
 	        $('#confirmModal').hide();
 	        $('.modal-backdrop').hide();

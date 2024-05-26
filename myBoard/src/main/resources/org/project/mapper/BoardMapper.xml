@@ -7,12 +7,45 @@
 <mapper namespace="org.project.mapper.BoardMapper">
 
 
-	<!-- getPostList(get) -->
+	<!-- getPost(get) -->
+	<!-- bno기준으로, attach를 board에 join > BoardVO에 매핑 -->
+	<resultMap id="boardMap" type="org.project.domain.BoardVO">
+		<id property="bno" column="bno" /> <!-- id가 group by -->
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="writer" column="writer" />
+		<result property="createdDate" column="createdDate" />
+		<result property="updatedDate" column="updatedDate" />
+		<collection property="attachVOList" resultMap="attachMap" /> 
+	</resultMap>
+	<!-- resultMap은 MyBatis에서 SQL 쿼리 결과를 자바 객체로 매핑하기 위해 사용 -->
+	<!-- BoardVO객체에 여러개의 AttachVO객체가 연관되어 있으므로 collection -->
+	<!-- resultType: 단일객체 매핑(매핑될 클래스 명), resultMap: 사용자가 원하는 POJO 클래스(VO) 매핑  -->
+
+
+	<resultMap id="attachMap" type="org.project.domain.AttachVO">
+		<result property="ano" column="ano" />
+		<result property="bno" column="bno" />
+		<result property="uuid" column="uuid" />
+		<result property="fileName" column="fileName" />
+	</resultMap>
+	
+	
+	<select id="read" resultMap="boardMap">
+		SELECT *
+			FROM tbl_board b 
+			LEFT OUTER JOIN attach a
+			ON b.bno = a.bno
+		WHERE b.bno = #{bno}
+	</select>
+	
+	
 	<select id="getList" resultType="org.project.domain.BoardVO">
         <![CDATA[
-        SELECT * FROM tbl_board WHERE bno > 0
+        SELECT * FROM tbl_board WHERE bno > 0 order by bno desc
         ]]>
 	</select>
+
 
 	<!-- createPost(post) -->
 	<insert id="insert" parameterType="org.project.domain.BoardVO">
@@ -25,9 +58,9 @@
 
 
 	<!-- getPost(get) -->
-	<select id="read" resultType="org.project.domain.BoardVO">
+<!-- 	<select id="read" resultType="org.project.domain.BoardVO">
 		SELECT * FROM tbl_board WHERE bno = #{bno}
-	</select>
+	</select> -->
 
 
 	<!-- deletePost(delete) -->
@@ -42,6 +75,7 @@
 		SET title = #{title}, content = #{content}, writer = #{writer}, updatedDate = #{updatedDate}
 		WHERE bno = #{bno}
 	</update>
+
 
 	<!-- getPostsByPage(get) -->
 	<!-- DB는 0번째부터 시작하므로 (currentPageNum - 1) -->
