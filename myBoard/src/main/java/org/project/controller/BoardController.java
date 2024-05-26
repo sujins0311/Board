@@ -8,7 +8,7 @@ import org.project.domain.AttachVO;
 import org.project.domain.BoardVO;
 import org.project.domain.PagingDTO;
 import org.project.service.BoardService;
-import org.project.util.UpDownUtile;
+import org.project.util.UpDownUtil;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.fasterxml.jackson.databind.introspect.TypeResolutionContext.Empty;
+
 import org.project.domain.Criteria;
 
 import lombok.AllArgsConstructor;
@@ -35,7 +38,7 @@ import lombok.extern.log4j.Log4j;
 public class BoardController {
 
 	private BoardService service;
-	private UpDownUtile upDownUtile; //파일업로드
+	private UpDownUtil upDownUtile; //파일업로드
 
 	// 게시글목록
 	// http://localhost:8080/board/getPostList
@@ -95,6 +98,28 @@ public class BoardController {
 		// board/getPostList로 리다이렉트하면 text/html타입으로 응답하는데 ajax는 text/*는 모두 text로 퉁침 
 		return "redirect:/board/getPostList";
 	}
+	
+//	@PreAuthorize("hasAnyRole('principal.username == #boardVO.writer','ROLE_ADMIN')")
+//	@PostMapping("deletePost")
+//	public String deletePost(
+//			@RequestParam("bno") Long bno, 
+//			RedirectAttributes rttr, 
+//			@ModelAttribute("cri") Criteria cri) {
+//		
+//		log.info("deletePost: " + bno);
+//		
+//		if(service.deletePost(bno)) {
+//			rttr.addFlashAttribute("deletePostResult", bno);
+//		}
+//		
+//		rttr.addAttribute("currentPageNum",cri.getCurrentPageNum()); // 
+//		rttr.addAttribute("itemPerPage",cri.getItemsPerPage());
+//		rttr.addAttribute("type",cri.getType());
+//		rttr.addAttribute("keyword",cri.getKeyword());
+//			
+//		// board/getPostList로 리다이렉트하면 text/html타입으로 응답하는데 ajax는 text/*는 모두 text로 퉁침 
+//		return "redirect:/board/getPostList";
+//	}
 
 //	@PostMapping("deletePost")
 //	public String deletePost(@RequestParam("bno") Long bno, RedirectAttributes rttr, 
@@ -141,22 +166,39 @@ public class BoardController {
 	@PreAuthorize("hasAnyRole('principal.username == #boardVO.writer','ROLE_ADMIN')")
 	@PostMapping("modifyPost")
 	public String modifyPost(
-			BoardVO boardVO, 
+			BoardVO boardVO,
+			@RequestParam(value = "files",required = false) MultipartFile[] multipartFiles,
+			@RequestParam(value = "anos", required = false) Long[] anos,
+			@RequestParam(value = "fullNames", required = false) String[] fullNames,
 			RedirectAttributes rttr, 
 			@ModelAttribute("cri") Criteria cri) {
 		
 		log.info("boardVO: " + boardVO);
 		
-		if (service.modifyPost(boardVO)) {
+		log.info("----------------------------------------------");
+		log.info(Arrays.toString(multipartFiles)); // MultipartFile[]이 배열이고, to String 으로 받음
+		
+		// 브라우저 업로드 파일이 서버로 전달 된 것을 받아 > upDownUtile로 전달
+		// List타압의 attachVOList에 담아 > boardVO의 AttachVOList에 할당
+		List<AttachVO> attachVOList = upDownUtile.uploadFormPost(multipartFiles);
+		
+		if (attachVOList != null && !attachVOList.isEmpty()) { // attachVOList가 null이 아니고 비어 있지 않을 때 실행할 코드
+			boardVO.setAttachVOList(attachVOList);
+		}
+		
+		if (service.modifyPost(boardVO, anos)) {
+			// 삭제할 파일들 삭제
+			upDownUtile.deleteFiles(fullNames);
 			rttr.addFlashAttribute("modifyPostResult", boardVO.getBno());
 		}
 		
-		rttr.addAttribute("currentPageNum", cri.getCurrentPageNum());
-		rttr.addAttribute("itemPerPage", cri.getItemsPerPage());
-		rttr.addAttribute("type",cri.getType());
-		rttr.addAttribute("keyword",cri.getKeyword());
+
+//		rttr.addAttribute("currentPageNum", cri.getCurrentPageNum());
+//		rttr.addAttribute("itemPerPage", cri.getItemsPerPage());
+//		rttr.addAttribute("type",cri.getType());
+//		rttr.addAttribute("keyword",cri.getKeyword());
 		
-		return "redirect:/board/getPostList";
+		return "redirect:/board/getPostList" + cri.getListLink();
 	}
 	
 //	@PostMapping("modifyPost")

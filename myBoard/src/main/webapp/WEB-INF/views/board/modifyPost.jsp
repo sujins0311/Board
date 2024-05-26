@@ -22,32 +22,32 @@
 			<!-- /.panel-heading -->
 			<div class="panel-body">
 
-				<form role="form" action="modifyPost" method="post" style="display: inline;">
-				
-					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>  
-			
+				<form role="form" action="modifyPost" method="post" style="display: inline;" 
+				enctype="multipart/form-data">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>  		
 					<input type='hidden' name='currentPageNum' value='<c:out value="${cri.currentPageNum }"/>'> 
 					<input type='hidden' name='itemPerPage' value='<c:out value="${cri.itemsPerPage }"/>'>
 					<input type='hidden' name='type' value='<c:out value="${cri.type }"/>'>
 					<input type='hidden' name='keyword' value='<c:out value="${cri.keyword }"/>'>
-
-
 					<div class="form-group">
-						<label>#번호</label> <input class="form-control" name='bno' value='<c:out value="${modifyPostResult.bno}"/>' readonly="readonly">
+						<label>#번호</label> 
+						<input class="form-control" name='bno' value='<c:out value="${modifyPostResult.bno}"/>' readonly="readonly">
 					</div>
-
 					<div class="form-group">
-						<label for="title">제목</label> <input class="form-control" id="title" name='title' value='<c:out value="${modifyPostResult.title}"/>'>
+						<label for="title">제목</label> 
+						<input class="form-control" id="title" name='title' value='<c:out value="${modifyPostResult.title}"/>'>
 					</div>
-
 					<div class="form-group">
 						<label for="content">내용</label>
 						<textarea class="form-control" rows="3" id="content" name='content'><c:out value="${modifyPostResult.content}" /></textarea>
 					</div>
-
 					<div class="form-group">
 						<label>작성자</label> 
 						<input class="form-control" name='writer' value='<c:out value="${modifyPostResult.writer}"/>' readonly="readonly">
+					</div>
+					<div class="form-group">
+						<label for="files">파일첨부</label> 
+						<input type="file" class="form-control files" id="files" name="files" multiple="multiple"> <!-- multiple="multiple" 첨부파일 여러개 선택할수있는 속성 -->
 					</div>
 
 					<!-- 게시물작성자만 수정/삭제버튼 확인 -->
@@ -63,17 +63,44 @@
 					<!-- <button type="submit" data-oper='modify' class="btn btn-default">수정</button>
 					<button type="submit" data-oper='delete' class="btn btn-danger">삭제</button>
 					<button type="submit" data-oper='list' class="btn btn-info">목록</button> -->
+					
+					<!-- 파일수정/삭제 폼 -->
+					<div class="deleteImages"></div> <!-- form태그에 히든태그를 붙이면 인풋태그가 사라짐 그래서 새 태그를 생성 -->
 				</form>
 				<button class="btn btn-info" onclick="back()" style="display: inline;" >취소</button>
 			</div>
 			<!--  end panel-body -->
-
 		</div>
 		<!--  end panel-body -->
 	</div>
 	<!-- end panel -->
+
+
+        <!-- 첨부파일(이미지) -->
+        <div class="col-lg-12">
+	        <div class="panel">
+		        <label>첨부파일</label>
+				<div class="attachList d-flex flex-row"> <!-- flex-row: 가로로 나열 -->
+				    <c:if test="${not empty modifyPostResult.attachVOList}">
+					    <c:forEach items="${modifyPostResult.attachVOList}" var="attach">
+					    	<c:if test="${attach.ano != null}" >
+				    			 <div class="attachList d-flex flex-column"> <!-- target.closest("div").remove() -->
+					        		<img src="/files/s_${attach.fileName}" alt="첨부 이미지"> <!-- 섬네일이미지 보여주기 -->
+			                        <button class="btn btn-danger removeImgBtn"
+			                                data-ano="${attach.ano}"
+			                                data-fullname="${attach.fileName}"
+			                        >X</button><!-- attach.fileName = uuid + fileName -->
+				        		</div>
+					        </c:if>
+					    </c:forEach>
+				    </c:if>
+				</div>
+			</div>
+		</div>
+		<!-- end 첨부파일(이미지) -->
 </div>
 <!-- /.row -->
+
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -104,6 +131,32 @@ $(document).ready(function() {
 		    }
 		    formObj.submit();
 	  });
+	  
+	    document.querySelector(".attachList").addEventListener("click", (e) => {
+
+	        const target = e.target
+
+	        if(target.tagName !=='BUTTON'){ // DOM 속성에서 tagName이 BUTTON이 아닐경우 종료
+	            return
+	        }
+
+
+	        const ano = target.getAttribute("data-ano")
+	        const fullName = target.getAttribute("data-fullname")
+
+	        if(ano && fullName){
+	            let str = ''
+	            str += `<input type='hidden' name='anos' value='\${ano}'> `
+	            str += `<input type='hidden' name='fullNames' value='\${fullName}'> `
+
+	            console.log("ano ", ano, "fullName " , fullName)
+	            target.closest("div").remove() /* closest("div") 버튼이벤트의 상위 div */
+
+	            document.querySelector(".deleteImages").innerHTML += str
+	        }
+
+
+	    },false)
 
 });
 

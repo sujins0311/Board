@@ -12,6 +12,7 @@ import org.project.domain.Criteria;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
+@Transactional
 @Log4j
 @Service
 @AllArgsConstructor
@@ -28,13 +29,9 @@ public class BoardServiceImpl implements BoardService {
 		Long bno = boardVO.getBno();
 		
 		List<AttachVO> attachVOList = boardVO.getAttachVOList();
-//		if(attachVOList != null && attachVOList.isEmpty()) {
-//			// attachVOList가 null이 아니고 비어있지 않은 경우에만 실행
-//			for(AttachVO attachVO: attachVOList) {
-//				attachVO.setBno(bno);
-//				mapper.insertAttach(attachVO);
-//			}
-//		}
+
+		// attachVOList가 null이 아니고 비어있지 않은 경우에만 실행
+		// if(attachVOList != null && !attachVOList.isEmpty()) {
 	    if(attachVOList != null && attachVOList.size() > 0){
 	        for (AttachVO attachVO: attachVOList) {
 	        	attachVO.setBno(bno);
@@ -69,11 +66,24 @@ public class BoardServiceImpl implements BoardService {
 		return mapper.delete(bno) == 1;
 	}
 
-
 	@Override
-	public boolean modifyPost(BoardVO boardVO) {
+	public boolean modifyPost(BoardVO boardVO, Long[] attachFileNums) {
 		boardVO.setUpdatedDate();
 	    log.info("modifyPost.....");
+	    
+		List<AttachVO> attachVOList = boardVO.getAttachVOList();
+		
+		if(attachFileNums != null && attachFileNums.length >0) {
+			mapper.deleteAttachFiles(attachFileNums);
+		}
+			
+		// attachVOList가 null이 아니고 비어있지 않은 경우에만 실행
+		if(attachVOList != null && !attachVOList.isEmpty()) {
+	        for (AttachVO attachVO: attachVOList) {
+	        	attachVO.setBno(boardVO.getBno());
+	          mapper.insertAttach(attachVO);
+	        }
+	      }
 	    return mapper.modify(boardVO) == 1;
 	}
 

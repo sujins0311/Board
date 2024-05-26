@@ -44,13 +44,13 @@ public class Criteria {
 		// type.split("") 빈문자열을 구분자로 hi = h,i
 	}
 	
-//	// ****getListLink
-//	public String getListLink() {
-//		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("")
-//				.queryParam("currentPageNum", this.getCurrentPageNum())
-//				.queryParam("itemsPerPage", this.getItemsPerPage())
-//				.queryParam("type", this.getType())
-//				.queryParam("keyword", this.getKeyword());
-//		return builder.toUriString();
-//	}
+	// ****getListLink
+	public String getListLink() {
+		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("")
+				.queryParam("currentPageNum", this.getCurrentPageNum())
+				.queryParam("itemsPerPage", this.getItemsPerPage())
+				.queryParam("type", this.getType())
+				.queryParam("keyword", this.getKeyword());
+		return builder.toUriString();
+	}
 }

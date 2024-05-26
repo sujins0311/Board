@@ -151,9 +151,19 @@
 
 	<!-- 파일업로드 -->
 	<insert id="insertAttach" parameterType="org.project.domain.BoardVO">
-	INSERT INTO attach (bno, uuid, fileName)
-	VALUES(#{bno}, #{uuid}, #{fileName})
+		INSERT INTO attach (bno, uuid, fileName)
+		VALUES(#{bno}, #{uuid}, #{fileName})
 	</insert>
+	
+	<!-- 파일업로드(수정/삭제) -->
+	<delete id="deleteAttachFiles" parameterType="java.lang.Long">
+		DELETE FROM attach
+		<where>
+		<foreach collection="anos" item="ano" open="ano in(" close=")" separator=",">
+			#{ano}
+		</foreach>
+		</where>
+	</delete>
 
 	
 

@@ -57,7 +57,7 @@
           <label>작성자</label> <input class="form-control" name='writer'
             value='<c:out value="${getPostResult.writer}"/>' readonly="readonly">
         </div>
-        
+        <!-- 첨부파일(이미지) -->
         <div class="form-group">
 	        <label>첨부파일</label>
 			<div class="attachList d-flex flex-column">
