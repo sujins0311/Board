@@ -172,7 +172,6 @@
 	        // 모달제거
 			//$('#confirmModal').remove();
 			
-			
 			//$('.modal-backdrop').remove();
 		});
 

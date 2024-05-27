@@ -55,7 +55,7 @@
 					<sec:authorize access="isAuthenticated()">
 						<c:if test="${pinfo.username eq modifyPostResult.writer || '[ROLE_ADMIN]' eq pinfo.authorities}">
 							<button type="submit" data-oper='modify' class="btn btn-default">수정</button>
-							<button type="submit" data-oper='delete' class="btn btn-danger">삭제</button>
+							<button type="submit" data-oper='delete' class="btn btn-danger removeBtn">삭제</button>
 						</c:if>
 					</sec:authorize>
 					<!-- <button type="submit" data-oper='list' class="btn btn-info">목록</button> -->
@@ -104,7 +104,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	
+	function handleFormSubmit() {
 	  var formObj = $("form");
 	  // button > 'button[type="submit"]'으로 수정
 	  // 이벤트는 엘리먼트랑 되도록 1:1 로 걸어야 한다.
@@ -131,15 +131,14 @@ $(document).ready(function() {
 		    }
 		    formObj.submit();
 	  });
+	}//end handleFormSubmit()
 	  
 	    document.querySelector(".attachList").addEventListener("click", (e) => {
-
 	        const target = e.target
 
 	        if(target.tagName !=='BUTTON'){ // DOM 속성에서 tagName이 BUTTON이 아닐경우 종료
 	            return
 	        }
-
 
 	        const ano = target.getAttribute("data-ano")
 	        const fullName = target.getAttribute("data-fullname")
@@ -155,9 +154,41 @@ $(document).ready(function() {
 	            document.querySelector(".deleteImages").innerHTML += str
 	        }
 
-
 	    },false)
+	    
+	    // 
+	    document.querySelector(".removeBtn").addEventListener("click", e => {
+	        e.stopPropagation();
+	        e.preventDefault();  
+	        //debugger;
+	        
+	        // 삭제할 파일을 hidden 태그를 이용
+	        const fileArr = document.querySelectorAll(".attachList button");
+	        console.log(fileArr);
+	        // dataset:DOMStringMap
+	        // ano: "9"
+	        // fullname: "16e5d92b-df5c-46d3-989f-8345112c5d11_토끼2.jpg"
+	        
+	        if(fileArr && fileArr.length >0){
+	        	
+	        	let str = ''
+	        	
+	        	for(const btn of fileArr){
+	    	        const ano = btn.getAttribute("data-ano")
+	    	        const fullName = btn.getAttribute("data-fullname")
+	    	        
+		            str += `<input type='hidden' name='anos' value='\${ano}'> `
+		            str += `<input type='hidden' name='fullNames' value='\${fullName}'> `
+	        	}//end for
+	        	document.querySelector(".deleteImages").innerHTML += str
+        }//end if
+	        
+        handleFormSubmit();
+	        //actionForm.action = `/board/deletePost/`;
+	        //actionForm.method = "post";
+	        //actionForm.submit();
 
+	    }, false);
 });
 
 </script>
