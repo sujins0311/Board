@@ -80,17 +80,21 @@ public class BoardController {
 	@PreAuthorize("hasAnyRole('principal.username == #boardVO.writer','ROLE_ADMIN')")
 	@PostMapping("deletePost")
 	public String deletePost(
-			@RequestParam("bno") Long bno, 
+			//@RequestParam("bno") Long bno,
+			BoardVO boardVO,
+			@RequestParam(value = "anos", required = false) Long[] anos,
+			@RequestParam(value = "fullNames", required = false) String[] fullNames,
 			RedirectAttributes rttr, 
 			@ModelAttribute("cri") Criteria cri) {
 		
-		log.info("deletePost: " + bno);
+		log.info("deletePost: " + boardVO);
 		
-		if(service.deletePost(bno)) {
-			rttr.addFlashAttribute("deletePostResult", bno);
-		}
-		
-		rttr.addAttribute("currentPageNum",cri.getCurrentPageNum()); // 
+		service.modifyPost(boardVO, anos);
+		service.deletePost(boardVO.getBno());
+		rttr.addFlashAttribute("deletePostResult", boardVO.getBno());
+		upDownUtile.deleteFiles(fullNames);// 로컬에 저장한 파일삭제
+
+		rttr.addAttribute("currentPageNum",cri.getCurrentPageNum());
 		rttr.addAttribute("itemPerPage",cri.getItemsPerPage());
 		rttr.addAttribute("type",cri.getType());
 		rttr.addAttribute("keyword",cri.getKeyword());
