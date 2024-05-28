@@ -44,8 +44,8 @@
 
         <div class="form-group">
           <label>내용</label>
-          <textarea class="form-control content" rows="3" name='content'
-            readonly="readonly"><c:out value="${getPostResult.content}" /></textarea>
+          <textarea class="form-control content" rows="3" style="resize: none;"
+           name='content' readonly="readonly"><c:out value="${getPostResult.content}" /></textarea> <!-- style="resize: none;" 크기 조절 불가 속성 -->
         </div>
         
 <%-- 		<div class="form-group">

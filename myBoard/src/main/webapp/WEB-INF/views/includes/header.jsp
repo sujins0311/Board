@@ -182,6 +182,12 @@ body {
 	margin: 0;
 }
 
+ textarea {
+    resize: none;
+    width: 300px;  /* 원하는 너비 설정 */
+    height: 150px; /* 원하는 높이 설정 */
+}
+
 /* 반응형 웹사이트를 만드는 @media query */
 @media (max-width: 768px) {
 

@@ -63,11 +63,11 @@
 					<!-- <button type="submit" data-oper='modify' class="btn btn-default">수정</button>
 					<button type="submit" data-oper='delete' class="btn btn-danger">삭제</button>
 					<button type="submit" data-oper='list' class="btn btn-info">목록</button> -->
-					<button class="btn btn-info" onclick="back()" style="display: inline;" >취소</button>
+					
 					<!-- 파일수정/삭제 폼 -->
 					<div class="deleteImages"></div> <!-- form태그에 히든태그를 붙이면 인풋태그가 사라짐 그래서 새 태그를 생성 -->
 				</form>
-				
+				<button class="btn btn-info" onclick="back()" style="display: inline;" >취소</button>
 			</div>
 			<!--  end panel-body -->
 		</div>
@@ -104,6 +104,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+	function handleFormSubmit() {
 	  var formObj = $("form");
 	  // button > 'button[type="submit"]'으로 수정
 	  // 이벤트는 엘리먼트랑 되도록 1:1 로 걸어야 한다.
@@ -112,51 +113,27 @@ $(document).ready(function() {
 	  $('button[type="submit"]').on("click", function(e){
 		    e.preventDefault();     
 		    var operation = $(this).data("oper"); //data-oper를 사용해 수정 , 목록으로 이동   
-		    console.log(operation);
-		    
-	        // 삭제할 파일을 hidden 태그를 이용
-	        const fileArr = $(".attachList button");
-	        console.log(fileArr); // dataset:DOMStringMap , ano: "9" ,fullname: "16e5d92b-df5c-46d3-989f-8345112c5d11_토끼2.jpg"
-	        
-	        if(fileArr.length > 0){
-	            let str = '';
-	            
-	            fileArr.each(function() {
-	                const ano = $(this).data("ano"); // 버튼의 data-ano 속성값을 가져옴
-	                const fullName = $(this).data("fullname"); // 버튼의 data-fullname 속성값을 가져옴
-	                
-	                str += `<input type='hidden' name='anos' value='${ano}'> `;
-	                str += `<input type='hidden' name='fullNames' value='${fullName}'> `;
-	            });
-	            
-	            $(".deleteImages").append(str);
-	        }
-		        
+		    console.log(operation);    
 		    if(operation === 'delete'){
 		      formObj.attr("action", "/board/deletePost");
-  
-		    }else if(operation === 'list'){ // 목록(목록이동버튼 주석처리함)
+		    }else if(operation === 'list'){
 		      formObj.attr("action", "/board/getPostList").attr("method","get");	      
 		      var pageNumTag = $("input[name='currentPageNum']").clone();
 		      var amountTag = $("input[name='itemsPerPage']").clone();
 		      var keywordTag = $("input[name='keyword']").clone();
 		      var typeTag = $("input[name='type']").clone();
 		      
-		   	  // 폼 내용을 비우고 복제된 입력 필드를 폼에 추가(Criteria 필드 전송)
 		      formObj.empty();
 		      formObj.append(pageNumTag);
 		      formObj.append(amountTag);
-		      formObj.append(keywordTag);
-		      formObj.append(typeTag);
-		      
+			      formObj.append(keywordTag);
+		      formObj.append(typeTag); 
 		    }
-		    formObj.submit(); //<form role="form" action="modifyPost" method="post"
+		    formObj.submit();
 	  });
-
+	}//end handleFormSubmit()
 	  
-	// 수정
 	// 바닐라JS
-	// 첨부파일 버튼을 눌렀을때 이벤트
     document.querySelector(".attachList").addEventListener("click", (e) => {
         const target = e.target
 
@@ -172,15 +149,47 @@ $(document).ready(function() {
             str += `<input type='hidden' name='anos' value='\${ano}'> `
             str += `<input type='hidden' name='fullNames' value='\${fullName}'> `
 
-            console.log("ano :", ano, "fullName :" , fullName);
-            
+            console.log("ano ", ano, "fullName " , fullName)
             target.closest("div").remove() /* closest("div") 버튼이벤트의 상위 div */
 
-            document.querySelector(".deleteImages").innerHTML += str // 삭제할 이미지의 정보를 담은 input태그 > 폼제출시, 같이 제출
+            document.querySelector(".deleteImages").innerHTML += str
         }
 
     },false)
+	    
+    // 바닐라JS
+    document.querySelector(".removeBtn").addEventListener("click", e => {
+        e.stopPropagation();
+        e.preventDefault();  
+        //debugger;
+        
+        // 삭제할 파일을 hidden 태그를 이용
+        const fileArr = document.querySelectorAll(".attachList button");
+        console.log(fileArr);
+        // dataset:DOMStringMap
+        // ano: "9"
+        // fullname: "16e5d92b-df5c-46d3-989f-8345112c5d11_토끼2.jpg"
+        
+        if(fileArr && fileArr.length >0){
+        	
+        	let str = ''
+        	
+        	for(const btn of fileArr){
+    	        const ano = btn.getAttribute("data-ano")
+    	        const fullName = btn.getAttribute("data-fullname")
+    	        
+	            str += `<input type='hidden' name='anos' value='\${ano}'> `
+	            str += `<input type='hidden' name='fullNames' value='\${fullName}'> `
+        	}//end for
+        	document.querySelector(".deleteImages").innerHTML += str
+       }//end if
+        
+       handleFormSubmit();
+        //actionForm.action = `/board/deletePost/`;
+        //actionForm.method = "post";
+        //actionForm.submit();
 
+    }, false);
 });
 
 </script>
