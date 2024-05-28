@@ -81,7 +81,7 @@
 	<!-- DB는 0번째부터 시작하므로 (currentPageNum - 1) -->
 	<select id="getListWithPaging" resultType="org.project.domain.BoardVO" parameterType="org.project.domain.Criteria">
         <![CDATA[
-        SELECT bno, title, content, writer, createdDate, updatedDate
+        SELECT bno, title, content, writer, createdDate, updatedDate, replyCnt
         FROM tbl_board
         ]]>
 		<where>

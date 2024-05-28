@@ -45,7 +45,7 @@ public class JDBCTests {
             // 연결에 성공하면 연결 정보와 함께 로그 메시지를 출력
         	// {}는 포맷 문자열로 동적인 값으로 대체됨. 매게변수로 받음. con이 {}에 대체됨
             log.info("Connection: {}", con);
-            // INFO : org.zerock.persistence.JDBCTests - Connection: org.mariadb.jdbc.Connection@19c0f4a
+            // INFO : org.project.persistence.JDBCTests - Connection: org.mariadb.jdbc.Connection@19c0f4a
 
 
         } catch (Exception e) {

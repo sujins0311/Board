@@ -42,8 +42,12 @@
 							<tr>
 								<td><c:out value="${post.bno}" /></td>
 								<%-- <td><a href='/board/getPost?bno=${post.bno}'>${post.title}</a></td> --%>
-								<td><a class="toGetPost" href='<c:out value="${post.bno}"/>'> 
-								<c:out value="${post.title}" /></a></td>
+								<td>
+									<a class="toGetPost" href='<c:out value="${post.bno}"/>'>
+									<c:out value="${post.title}" /></a>
+									&nbsp;&nbsp;[<c:out value="${post.replyCnt}"></c:out>]
+								</td>
+								
 								<td><c:out value="${post.writer}" /></td>
 								<td><c:out value="${post.createdDate}" /></td>
 								<td><c:out value="${post.updatedDate}" /></td>

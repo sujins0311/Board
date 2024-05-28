@@ -53,6 +53,7 @@ public class BoardController {
 	    
 		int total = service.getTotal(cri);
 		log.info("total: " + total);
+		
 		model.addAttribute("pageMaker", new PagingDTO(cri, total)); //페이징
 	}
 	
