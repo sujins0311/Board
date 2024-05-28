@@ -52,7 +52,8 @@
 					</div>
 					<div class="form-group">
 						<label for="content">내용:</label>
-						<textarea class="form-control content" placeholder="내용을 입력하세요" rows="3" id="content" name="content"></textarea>
+						<textarea class="form-control content" placeholder="내용을 입력하세요" rows="3" style="resize: none;"
+						id="content" name="content"></textarea>
 					</div>
 					<div class="form-group">
 						<label for="writer">작성자:</label> 
