@@ -3,15 +3,16 @@ CREATE USER 'user'@'%' IDENTIFIED BY 'mypw1234';
 GRANT ALL PRIVILEGES ON myBoard.* TO 'user'@'localhost' IDENTIFIED BY 'mypw1234';
 FLUSH PRIVILEGES;
 
+
 CREATE TABLE tbl_board (
     bno BIGINT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(255),
     content TEXT,
     writer VARCHAR(50),
-    createdDate DATETIME NOT NULL, -- LocalDateTime
-    updatedDate DATETIME -- LocalDateTime
-) DEFAULT CHARSET = utf8;
-
+    replyCnt INT NOT NULL DEFAULT 0,
+    createdDate DATETIME NOT NULL,
+    updatedDate DATETIME
+)DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE tbl_reply (
