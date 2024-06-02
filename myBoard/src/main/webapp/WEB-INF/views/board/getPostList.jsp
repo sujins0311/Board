@@ -43,14 +43,13 @@
 								<td><c:out value="${post.bno}" /></td>
 								<%-- <td><a href='/board/getPost?bno=${post.bno}'>${post.title}</a></td> --%>
 								<td>
-									<a class="toGetPost" href='<c:out value="${post.bno}"/>'>
-									<c:out value="${post.title}" /></a>
-									&nbsp;&nbsp;[<c:out value="${post.replyCnt}"></c:out>]
-								</td>
-								
+								    <a class="toGetPost" href='<c:out value="${post.bno}"/>' style="color: black;">
+								        <c:out value="${post.title}" /></a>
+								    &nbsp; &nbsp;<span style="color: red;">[<c:out value="${post.replyCnt}"></c:out>]</span>
+								</td>	
 								<td><c:out value="${post.writer}" /></td>
-								<td><c:out value="${post.createdDate}" /></td>
-								<td><c:out value="${post.updatedDate}" /></td>
+								<td><c:out value="${fn:substring(post.createdDate, 2, 10)}" /></td>
+								<td><c:out value="${fn:substring(post.updatedDate, 2, 10)}" /></td>
 							</tr>
 						</c:forEach>
 					</tbody>

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.project.commons.ServletContextAwareImpl;
 import org.project.domain.AttachVO;
 import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
@@ -20,10 +21,19 @@ import net.coobird.thumbnailator.Thumbnails;
 @Log4j
 public class UpDownUtil {
 
-	private final String UPLOAD = "C:\\upload\\tmp";
+	private String UPLOAD = 
+			ServletContextAwareImpl.getSerlvetContext().getRealPath("/") + "attachments";
+	//private final String UPLOAD = "C:\\upload\\serverdata";
+	
 
 	// 반환을 DB로, 파일 복사 후 저장은 FileCopyUtils사용
 	public List<AttachVO> uploadFormPost(MultipartFile[] uploadFiles) {
+		
+		// 업로드경로가 존재하지 않을 경우 생성
+		File uploadDir = new File(UPLOAD);
+		if(!uploadDir.exists()) {
+			uploadDir.mkdirs();
+		}
 		
 		if (uploadFiles == null || uploadFiles.length == 0) { // 파일이 없을떄
 
@@ -39,6 +49,10 @@ public class UpDownUtil {
 
 		// MultipartFile[] 배열이라 for루프
 		for (MultipartFile multipartFile : uploadFiles) {
+			
+			log.info("--------------------------------------------");
+			log.info("Upload File Name: " +multipartFile.getOriginalFilename());
+			log.info("Upload File Size: " +multipartFile.getSize());
 
 			// fileSize 체크
 			if (multipartFile.getSize() == 0) { // getSize == 0 일경우 계속하고
@@ -51,6 +65,8 @@ public class UpDownUtil {
 			
 			// 저장파일
 			String saveFileName = uuid + "_" + fileName; // _ 로 구분
+			
+			log.info("Upload Saved File Name: " +saveFileName);
 			
 			/* 파일 섬네일 시작 */
 			// jpg, gif, png, bmp
@@ -83,7 +99,7 @@ public class UpDownUtil {
 				
 				AttachVO attachVO = new AttachVO();
 				attachVO.setUuid(uuid);
-				attachVO.setFileName(saveFileName);
+				attachVO.setFileName(saveFileName); //원본파일
 				list.add(attachVO);
 
 			} catch (Exception e) {
@@ -95,6 +111,7 @@ public class UpDownUtil {
 		return list; // 사용자업로드파일 > attachVO > list > DB로 return
 	}
 
+	// 파일삭제
 	public void deleteFiles(String[] fileNames) {
 		
 		if(fileNames == null || fileNames.length == 0) {// null이거나 비어 있으면 아무 작업도 수행하지 않고 메서드를 종료
@@ -106,7 +123,18 @@ public class UpDownUtil {
 			File orgFile = new File(UPLOAD +  File.separator + fileName);
 			File thumbFile = new File(UPLOAD +  File.separator + "s_" + fileName);
 			
+//            // 원본 파일 삭제
+//            if (orgFile.exists()) {
+//                orgFile.delete();
+//            }
+//
+//            // 썸네일 파일 삭제
+//            if (thumbFile.exists()) {
+//                thumbFile.delete();
+//            }
+			
 		}//end for
 		
 	}
+
 }
