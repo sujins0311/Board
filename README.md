@@ -48,7 +48,7 @@
 | 게시글(작성, 수정, 삭제) | ❌️  | ⭕️  |
 | 댓글(작성, 수정, 삭제)  | ❌   | ⭕️  |
 | 회원정보(로그인/로그아웃)     | ❌   | ⭕️  |
-| 게시글,댓글 보기  | ⭕️   | ❌  |
+| 게시글,댓글 목록, 회원가입  | ⭕️   | ⭕️  |
 
 <br>
 <br>
@@ -92,7 +92,7 @@
 
 ```mermaid
 gantt
-    title 프로젝트 일정 (2024년 01월 10일 - 2024년 4월 10일)
+    title 프로젝트 일정 (2024년 01월 10일 - 2024년 4월 30일)/추가 수정 중
     dateFormat YYYY-MM-DD
     section 기획
         구상: a1, 2024-01-10, 5d
@@ -113,7 +113,9 @@ gantt
 
 <br>
 
-![image](https://github.com/sujins0311/Board/assets/122525760/1ab67205-9f92-47f4-bf70-542978b112d3)
+![image](https://github.com/sujins0311/Board/assets/122525760/f6a07a36-12f9-4005-acce-5db39bfc04de)
+
+
 
 <br>
 
