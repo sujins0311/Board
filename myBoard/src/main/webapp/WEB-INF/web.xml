@@ -35,7 +35,6 @@
 		
 		<!-- 파일업로드 -->
 		<multipart-config>
-			<location>C:\\upload\\tmp</location> <!-- 저장경로 -->
 			<max-file-size>20971520</max-file-size> <!--최대크기 1MB * 20 -->
 			<max-request-size>41943040</max-request-size><!-- 1MB * 40 -->
 			<file-size-threshold>20971520</file-size-threshold> <!-- 1MB * 20 -->
