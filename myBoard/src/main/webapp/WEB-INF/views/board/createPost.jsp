@@ -110,6 +110,8 @@
 	    // dir 속성> files > file의 list를 볼 수 있음
 	    const fileArr = fileInput.files;
 	    
+	    console.log(fileArr);
+	    
 	    if(fileArr && fileArr.length > 0){ // 0보다 크다는 건 첨부 파일이 있다.
 	        for (const file of fileArr) {
 	            if(!file.name.match(fileReg)) { // 첨부파일에 올린 파일과 fileRegExp내가 허용한 파일 확장자(이미지)를 match를 한다.

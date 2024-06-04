@@ -9,7 +9,14 @@
 			<param name="ConversionPattern" value="%-5p: %c - %m%n" />
 		</layout>
 	</appender>
-	
+	<!-- 
+	TRACE: 가장 상세한 로그 메시지. 애플리케이션의 모든 단계와 각각의 트랜잭션을 추적하는 데 사용됩니다.
+	DEBUG: 디버깅 목적으로 사용되며, 애플리케이션 실행 중에 자세한 내부 상태를 기록합니다.
+	INFO: 정보 메시지. 애플리케이션의 일반적인 실행 상태를 나타냅니다.
+	WARN: 경고 메시지. 애플리케이션이 실행되는 동안 주의가 필요한 상황을 나타냅니다.
+	ERROR: 에러 메시지. 애플리케이션에서 예기치 않은 상황이 발생했음을 나타냅니다.
+	FATAL: 치명적인 에러 메시지. 애플리케이션 실행이 중단되었거나 매우 심각한 문제가 발생했음을 나타냅니다.
+	 -->
 	<!-- Application Loggers -->
 	<logger name="org.project.controller">
 		<level value="info" />
@@ -33,7 +40,7 @@
 	</logger>
 
 	<logger name="org.springframework.security">
-		<level value="info" />
+		<level value="debug" />
 	</logger>
 
 	<!-- Root Logger -->

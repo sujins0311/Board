@@ -1,12 +1,21 @@
 package org.project.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.project.domain.MemberVO;
 import org.project.security.UserSessionUtils;
 import org.project.service.MemberService;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -104,25 +113,31 @@ public class MemberContoller {
 	}
 	
 	// 비밀번호수정	
-	@PostMapping("member/updatePassword") // getPost.jsp
-	public String updatePassword(MemberVO memberVO, RedirectAttributes rttr) {
-
+	// form submit을 위한 API 에서 ajax(XHR)을 위한 API 로 변경
+	@PostMapping(value = "member/updatePassword", 
+			consumes = "application/json", 
+			produces = "application/json") // getPost.jsp
+	public ResponseEntity<Map<String, Object>> updatePassword(@RequestBody Map<String, String> map, HttpServletResponse response) {
+		log.info("@PostMapping(\"member/updatePassword\")");
+		log.info("MemberVO: " + map);
+		Map<String, Object> resultMap = new HashMap<>();
+		// INFO : org.project.controller.MemberContoller - MemberVO: MemberVO(userid=user00, userpw=123, username=null, email=null, enabled=false, regDate=null, updateDate=null, authList=null)
 		// member의 pw의 유효성검증
-	    if (!service.checkPassword(memberVO.getUserpw(), memberVO.getUserid())) {
+	    if (!service.checkPassword(map.get("currentpw"), map.get("userid"))) {
 	        log.error("비밀번호가 일치하지 않습니다. 확인 후 다시 입력해주세요.");
-	        rttr.addFlashAttribute("error", "비밀번호가 일치하지 않습니다. 확인 후 다시 입력해주세요.");
-	        return "redirect:/auth/member/updatePassword";
+	        resultMap.put("result", "error");
+			resultMap.put("msg", "비밀번호가 일치하지 않습니다. 확인 후 다시 입력해주세요.");
+	        return new ResponseEntity<>(resultMap, HttpStatus.OK);
 	    }
-
+	    
+	    MemberVO memberVO = userSessionUtils.getCurrentMemberVO();
+	    memberVO.setUserpw(map.get("userpw"));
 		service.updatePassword(memberVO);
 		// 세션에 pw인코더 된 것을 저장 해야할까? >로그아웃 하면 갱신되지 않을까? >로그아웃을 시키자>성공 메시지 확인 및 모달 표시: 확인버튼 > 로그아웃
-		rttr.addFlashAttribute("success", "비밀번호가 성공적으로 변경되었습니다. 새로운 비밀번호로 재로그인해주세요.");
-		return "redirect:/customLogin";
-
+		resultMap.put("result", "success");
+		resultMap.put("msg", "비밀번호가 성공적으로 변경되었습니다. 새로운 비밀번호로 재로그인해주세요.");
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
 	}
-	
-
-    
     
     // 회원정보삭제
 	@GetMapping("member/delete")

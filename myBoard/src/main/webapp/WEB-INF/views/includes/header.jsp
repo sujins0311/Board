@@ -340,6 +340,9 @@ body {
               		각각이 의미하는 문자가 존재하며 특히 HTML에서 띄어쓰기는 여러번들어가도 한칸밖에 인식이 안되는데 이 떄 &nbsp;를 사용  -->
               		<a>&lt;</a>&nbsp;&nbsp;<a>&gt;</a>
               	</div>
+				 <a href='https://www.free-counters.org/'>free Counters on Free-Counters.org</a> 
+				<script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=c8bfeb710197eb1ec065023a3bca66c02b2490c7'></script>
+				<script type="text/javascript" src="https://freevisitorcounters.com/en/home/counter/1189164/t/10"></script>
             </div>
             <!-- /.navbar-static-side -->
         </nav>
