@@ -27,7 +27,7 @@
 <link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- 부트스트랩 아이콘 -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <!-- MetisMenu CSS(반응형 사이드바 메뉴를 생성하는데 도움을 주는 jQuery 플러그인) -->
 <link href="/resources/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
