@@ -29,7 +29,7 @@
 	                    </div>
                         <div class="form-group">
                             <label for="currentPassword">현재 비밀번호</label>
-                            <input type="password" class="form-control" id="currentPassword">
+                            <input type="password" class="form-control" id="currentpw" name="currentpw">
                         </div>
                         <div class="form-group">
                             <label for="userpw">새 비밀번호</label>
@@ -126,8 +126,29 @@ $(document).ready(function() {
 
         if (confirm("비밀번호를 변경하시겠습니까?")) {
             // 확인버튼 > 로그아웃(=세션종료)
-            document.getElementById('logoutForm').submit();
-            $("#updatePWForm").submit();
+            const updateForm = $("#updatePWForm");
+            const payload = {
+            	"userid" :  updateForm.find('input[name="userid"]').val(),
+            	"currentpw" : updateForm.find('input[name="currentpw"]').val(),
+            	"userpw" : updateForm.find('input[name="userpw"]').val(),
+            }
+            $.ajax({
+            	url: '/auth/member/updatePassword',
+            	headers: {
+            		"X-CSRF-TOKEN": "${_csrf.token}", 
+            	},
+            	contentType: "application/json",
+            	method: 'POST',
+            	data: JSON.stringify(payload),
+            	success: function(data) {
+            		if(data.result == 'success') {
+            			alert(data.msg);
+            			document.getElementById('logoutForm').submit();
+            		} else {
+            			alert(data.msg);
+            		}
+            	},
+            });
         }
     });
 

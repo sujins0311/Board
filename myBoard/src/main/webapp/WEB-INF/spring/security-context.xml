@@ -40,8 +40,8 @@
 		
 		
 		<!-- 관리자 -->
-		<security:intercept-url pattern="/auth/admin/*" 
-		access="hasRole('ROLE_ADMIN')" />
+		<!-- <security:intercept-url pattern="/auth/admin/*" 
+		access="hasRole('ROLE_ADMIN')" /> -->
 		
 		
 		<!-- 회원 -->

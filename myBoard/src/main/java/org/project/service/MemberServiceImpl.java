@@ -19,15 +19,10 @@ public class MemberServiceImpl implements MemberService {
 	private PasswordEncoder passwordEncoder;
 	
 	
-	// 회원정보수정, 비밀번호수정
+	// 회원정보수정
 	@Transactional
 	@Override
 	public boolean update(MemberVO memberVO) {
-		
-//		if (member.getUserpw() != null && !member.getUserpw().isEmpty()) {
-//			member.setUserpw(passwordEncoder.encode(member.getUserpw()));
-//		}
-		// 비밀번호가 변경된 경우 인코딩
 		memberVO.setUpdatedDate();
 		return mapper.update(memberVO) == 1;
 	}
@@ -44,7 +39,6 @@ public class MemberServiceImpl implements MemberService {
 		return mapper.updatePassword(memberVO) == 1;
 	}
 	
-	// 회원정보삭제
 	@Transactional
 	@Override
 	public boolean checkPassword(String userpw, String userid) {
