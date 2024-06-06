@@ -32,7 +32,7 @@
 								</label>
 							</div>
 							<!-- Change this to a button or input when using this as a form -->
-							<a href="index.html" class="btn btn-lg btn-success btn-block">로그인</a>
+							<a href="index.html" class="btn btn-lg btn-custom-success btn-block">로그인</a>
 						</fieldset>
 						<!-- CSRF(Cross-Site Request Forgery)토큰은 서버가 브라우저에 전송한 토큰값과 비교해 처리하는 방식 > 세션 보관 -->
 						<!-- <input type="hidden" name="_csrf"
@@ -116,8 +116,8 @@
 	});
 
 	
-	//로그인버튼
-	$(".btn-success").on("click", function(e) {
+	// 로그인버튼
+	$(".btn-custom-success").on("click", function(e) {
 
 		e.preventDefault();
 		$("form").submit();

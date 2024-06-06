@@ -31,17 +31,68 @@
 <style type="text/css">
 /* 부트스트랩 기본값을 커스텀합니다.*/
 .custom-panel-heading {
-    background-color: rgba(255, 255, 255, 1); /* 패널의 헤더 색상 */
+    background-color: #5e42a1; /* 패널의 헤더 색상 */
 }
 
-.btn-success {
-    background-color: rgba(94,66,161,1); /* 버튼의 배경색 */
-    border-color: rgba(94,66,161,1); /* 버튼의 테두리색 */
+.btn-custom-success {
+  color: #fff;
+  background-color: #5e42a1;
+  border-color: #5e42a1;
 }
-.btn-success:hover {
-    background-color: rgba(94,66,161,0.8); /* 버튼에 마우스 호버 시 배경색 */
-    border-color: rgba(94,66,161,0.8); /*버튼에 마우스 호버 시 테두리색 */
+.btn-custom-success:focus,
+.btn-custom-success.focus {
+  color: #fff;
+  background-color: #4c3581;
+  border-color: #4c3581;
 }
+.btn-custom-success:hover {
+  color: #fff;
+  background-color: #4c3581;
+  border-color: #4c3581;
+}
+.btn-custom-success:active,
+.btn-custom-success.active,
+.open > .dropdown-toggle.btn-custom-success {
+  color: #fff;
+  background-color: #4c3581;
+  border-color: #4c3581;
+}
+.btn-custom-success:active:hover,
+.btn-custom-success.active:hover,
+.open > .dropdown-toggle.btn-custom-success:hover,
+.btn-custom-success:active:focus,
+.btn-custom-success.active:focus,
+.open > .dropdown-toggle.btn-custom-success:focus,
+.btn-custom-success:active.focus,
+.btn-custom-success.active.focus,
+.open > .dropdown-toggle.btn-custom-success.focus {
+  color: #fff;
+  background-color: #4c3581;
+  border-color: #4c3581;
+}
+.btn-custom-success:active,
+.btn-custom-success.active,
+.open > .dropdown-toggle.btn-custom-success {
+  background-image: none;
+}
+.btn-custom-success.disabled:hover,
+.btn-custom-success[disabled]:hover,
+fieldset[disabled] .btn-custom-success:hover,
+.btn-custom-success.disabled:focus,
+.btn-custom-success[disabled]:focus,
+fieldset[disabled] .btn-custom-success:focus,
+.btn-custom-success.disabled.focus,
+.btn-custom-success[disabled].focus,
+fieldset[disabled] .btn-custom-success.focus {
+  background-color: #5e42a1;
+  border-color: #5e42a1;
+}
+.btn-custom-success .badge {
+  color: #5e42a1;
+  background-color: #fff;
+}
+
+
 
 
 /*  body {
