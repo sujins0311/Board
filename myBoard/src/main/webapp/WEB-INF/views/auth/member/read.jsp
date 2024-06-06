@@ -57,15 +57,12 @@
 						</ul>
 					</sec:authorize>
 					<div class="button-container">
-						<a class="snb-btn" href="/auth/member/update">
-							<button class="common-btn btn mr-2">개인정보수정</button>
-						</a> <a class="snb-btn" href="/auth/member/updatePassword">
-							<button class="common-btn btn mr-2">비밀번호수정</button>
-						</a> <a class="snb-btn" href="#">
+						<a class="snb-btn" href="/auth/member/update">개인정보수정</a>  &nbsp; | &nbsp;
+						<a class="snb-btn" href="/auth/member/updatePassword">비밀번호수정</a>  &nbsp; | &nbsp;
+	<!-- 					<a class="snb-btn" href="#">
 							<button class="common-btn btn mr-2">나의활동:작성글모아보기(예정)</button>
-						</a> <a class="snb-btn" href="/auth/member/delete">
-							<button class="common-btn btn">탈퇴하기</button>
-						</a>
+						</a> --> 
+						<a class="snb-btn" href="/auth/member/delete">탈퇴하기 </a>
 					</div>
 				</div>
 			</div>

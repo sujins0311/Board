@@ -327,22 +327,22 @@ body {
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->
-              	<div class="sidebar-widget" style="margin-top:500px;">
+<!--               	<div class="sidebar-widget" style="margin-top:500px;">
               		<p><b>최근 댓글 보기(작업중)</b></p>
               		<p><a>최근 댓글 및 링크 1</a></p>
               		<p><a>최근 댓글 및 링크 2</a></p>
               		<p><a>최근 댓글 및 링크 3</a></p>
               		<p><a>최근 댓글 및 링크 4</a></p>
               		<p style=''><a>최근 댓글 및 링크 5</a></p>
-              		<!-- <![CDATA[ 문자열 ]]> 표현식 : XML 에서 문자열을 escape 할 수 있다. 
-              		태그나 특수기호 등 언어나 예약어로 파싱되는게 아닌 일반 문자로 인식되어야 할 때 사용 ex) mybatis sql에서 사용가능 -->
-              		<!-- &nbsp; &lt; &gt; 등의 표현식 : HTML에서 문자열 escape를 하는 방법.
-              		각각이 의미하는 문자가 존재하며 특히 HTML에서 띄어쓰기는 여러번들어가도 한칸밖에 인식이 안되는데 이 떄 &nbsp;를 사용  -->
+              		<![CDATA[ 문자열 ]]> 표현식 : XML 에서 문자열을 escape 할 수 있다. 
+              		태그나 특수기호 등 언어나 예약어로 파싱되는게 아닌 일반 문자로 인식되어야 할 때 사용 ex) mybatis sql에서 사용가능
+              		&nbsp; &lt; &gt; 등의 표현식 : HTML에서 문자열 escape를 하는 방법.
+              		각각이 의미하는 문자가 존재하며 특히 HTML에서 띄어쓰기는 여러번들어가도 한칸밖에 인식이 안되는데 이 떄 &nbsp;를 사용 
               		<a>&lt;</a>&nbsp;&nbsp;<a>&gt;</a>
-              	</div>
-				 <a href='https://www.free-counters.org/'>free Counters on Free-Counters.org</a> 
+              	</div> -->
+<!-- 				 <a href='https://www.free-counters.org/'>free Counters on Free-Counters.org</a> 
 				<script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=c8bfeb710197eb1ec065023a3bca66c02b2490c7'></script>
-				<script type="text/javascript" src="https://freevisitorcounters.com/en/home/counter/1189164/t/10"></script>
+				<script type="text/javascript" src="https://freevisitorcounters.com/en/home/counter/1189164/t/10"></script> -->
             </div>
             <!-- /.navbar-static-side -->
         </nav>
