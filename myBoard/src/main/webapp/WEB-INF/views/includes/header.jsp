@@ -188,29 +188,88 @@ body {
     height: 150px; /* 원하는 높이 설정 */
 }
 
+/* 부트스트랩 성공버튼 커스텀 */
+.btn-custom-success {
+  color: #fff;
+  background-color: #5e42a1;
+  border-color: #5e42a1;
+}
+.btn-custom-success:focus,
+.btn-custom-success.focus {
+  color: #fff;
+  background-color: #4c3581;
+  border-color: #4c3581;
+}
+.btn-custom-success:hover {
+  color: #fff;
+  background-color: #4c3581;
+  border-color: #4c3581;
+}
+.btn-custom-success:active,
+.btn-custom-success.active,
+.open > .dropdown-toggle.btn-custom-success {
+  color: #fff;
+  background-color: #4c3581;
+  border-color: #4c3581;
+}
+.btn-custom-success:active:hover,
+.btn-custom-success.active:hover,
+.open > .dropdown-toggle.btn-custom-success:hover,
+.btn-custom-success:active:focus,
+.btn-custom-success.active:focus,
+.open > .dropdown-toggle.btn-custom-success:focus,
+.btn-custom-success:active.focus,
+.btn-custom-success.active.focus,
+.open > .dropdown-toggle.btn-custom-success.focus {
+  color: #fff;
+  background-color: #4c3581;
+  border-color: #4c3581;
+}
+.btn-custom-success:active,
+.btn-custom-success.active,
+.open > .dropdown-toggle.btn-custom-success {
+  background-image: none;
+}
+.btn-custom-success.disabled:hover,
+.btn-custom-success[disabled]:hover,
+fieldset[disabled] .btn-custom-success:hover,
+.btn-custom-success.disabled:focus,
+.btn-custom-success[disabled]:focus,
+fieldset[disabled] .btn-custom-success:focus,
+.btn-custom-success.disabled.focus,
+.btn-custom-success[disabled].focus,
+fieldset[disabled] .btn-custom-success.focus {
+  background-color: #5e42a1;
+  border-color: #5e42a1;
+}
+.btn-custom-success .badge {
+  color: #5e42a1;
+  background-color: #fff;
+}
+
 /* 반응형 웹사이트를 만드는 @media query */
 @media (max-width: 768px) {
 
-	.sidebar-widget {
-		display: none;
-	}
-	
-	.navbar-toggle {
-		float: left;
-		margin-left: 10px;
-	}
-	
-	.navbar-toggle:focus {
-		background-color: transparent !important;
-	}
-	
-	.navbar-brand {
-		margin-left: -15px;
-	}
-	
-	.btn-search {
-		width: 100%;
-	}
+.sidebar-widget {
+	display: none;
+}
+
+.navbar-toggle {
+	float: left;
+	margin-left: 10px;
+}
+
+.navbar-toggle:focus {
+	background-color: transparent !important;
+}
+
+.navbar-brand {
+	margin-left: -15px;
+}
+
+.btn-search {
+	width: 100%;
+}
 }
 </style>
 
