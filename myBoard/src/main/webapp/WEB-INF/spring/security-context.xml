@@ -81,7 +81,7 @@
 		<!-- 토큰을 사용하기위함. value="${_csrf.token} 디폴트값이 false -->
 		<security:csrf disabled="false"/>
 			
-    	<!-- 자동로그인 -->
+		<!-- 자동로그인 -->
 		<security:remember-me 
 		data-source-ref="dataSource" 
 		token-validity-seconds="604800" />	

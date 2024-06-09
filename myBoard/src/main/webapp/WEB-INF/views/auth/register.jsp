@@ -41,7 +41,7 @@
 	                        <input type="email" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요" required>
 	                    </div>
 	                    <!-- <button id="resetBtn" type="reset" class="btn btn-secondary">초기화</button> -->
-	                    <button id="registerSubmitBtn" type="submit" class="btn btn-lg btn-success btn-block">가입하기</button>
+	                    <button id="registerSubmitBtn" type="submit" class="btn btn-lg btn-custom-success btn-block">가입하기</button>
 	                </form>
 	            </div>
 	            <div class="text-center">

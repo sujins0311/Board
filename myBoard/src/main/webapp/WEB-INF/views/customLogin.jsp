@@ -45,7 +45,7 @@
 			<div style="display: flex; justify-content: center;">
 				<a class="snb-btn" href="/"> <!-- 아이콘 --> <!-- <img src="/resources/images/icons/home.ico" width=24px; height=24px; />  -->
 					<button class="common-btn btn">HOME</button>
-				</a> <a class="snb-btn" href="/board/getPostList"> <!-- 아이콘 --> <!-- <img src="/resources/images/icons/list.ico" width=24px; height=24px;/> -->
+				</a> <a class="snb-btn" href="/board/getPostList" style="margin: 0px 15px 0px 15px"> <!-- 아이콘 --> <!-- <img src="/resources/images/icons/list.ico" width=24px; height=24px;/> -->
 					<button class="common-btn btn">게시글 목록</button>
 				</a> <a class="snb-btn" href="/auth/register"> <!-- 아이콘 --> <!-- <img src="/resources/images/icons/list.ico" width=24px; height=24px;/> --> <span></span>
 					<button class="common-btn btn">회원가입</button>
@@ -76,7 +76,7 @@
 <!--  jQuery 라이브러리의 3.6.4 버전 -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script type="text/javascript">
-
+$(document).ready(function() {
 	// 회원가입 모달
 	$(function() {
 		var registerMember = '${registerMember}';
@@ -114,26 +114,36 @@
 	        $("#successModal").modal("show");
 	    }
 	});
-
 	
 	// 로그인버튼
 	$(".btn-custom-success").on("click", function(e) {
-
 		e.preventDefault();
+		// 아이디, 패스워드 입력 검증
 		$("form").submit();
-
 	});
 	
+	// 패스워드 입력창에서 엔터키 입력시 로그인 버튼 클릭
+	$("form input[name='password']").keydown(function(e) {
+		// 키 번호 13 == enter 키
+		if(e.keyCode == 13) {
+			$(".btn-custom-success").click();
+		}
+	});
+	
+	// 모바일 화면에서 키보드 사용시 푸터 숨김 및 해제
+	$("form input").focus(function() {
+		if($(window).width() < 768) {
+			$(".footer").hide();	
+		}
+	});
+	
+	$("form input").blur(function() {
+		if($(window).width() < 768) {
+			$(".footer").show();	
+		}
+	});
+});
 </script>
-
-
-<c:if test="${param.logout != null}">
-	<script>
-		$(document).ready(function() {
-			alert("로그아웃하였습니다.");
-		});
-	</script>
-</c:if>
 
 </body>
 </html>

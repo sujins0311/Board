@@ -63,7 +63,7 @@
 					<!-- <button type="submit" data-oper='modify' class="btn btn-default">수정</button>
 					<button type="submit" data-oper='delete' class="btn btn-danger">삭제</button>
 					<button type="submit" data-oper='list' class="btn btn-info">목록</button> -->
-					<button class="btn btn-info" onclick="back()" style="display: inline;" >취소</button>
+					<div class="btn btn-info" onclick="back()" style="float: right;" >취소</div>
 					<!-- 파일수정/삭제 폼 -->
 					<div class="deleteImages"></div> <!-- form태그에 히든태그를 붙이면 인풋태그가 사라짐 그래서 새 태그를 생성 -->
 				</form>
@@ -74,7 +74,6 @@
 		<!--  end panel-body -->
 	</div>
 	<!-- end panel -->
-
 
         <!-- 첨부파일(이미지) -->
         <div class="col-lg-12">
@@ -101,58 +100,58 @@
 </div>
 <!-- /.row -->
 
-
 <script type="text/javascript">
 $(document).ready(function() {
-	  var formObj = $("form");
-	  // button > 'button[type="submit"]'으로 수정
-	  // 이벤트는 엘리먼트랑 되도록 1:1 로 걸어야 한다.
-	  // 공통으로 걸면 수정시 영향도가 너무 높아서 유지보수가 힘들어진다.
-	  // 원인을 찾기가 힘들어질 수 있다.
-	  $('button[type="submit"]').on("click", function(e){
-		    e.preventDefault();     
-		    var operation = $(this).data("oper"); //data-oper를 사용해 수정 , 목록으로 이동   
-		    console.log(operation);
+	var formObj = $("form");
+	// button > 'button[type="submit"]'으로 수정
+	// 이벤트는 엘리먼트랑 되도록 1:1 로 걸어야 한다.
+	// 공통으로 걸면 수정시 영향도가 너무 높아서 유지보수가 힘들어진다.
+	// 원인을 찾기가 힘들어질 수 있다.
+	$('button[type="submit"]').on("click", function(e){
+		e.preventDefault();
+		var operation = $(this).data("oper"); //data-oper를 사용해 수정 , 목록으로 이동   
+		console.log(operation);
+		
+		// 삭제할 파일을 hidden 태그를 이용
+		const fileArr = $(".attachList button");
+		console.log(fileArr); // dataset:DOMStringMap , ano: "9" ,fullname: "16e5d92b-df5c-46d3-989f-8345112c5d11_토끼2.jpg"
+		
+		if(fileArr.length > 0){
+			let str = '';
 		    
-	        // 삭제할 파일을 hidden 태그를 이용
-	        const fileArr = $(".attachList button");
-	        console.log(fileArr); // dataset:DOMStringMap , ano: "9" ,fullname: "16e5d92b-df5c-46d3-989f-8345112c5d11_토끼2.jpg"
-	        
-	        if(fileArr.length > 0){
-	            let str = '';
-	            
-	            fileArr.each(function() {
-	                const ano = $(this).data("ano"); // 버튼의 data-ano 속성값을 가져옴
-	                const fullName = $(this).data("fullname"); // 버튼의 data-fullname 속성값을 가져옴
-	                
-	                str += `<input type='hidden' name='anos' value='${ano}'> `;
-	                str += `<input type='hidden' name='fullNames' value='${fullName}'> `;
-	            });
-	            
-	            $(".deleteImages").append(str);
-	        }
+		    fileArr.each(function() {
+		        const ano = $(this).data("ano"); // 버튼의 data-ano 속성값을 가져옴
+		        const fullName = $(this).data("fullname"); // 버튼의 data-fullname 속성값을 가져옴
 		        
-		    if(operation === 'delete'){
-		      formObj.attr("action", "/board/deletePost");
-  
-		    }else if(operation === 'list'){ // 목록(목록이동버튼 주석처리함)
-		      formObj.attr("action", "/board/getPostList").attr("method","get");	      
-		      var pageNumTag = $("input[name='currentPageNum']").clone();
-		      var amountTag = $("input[name='itemsPerPage']").clone();
-		      var keywordTag = $("input[name='keyword']").clone();
-		      var typeTag = $("input[name='type']").clone();
-		      
-		   	  // 폼 내용을 비우고 복제된 입력 필드를 폼에 추가(Criteria 필드 전송)
-		      formObj.empty();
-		      formObj.append(pageNumTag);
-		      formObj.append(amountTag);
-		      formObj.append(keywordTag);
-		      formObj.append(typeTag);
-		      
-		    }
-		    formObj.submit(); //<form role="form" action="modifyPost" method="post"
-	  });
+		        str += `<input type='hidden' name='anos' value='${ano}'> `;
+		        str += `<input type='hidden' name='fullNames' value='${fullName}'> `;
+		    });
+		    
+		    $(".deleteImages").append(str);
+		}
 
+		if(operation === 'delete'){
+			debugger;
+			if(!confirm("정말로 삭제 하시겠습니까?")) {
+				return;
+			}
+			formObj.attr("action", "/board/deletePost");
+		}else if(operation === 'list'){ // 목록(목록이동버튼 주석처리함)
+			formObj.attr("action", "/board/getPostList").attr("method","get");	      
+			var pageNumTag = $("input[name='currentPageNum']").clone();
+			var amountTag = $("input[name='itemsPerPage']").clone();
+			var keywordTag = $("input[name='keyword']").clone();
+			var typeTag = $("input[name='type']").clone();
+			
+			// 폼 내용을 비우고 복제된 입력 필드를 폼에 추가(Criteria 필드 전송)
+			formObj.empty();
+			formObj.append(pageNumTag);
+			formObj.append(amountTag);
+			formObj.append(keywordTag);
+			formObj.append(typeTag);
+		}
+		formObj.submit(); //<form role="form" action="modifyPost" method="post"
+	});
 	  
 	// 수정
 	// 바닐라JS
@@ -178,10 +177,9 @@ $(document).ready(function() {
 
             document.querySelector(".deleteImages").innerHTML += str // 삭제할 이미지의 정보를 담은 input태그 > 폼제출시, 같이 제출
         }
+    }, false);
 
-    },false)
-
-});
+});// end $(document).ready()
 
 </script>
 <!-- 푸터------------------------------------------------------------------------------ -->

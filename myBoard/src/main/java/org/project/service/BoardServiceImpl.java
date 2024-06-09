@@ -20,7 +20,6 @@ public class BoardServiceImpl implements BoardService {
 
 	private BoardMapper mapper;
 	
-	@Transactional
 	@Override
 	public Long createPost(BoardVO boardVO) {
 		boardVO.setCreatedDate();
