@@ -164,8 +164,8 @@ public class MemberContoller {
 	    }
 		// 비밀번호가 일치할 때의 처리
 		service.delete(memberVO.getUserid());
-		rttr.addFlashAttribute("success", "회원 탈퇴가 성공적으로 이루어졌습니다. 메인 화면으로 이동합니다.");
-		return "redirect:/board/getPostList";
+		rttr.addFlashAttribute("success", "회원 탈퇴가 성공적으로 이루어졌습니다.");
+		return "redirect:/customLogin";
 	}
 	
 //	@PostMapping("member/delete")

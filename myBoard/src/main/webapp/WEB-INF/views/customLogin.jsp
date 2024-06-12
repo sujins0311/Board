@@ -120,7 +120,7 @@ $(document).ready(function() {
 		$("#logoutModal").modal("show");
 	}
 	
-	// 회원가입 모달
+	// 회원가입모달
 	$(function() {
 		var registerMember = '${registerMember}';
 		
@@ -137,6 +137,25 @@ $(document).ready(function() {
 				}else{
 					$("#successModalBody").html(
 							"[ID :" + registerMember + "] 회원가입에 성공하셨습니다.");
+					}
+		$("#successModal").modal("show");
+	}
+	});
+	
+	
+	// 회원탈퇴모달
+	var deleteMember = '${deleteMember}';
+	
+	console.log(deleteMember);
+	checkModal(deleteMember);
+	
+	function checkModal(deleteMember) {
+		if (!deleteMember || deleteMember === '' 
+				|| deleteMember === null) { // 공백이거나 null이면 모달종료 
+			return;
+				}else{
+					$("#successModalBody").html(
+							"[ID :" + deleteMember + "] 회원탈퇴에 성공하셨습니다.");
 					}
 		$("#successModal").modal("show");
 	}
@@ -201,7 +220,6 @@ $(document).ready(function() {
 			$(".footer").show();	
 		}
 	});
-});
 </script>
 
 </body>
