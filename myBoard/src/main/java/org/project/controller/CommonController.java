@@ -16,7 +16,6 @@ public class CommonController {
 	public void accessDenied(Authentication auth, Model model) {
 
 		log.info("access Denied : " + auth);
-
 		model.addAttribute("result", "Access Denied");
 	}
 
@@ -24,15 +23,15 @@ public class CommonController {
 	@GetMapping("/customLogin")
 	public void loginPage(String error, String logout, Model model) {
 		
-		log.info("-------custom Login-------");
+		log.info("/customLogin");
 
 		if (error != null) {
-			model.addAttribute("error", "Login Error Check Your Account");
+			model.addAttribute("error", "ID 또는 비밀번호를 확인 후 다시 입력해 주세요.");
 			log.info("error: " + error);
 		}
 
 		if (logout != null) {
-			model.addAttribute("logout", "Logout!!");
+			model.addAttribute("logout", "로그아웃 성공했습니다.");
 			log.info("logout: " + logout);
 		}
 	}
