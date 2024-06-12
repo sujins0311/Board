@@ -74,6 +74,35 @@ public class BoardController {
 		log.info(service.getPost(bno));
 	}
 	
+//	// 게시글삭제 (> 조회 페이지에서 삭제버튼 > 모달창 > 게시글 목록페이지)
+//	// http://localhost:8080/board/deletePost?bno=1
+//	// 현재 application/x-www-form-urlencoded를 받음
+//	@PreAuthorize("hasAnyRole('principal.username == #boardVO.writer','ROLE_ADMIN')")
+//	@PostMapping("deletePost")
+//	public String deletePost(
+//			@RequestParam("bno") Long bno,
+//			BoardVO boardVO,
+//			@RequestParam(value = "anos", required = false) Long[] anos,
+//			@RequestParam(value = "fullNames", required = false) String[] fullNames,
+//			RedirectAttributes rttr, 
+//			@ModelAttribute("cri") Criteria cri) {
+//		
+//		log.info("deletePost: " + boardVO);
+//		log.info("----------------------------------------------");
+//		
+//		service.modifyPost(boardVO, anos);
+//		service.deletePost(boardVO.getBno());
+//		rttr.addFlashAttribute("deletePostResult", boardVO.getBno());
+//		upDownUtile.deleteFiles(fullNames);// 로컬에 저장한 파일삭제
+//
+//		rttr.addAttribute("currentPageNum",cri.getCurrentPageNum());
+//		rttr.addAttribute("itemPerPage",cri.getItemsPerPage());
+//		rttr.addAttribute("type",cri.getType());
+//		rttr.addAttribute("keyword",cri.getKeyword());
+//			
+//		// board/getPostList로 리다이렉트하면 text/html타입으로 응답하는데 ajax는 text/*는 모두 text로 퉁침 
+//		return "redirect:/board/getPostList";
+//	}
 
 	// 게시글삭제 (> 조회 페이지에서 삭제버튼 > 모달창 > 게시글 목록페이지)
 	// http://localhost:8080/board/deletePost?bno=1
@@ -88,13 +117,25 @@ public class BoardController {
 			RedirectAttributes rttr, 
 			@ModelAttribute("cri") Criteria cri) {
 		
-		log.info("deletePost: " + boardVO);
+		log.info("deletePost: bno = " + boardVO.getBno());
+		log.info("----------------------------------------------");
 		
-		service.modifyPost(boardVO, anos);
-		service.deletePost(boardVO.getBno());
-		rttr.addFlashAttribute("deletePostResult", boardVO.getBno());
-		upDownUtile.deleteFiles(fullNames);// 로컬에 저장한 파일삭제
-
+		// 1. 삭제 전 기존 게시물의 정보를 가져와 비교
+		BoardVO BoardVO = service.getPost(boardVO.getBno());
+		
+		if(BoardVO == null) {
+			return "/board/getPostList";
+		}
+		
+		// 2. 게시글 삭제
+		if (service.deletePost(boardVO)) {
+			// 로컬에 저장한 파일삭제 --------------------------------------------------> 원본 파일 삭제 수정해야함~!!!
+			if (fullNames != null && fullNames.length > 0) {
+				upDownUtile.deleteFiles(fullNames); // 
+			}
+			rttr.addFlashAttribute("deletePostResult", boardVO.getBno());
+		}
+		
 		rttr.addAttribute("currentPageNum",cri.getCurrentPageNum());
 		rttr.addAttribute("itemPerPage",cri.getItemsPerPage());
 		rttr.addAttribute("type",cri.getType());
@@ -179,25 +220,29 @@ public class BoardController {
 			@ModelAttribute("cri") Criteria cri) {
 		
 		log.info("boardVO: " + boardVO);
-		
+
 		log.info("----------------------------------------------");
 		log.info(Arrays.toString(multipartFiles)); // MultipartFile[]이 배열이고, to String 으로 받음
-		
+
 		// 브라우저 업로드 파일이 서버로 전달 된 것을 받아 > upDownUtile로 전달
 		// List타압의 attachVOList에 담아 > boardVO의 AttachVOList에 할당
 		List<AttachVO> attachVOList = upDownUtile.uploadFormPost(multipartFiles);
-		
+
+		// 파일이 업로드된 경우에만 AttachVOList를 설정
 		if (attachVOList != null && !attachVOList.isEmpty()) { // attachVOList가 null이 아니고 비어 있지 않을 때 실행할 코드
 			boardVO.setAttachVOList(attachVOList);
 		}
-		
+
+		// 게시글 수정 서비스 호출
 		if (service.modifyPost(boardVO, anos)) {
 			// 삭제할 파일들 삭제
-			upDownUtile.deleteFiles(fullNames);
+			if (fullNames != null && fullNames.length > 0) {
+				upDownUtile.deleteFiles(fullNames);
+			}
 			rttr.addFlashAttribute("modifyPostResult", boardVO.getBno());
 		}
-		
 
+		
 //		rttr.addAttribute("currentPageNum", cri.getCurrentPageNum());
 //		rttr.addAttribute("itemPerPage", cri.getItemsPerPage());
 //		rttr.addAttribute("type",cri.getType());

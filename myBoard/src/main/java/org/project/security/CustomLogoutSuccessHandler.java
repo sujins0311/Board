@@ -15,10 +15,10 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class CustomLogoutSuccessHandler implements LogoutSuccessHandler  {
 
-    @Override
-    public void onLogoutSuccess(
-    		HttpServletRequest request, 
-    		HttpServletResponse response,
+	@Override
+	public void onLogoutSuccess(
+			HttpServletRequest request, 
+			HttpServletResponse response,
 			Authentication authentication) 
 					throws IOException, ServletException {
 		if (authentication != null && authentication.getDetails() != null) {
@@ -36,7 +36,7 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler  {
 				e.printStackTrace();
 			}
 			//response.setStatus(HttpServletResponse.SC_OK);
-	        //response.sendRedirect("/");
+			//response.sendRedirect("/");
 		}
 	}
 }

@@ -36,6 +36,10 @@
 	<delete id="delete" parameterType="java.lang.Long">
 		DELETE FROM tbl_reply WHERE rno = #{rno}
 	</delete>
+	
+	<delete id="deleteByBno" parameterType="java.lang.Long">
+	    DELETE FROM tbl_reply WHERE bno = #{bno}
+	</delete>
 
 
 	<!-- getList(@GetMapping(value = "/pages/{bno}/{page}",) -->

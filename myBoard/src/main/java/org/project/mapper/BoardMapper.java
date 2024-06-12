@@ -21,7 +21,5 @@ public interface BoardMapper {
 	public int modify(BoardVO boardVO); // modifyPost(post)
 	
 	public void updateReplyCnt(@Param("bno") Long bno, @Param("itemsPerPage") int itemsPerPage);
-	
-	public int insertAttach(AttachVO attachVO);
-	public void deleteAttachFiles(@Param("anos") Long[] anos);
+
 	}
