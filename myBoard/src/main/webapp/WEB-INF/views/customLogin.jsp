@@ -134,14 +134,13 @@ $(document).ready(function() {
 		if (!registerMember || registerMember === '' 
 				|| registerMember === null) { // 공백이거나 null이면 모달종료 
 			return;
-				}else{
-					$("#successModalBody").html(
-							"[ID :" + registerMember + "] 회원가입에 성공하셨습니다.");
-					}
+		}else{
+			$("#successModalBody").html(
+					"[ID :" + registerMember + "] 회원가입에 성공하셨습니다.");
+			}
 		$("#successModal").modal("show");
-	}
+		}
 	});
-	
 	
 	// 회원탈퇴모달
 	var deleteMember = '${deleteMember}';
@@ -153,12 +152,12 @@ $(document).ready(function() {
 		if (!deleteMember || deleteMember === '' 
 				|| deleteMember === null) { // 공백이거나 null이면 모달종료 
 			return;
-				}else{
-					$("#successModalBody").html(
-							"[ID :" + deleteMember + "] 회원탈퇴에 성공하셨습니다.");
-					}
+		}else{
+			$("#successModalBody").html(
+					"[ID :" + deleteMember + "] 회원탈퇴에 성공하셨습니다.");
+			}
 		$("#successModal").modal("show");
-	}
+		}
 	});
 	
 	// 에러 메시지 확인 및 모달 표시

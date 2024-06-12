@@ -27,12 +27,12 @@ import lombok.extern.log4j.Log4j;
 @Controller
 @AllArgsConstructor // 생성자주입
 public class MemberContoller {
-	
-    private MemberService service;
-    private UserSessionUtils userSessionUtils;
 
-    // ppoosumi 1234
-    // 회원조회
+	private MemberService service;
+	private UserSessionUtils userSessionUtils;
+
+	// ppoosumi 1234
+	// 회원조회
 	@GetMapping("member/read")
 	public void read(Model model) {
 		// UserSessionUtils를 사용하여 세션에 저장된 사용자 정보를 가져옴
@@ -43,10 +43,8 @@ public class MemberContoller {
 			model.addAttribute("member", memberVO);
 		}
 	}
-    
 
-    
-    // 회원정보수정
+	// 회원정보수정
 	@GetMapping("member/update") // getPost.jsp
 	public void update(Model model) {
 		// UserSessionUtils를 사용하여 세션에 저장된 사용자 정보를 가져옴
@@ -94,8 +92,8 @@ public class MemberContoller {
 				rttr.addFlashAttribute("success", "회원 정보 수정에 성공했습니다.");
 				rttr.addFlashAttribute("member",currentMember);
 			} else {
-			    // 업데이트가 실패한 경우
-			    rttr.addFlashAttribute("error", "회원 정보 수정에 실패했습니다.");
+				// 업데이트가 실패한 경우
+				rttr.addFlashAttribute("error", "회원 정보 수정에 실패했습니다.");
 			}
 			return "redirect:/auth/member/read";
 		}
@@ -118,28 +116,32 @@ public class MemberContoller {
 			consumes = "application/json", 
 			produces = "application/json") // getPost.jsp
 	public ResponseEntity<Map<String, Object>> updatePassword(@RequestBody Map<String, String> map, HttpServletResponse response) {
+		
 		log.info("@PostMapping(\"member/updatePassword\")");
 		log.info("MemberVO: " + map);
+		
 		Map<String, Object> resultMap = new HashMap<>();
+		
 		// INFO : org.project.controller.MemberContoller - MemberVO: MemberVO(userid=user00, userpw=123, username=null, email=null, enabled=false, regDate=null, updateDate=null, authList=null)
-		// member의 pw의 유효성검증
-	    if (!service.checkPassword(map.get("currentpw"), map.get("userid"))) {
-	        log.error("비밀번호가 일치하지 않습니다. 확인 후 다시 입력해주세요.");
-	        resultMap.put("result", "error");
+		// Member의 비밓번호 유효성검증
+		if (!service.checkPassword(map.get("currentpw"), map.get("userid"))) {
+			log.error("비밀번호가 일치하지 않습니다. 확인 후 다시 입력해주세요.");
+			resultMap.put("result", "error");
 			resultMap.put("msg", "비밀번호가 일치하지 않습니다. 확인 후 다시 입력해주세요.");
-	        return new ResponseEntity<>(resultMap, HttpStatus.OK);
-	    }
-	    
-	    MemberVO memberVO = userSessionUtils.getCurrentMemberVO();
-	    memberVO.setUserpw(map.get("userpw"));
+			return new ResponseEntity<>(resultMap, HttpStatus.OK);
+		}
+
+		MemberVO memberVO = userSessionUtils.getCurrentMemberVO();
+		memberVO.setUserpw(map.get("userpw"));
 		service.updatePassword(memberVO);
+		
 		// 세션에 pw인코더 된 것을 저장 해야할까? >로그아웃 하면 갱신되지 않을까? >로그아웃을 시키자>성공 메시지 확인 및 모달 표시: 확인버튼 > 로그아웃
 		resultMap.put("result", "success");
 		resultMap.put("msg", "비밀번호가 성공적으로 변경되었습니다. 새로운 비밀번호로 재로그인해주세요.");
-        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+		return new ResponseEntity<>(resultMap, HttpStatus.OK);
 	}
-    
-    // 회원정보삭제
+	
+	// 회원정보삭제
 	@GetMapping("member/delete")
 	public void delete(Model model) {
 		MemberVO memberVO = userSessionUtils.getCurrentMemberVO();
@@ -150,99 +152,67 @@ public class MemberContoller {
 		}
 	}
 	
-	// 회원정보삭제
+	// 회원탈퇴
 	@PostMapping("member/delete")
 	public String delete(MemberVO memberVO, RedirectAttributes rttr) {
-	    // 로그인한 사용자의 정보 가져오기
-	    //MemberVO currentMember = userSessionUtils.getCurrentMemberVO();
+		// 로그인한 사용자의 정보 가져오기
+		// MemberVO currentMember = userSessionUtils.getCurrentMemberVO();
 
-	    // 비밀번호 일치 여부 확인
-	    if (!service.checkPassword(memberVO.getUserpw(), memberVO.getUserid())) {
-	        log.error("비밀번호가 일치하지 않습니다. 확인 후 다시 입력해주세요.");
-	        rttr.addFlashAttribute("error", "비밀번호가 일치하지 않습니다. 확인 후 다시 입력해주세요.");
-	        return "redirect:/auth/member/delete";
-	    }
+		// 비밀번호 일치 여부 확인
+		if (!service.checkPassword(memberVO.getUserpw(), memberVO.getUserid())) {
+			log.error("비밀번호가 일치하지 않습니다. 확인 후 다시 입력해주세요.");
+			rttr.addFlashAttribute("error", "비밀번호가 일치하지 않습니다. 확인 후 다시 입력해주세요.");
+			return "redirect:/auth/member/delete";
+		}
 		// 비밀번호가 일치할 때의 처리
 		service.delete(memberVO.getUserid());
 		rttr.addFlashAttribute("success", "회원 탈퇴가 성공적으로 이루어졌습니다.");
 		return "redirect:/customLogin";
 	}
 	
-//	@PostMapping("member/delete")
-//	public void delete(MemberVO memberVO, RedirectAttributes rttr) {
-//	    // 로그인한 사용자의 정보 가져오기
-//	    MemberVO currentMember = userSessionUtils.getCurrentMemberVO();
-//
-//	    // 비밀번호 일치 여부 확인
-//	    if (!service.checkPassword(memberVO.getUserpw(), currentMember.getUserid())) {
-//	        log.error("비밀번호가 일치하지 않습니다. 확인 후 다시 입력해주세요.");
-//	        rttr.addFlashAttribute("error", "비밀번호가 일치하지 않습니다. 확인 후 다시 입력해주세요.");
-//	        //return "redirect:/auth/member/delete";
-//	    }
-//		// 비밀번호가 일치할 때의 처리
-//		service.delete(memberVO.getUserpw());
-//		rttr.addFlashAttribute("success", "회원 탈퇴가 성공적으로 이루어졌습니다. 메인 화면으로 이동합니다.");
-//
-//		//return "redirect:/board/getPostList";
-//	}
-
-    
-    
-
-
+	// 회원가입
+	// http://localhost:8888/auth/register
+	@GetMapping("register")
+	public void register() {
+		log.info("register");
+	}
 	
-	
-    
-    // 회원가입
-    //http://localhost:8888/auth/register
-    @GetMapping("register")
-    public void register() {
-    	log.info("register");
-    }
-    
-    
-    // ***ajax로 수정예정
-    // form submit() : x-www-form-urlencoded  
-    // ajax send() JSON : application/json 
+	// ***ajax로 수정예정
+	// form submit() : x-www-form-urlencoded
+	// ajax send() JSON : application/json
 	@PostMapping("register")
 	public String register(MemberVO memberVO, RedirectAttributes rttr) {
 		log.info("register" + rttr);
 		service.register(memberVO); // 회원가입(DB)
-		rttr.addFlashAttribute("registerMember",memberVO.getUserid());// 유저의 id 전달 > 모달창 띄워 완료
-		return "redirect:/customLogin";	
-	}
-
-
-	// http://localhost:8888/user/all
-	// http://localhost:8888/Custom Login?error
-	@GetMapping
-	public void loginPage(String error, String logout, Model model) {
-
-		log.info("--------Custom Login Page--------");
-		log.info(error);
-		if (error != null) {
-			log.info("---------------");
-			log.info(error);
-		}
-	}
-
-	// http://localhost:8888/user/all
-	@GetMapping("/all")
-	public void All() {
-
-		log.info("all....................");
+		rttr.addFlashAttribute("registerMember", memberVO.getUserid());// 유저의 id 전달 > 모달창 띄워 완료
+		return "redirect:/customLogin";
 	}
 
 
 
-	// http://localhost:8888/user/admin
-	@GetMapping("/admin")
-	public void Admin() {
-
-		log.info("Admin only.....................");
-	}
+//	// http://localhost:8888/Custom Login?error
+//	@GetMapping
+//	public void loginPage(String error, String logout, Model model) {
+//
+//		log.info("--------Custom Login Page--------");
+//		log.info(error);
+//		if (error != null) {
+//			log.info("---------------");
+//			log.info(error);
+//		}
+//	}
 	
-	
+//	// http://localhost:8888/auth/all
+//	@GetMapping("/all")
+//	public void All() {
+//		log.info("all....................");
+//	}
+
+//	// http://localhost:8888/auth/admin
+//	@GetMapping("/admin")
+//	public void Admin() {
+//		log.info("Admin only.....................");
+//	}	
 
 //  @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MEMBER')")
 //  @GetMapping("/annoMember")

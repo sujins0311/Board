@@ -72,12 +72,12 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="errorModalLabel">에러 메시지</h5>
+				<h5 class="modal-title" id="errorModalLabel">오류 메시지</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body" id="errorMessage"></div>
+			<div class="modal-body" id="errorModalBody">${error}</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
 			</div>
@@ -90,7 +90,22 @@
 <!--  jQuery 라이브러리의 3.6.4 버전 -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script type="text/javascript">
-	$(document).ready(function() {
+$(document).ready(function() {
+		
+	// 회원탈퇴비밀
+	var error = '${error}';
+	
+	console.log(error);
+	checkModal(error);
+	
+	function checkModal(error) {
+		if (!error || error === '') { // 공백이거나 null이면 모달종료 
+			return;
+		}else{
+			$("#successModalBody").html(error);
+			}
+		$("#errorModal").modal("show");
+		}
 
 	// 회원탈퇴 폼 제출
 	$("#deleteSubmitBtn").on("click", function(event) {
@@ -106,8 +121,8 @@
 			return;
 		} else{
 			$("#deleteMemberModal").modal("show");
-		}
-	});
+			}
+		});
 
 	$("#confirmDeleteMemberBtn").on("click", function(e) {
 		event.preventDefault();

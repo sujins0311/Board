@@ -20,6 +20,7 @@ public class CommonController {
 	}
 
 	// 로그인 페이지에서 로그아웃을 요청할때 String logout
+	// http://localhost:8888/Custom Login?error
 	@GetMapping("/customLogin")
 	public void loginPage(String error, String logout, Model model) {
 		
