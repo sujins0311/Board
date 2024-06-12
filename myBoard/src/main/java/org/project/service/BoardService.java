@@ -14,6 +14,6 @@ public interface BoardService {
 	
 	public Long createPost(BoardVO boardVO); //post
 	public BoardVO getPost(Long bno); //get
-	public boolean deletePost(Long bno); //delete
+	public boolean deletePost(BoardVO boardVO); //delete
 	public boolean modifyPost(BoardVO boardVO, Long[] attachFileNums); //update
 }

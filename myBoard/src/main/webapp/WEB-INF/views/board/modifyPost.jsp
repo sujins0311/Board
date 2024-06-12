@@ -75,28 +75,33 @@
 	</div>
 	<!-- end panel -->
 
-        <!-- 첨부파일(이미지) -->
-        <div class="col-lg-12">
-	        <div class="panel">
-		        <label>첨부파일</label>
-				<div class="attachList d-flex flex-row"> <!-- flex-row: 가로로 나열 -->
-				    <c:if test="${not empty modifyPostResult.attachVOList}">
-					    <c:forEach items="${modifyPostResult.attachVOList}" var="attach">
-					    	<c:if test="${attach.ano != null}" >
-				    			 <div class="attachList d-flex flex-column"> <!-- target.closest("div").remove() -->
-					        		<img src="/files/s_${attach.fileName}" alt="첨부 이미지"> <!-- 섬네일이미지 보여주기 -->
-			                        <button class="btn btn-danger removeImgBtn"
-			                                data-ano="${attach.ano}"
-			                                data-fullname="${attach.fileName}"
-			                        >X</button><!-- attach.fileName = uuid + fileName -->
-				        		</div>
-					        </c:if>
-					    </c:forEach>
-				    </c:if>
-				</div>
+	<!-- 첨부파일(이미지) -->
+	<div class="col-lg-12">
+		<div class="panel">
+			<label>첨부파일</label>
+			<div class="attachList d-flex flex-row">
+				<!-- flex-row: 가로로 나열 -->
+				<c:if test="${not empty modifyPostResult.attachVOList}">
+					<c:forEach items="${modifyPostResult.attachVOList}" var="attach">
+						<c:if test="${attach.ano != null}">
+							<div class="attachList d-flex flex-column">
+								<!-- target.closest("div").remove() -->
+								<img src="/files/s_${attach.fileName}" alt="첨부 이미지">
+								<!-- 섬네일이미지 보여주기 -->
+								<button 
+									class="btn btn-danger removeImgBtn" 
+									data-ano="${attach.ano}" 
+									data-fullname="${attach.fileName}">
+								X</button>
+								<!-- attach.fileName = uuid + fileName -->
+							</div>
+						</c:if>
+					</c:forEach>
+				</c:if>
 			</div>
 		</div>
-		<!-- end 첨부파일(이미지) -->
+	</div>
+	<!-- end 첨부파일(이미지) -->
 </div>
 <!-- /.row -->
 
@@ -109,26 +114,30 @@ $(document).ready(function() {
 	// 원인을 찾기가 힘들어질 수 있다.
 	$('button[type="submit"]').on("click", function(e){
 		e.preventDefault();
-		var operation = $(this).data("oper"); //data-oper를 사용해 수정 , 목록으로 이동   
+		var operation = $(this).data("oper"); //data-oper를 사용해 수정 , 목록으로 이동
 		console.log(operation);
 		
-		// 삭제할 파일을 hidden 태그를 이용
-		const fileArr = $(".attachList button");
-		console.log(fileArr); // dataset:DOMStringMap , ano: "9" ,fullname: "16e5d92b-df5c-46d3-989f-8345112c5d11_토끼2.jpg"
 		
-		if(fileArr.length > 0){
+		// 삭제할 파일을 hidden 태그를 이용
+		//const fileArr = $(".attachList button");
+		const fileArr = $(".attachList .removeImgBtn");
+		console.log("fileArr", fileArr); // dataset:DOMStringMap , ano: "9" ,fullname: "16e5d92b-df5c-46d3-989f-8345112c5d11_토끼2.jpg"
+		
+		if(fileArr && fileArr.length > 0){
 			let str = '';
-		    
-		    fileArr.each(function() {
-		        const ano = $(this).data("ano"); // 버튼의 data-ano 속성값을 가져옴
-		        const fullName = $(this).data("fullname"); // 버튼의 data-fullname 속성값을 가져옴
-		        
-		        str += `<input type='hidden' name='anos' value='${ano}'> `;
-		        str += `<input type='hidden' name='fullNames' value='${fullName}'> `;
-		    });
-		    
-		    $(".deleteImages").append(str);
-		}
+			
+			fileArr.each(function() {
+				const ano = $(this).data("ano"); // 버튼의 data-ano 속성값을 가져옴
+				const fullName = $(this).data("fullname"); // 버튼의 data-fullname 속성값을 가져옴
+				
+				str += `<input type='hidden' name='anos' value='${ano}'> `;
+				str += `<input type='hidden' name='fullNames' value='${fullName}'> `;
+			});
+			
+			console.log("attach hidden inputs: ", str); // 생성된 히든 입력 필드 로그
+			
+			$(".deleteImages").append(str);
+		}// end if
 
 		if(operation === 'delete'){
 			debugger;
@@ -156,28 +165,34 @@ $(document).ready(function() {
 	// 수정
 	// 바닐라JS
 	// 첨부파일 버튼을 눌렀을때 이벤트
-    document.querySelector(".attachList").addEventListener("click", (e) => {
-        const target = e.target
+	document.querySelector(".attachList").addEventListener("click", (e) => {
+		const target = e.target
 
-        if(target.tagName !=='BUTTON'){ // DOM 속성에서 tagName이 BUTTON이 아닐경우 종료
-            return
-        }
+		if(target.tagName !=='BUTTON'){ // DOM 속성에서 tagName이 BUTTON이 아닐경우 종료
+			return
+		}
 
-        const ano = target.getAttribute("data-ano")
-        const fullName = target.getAttribute("data-fullname")
+		const ano = target.getAttribute("data-ano")
+		const fullName = target.getAttribute("data-fullname")
 
-        if(ano && fullName){
-            let str = ''
-            str += `<input type='hidden' name='anos' value='\${ano}'> `
-            str += `<input type='hidden' name='fullNames' value='\${fullName}'> `
+		if(ano && fullName){
+			let str = ''
+			str += `<input type='hidden' name='anos' value='\${ano}'> `
+			str += `<input type='hidden' name='fullNames' value='\${fullName}'> `
 
-            console.log("ano :", ano, "fullName :" , fullName);
-            
-            target.closest("div").remove() /* closest("div") 버튼이벤트의 상위 div */
-
-            document.querySelector(".deleteImages").innerHTML += str // 삭제할 이미지의 정보를 담은 input태그 > 폼제출시, 같이 제출
-        }
-    }, false);
+			console.log("ano :", ano, "fullName :" , fullName);
+			
+			target.closest("div").remove() /* closest("div") 버튼이벤트의 상위 div */
+			
+			console.log("attach hidden inputs: ", str); // 생성된 히든 입력 필드 로그
+			
+			if(!confirm("수정 하시겠습니까?")) {
+				return;
+			}
+			
+			document.querySelector(".deleteImages").innerHTML += str // 삭제할 이미지의 정보를 담은 input태그 > 폼제출시, 같이 제출
+		}
+	}, false);
 
 });// end $(document).ready()
 

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace 속성값은 Mapper 인터페이스와 동일한 이름으로 작성 -->
+<mapper namespace="org.project.mapper.BoardAttachMapper">
+
+
+	<!-- 파일업로드 -->
+	<insert id="insertAttach" parameterType="org.project.domain.BoardVO">
+		INSERT INTO attach (bno, uuid, fileName)
+		VALUES(#{bno}, #{uuid}, #{fileName})
+	</insert>
+	
+	<!-- 파일업로드(수정/삭제) -->
+	<delete id="deleteAttachFiles" parameterType="java.lang.Long">
+		DELETE FROM attach
+		<where>
+		<foreach collection="anos" item="ano" open="ano in(" close=")" separator=",">
+			#{ano}
+		</foreach>
+		</where>
+	</delete>
+	
+	<!-- 파일업로드(조회) -->
+<!-- 	<select id="readAttach" parameterType="org.project.domain.attachVO">
+		SELECT * FROM attach
+		WHERE bno = #{bno}
+	</select> -->
+	
+	<!-- 파일업로드(삭제) -->
+	<delete id="deleteAttachFilesByBno" parameterType="java.lang.Long">
+		DELETE FROM attach WHERE bno = #{bno}
+	</delete>
+	
+
+</mapper>
