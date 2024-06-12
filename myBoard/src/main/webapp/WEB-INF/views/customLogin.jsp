@@ -5,12 +5,12 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-md-4 col-md-offset-4">
+<!-- 		<div class="col-md-4 col-md-offset-4">
 			<h3 class="page-header text-center">
 				<a href="/"><b>HOME(이미지삽입예정)</a></b>
 			</h3>
 			</a>
-		</div>
+		</div> -->
 	</div>
 	<div class="row">
 		<div class="col-md-4 col-md-offset-4 ">
@@ -22,17 +22,17 @@
 					<form role="form" method='post' action="/login">
 						<fieldset>
 							<div class="form-group">
-								<input class="form-control" placeholder="아이디를 입력해 주세요." name="username" type="text" autofocus>
+								<input id="userid" class="form-control" placeholder="아이디를 입력해 주세요." name="username" type="text" autofocus>
 							</div>
 							<div class="form-group">
-								<input class="form-control" placeholder="비밀번호를 입력해 주세요." name="password" type="password" value="">
+								<input id="userpw" class="form-control" placeholder="비밀번호를 입력해 주세요." name="password" type="password" value="">
 							</div>
 							<div class="checkbox">
 								<label> <input name="remember-me" type="checkbox">아이디 저장
 								</label>
 							</div>
 							<!-- Change this to a button or input when using this as a form -->
-							<a href="index.html" class="btn btn-lg btn-custom-success btn-block">로그인</a>
+							<button type="submit" class="btn btn-lg btn-custom-success btn-block">로그인</button>
 						</fieldset>
 						<!-- CSRF(Cross-Site Request Forgery)토큰은 서버가 브라우저에 전송한 토큰값과 비교해 처리하는 방식 > 세션 보관 -->
 						<!-- <input type="hidden" name="_csrf"
@@ -57,68 +57,145 @@
 
 <!-- 회원가입성공모달 -->
 <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="successModalLabel">성공 메시지</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="successModalBody"></div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="successModalBtnToLogIn" data-dismiss="modal">확인</button>
-            </div>
-        </div>
-    </div>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="successModalLabel">성공 메시지</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" id="successModalBody"></div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" id="successModalBtnToLogIn" data-dismiss="modal">확인</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 에러 모달 -->
+<div class="modal fade" id="loginErrorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="errorModalLabel">오류 메시지</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" id="errorModalBody">${error}</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 로그아웃 모달 -->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="logoutModalLabel">로그아웃 메시지</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" id="logoutModalBody">${logout}</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 <!--  jQuery 라이브러리의 3.6.4 버전 -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	// 회원가입 모달
+	
+	// 로그아웃 메시지 확인 및 모달 표시
+	var logout = "${logout}";
+	if (logout) {
+		$("#logoutModal").modal("show");
+	}
+	
+	// 회원가입모달
 	$(function() {
 		var registerMember = '${registerMember}';
 		
 		console.log(registerMember);
 		checkModal(registerMember);
 		
-		// parseInt() 함수는 문자열을 정수로 변환하는 JavaScript의 내장 함수
-		// $(".modal-body").html("<p>모달에 추가할 HTML 형식의 텍스트</p>");
-		// $(".modal-body").text("모달에 추가할 텍스트");
-		function checkModal(registerMember) {
-		    if (!registerMember || registerMember === '' 
-		    		|| registerMember === null) { // 공백이거나 null이면 모달종료 
-		        return;
-		    }else{
-				$("#successModalBody").html(
-						"[ID :" + registerMember + "] 회원가입에 성공하셨습니다.");
-				}
-			$("#successModal").modal("show");
+	// parseInt() 함수는 문자열을 정수로 변환하는 JavaScript의 내장 함수
+	// $(".modal-body").html("<p>모달에 추가할 HTML 형식의 텍스트</p>");
+	// $(".modal-body").text("모달에 추가할 텍스트");
+	function checkModal(registerMember) {
+		if (!registerMember || registerMember === '' 
+				|| registerMember === null) { // 공백이거나 null이면 모달종료 
+			return;
+		}else{
+			$("#successModalBody").html(
+					"[ID :" + registerMember + "] 회원가입에 성공하셨습니다.");
+			}
+		$("#successModal").modal("show");
 		}
 	});
 	
+	// 회원탈퇴모달
+	var deleteMember = '${deleteMember}';
+	
+	console.log(deleteMember);
+	checkModal(deleteMember);
+	
+	function checkModal(deleteMember) {
+		if (!deleteMember || deleteMember === '' 
+				|| deleteMember === null) { // 공백이거나 null이면 모달종료 
+			return;
+		}else{
+			$("#successModalBody").html(
+					"[ID :" + deleteMember + "] 회원탈퇴에 성공하셨습니다.");
+			}
+		$("#successModal").modal("show");
+		}
+	});
+	
+	// 에러 메시지 확인 및 모달 표시
+	var error = "${error}";
+	if (error) {
+		$("#errorModalBody").html(error);
+		$("#loginErrorModal").modal("show");
+	}
+	
 	// 비밀번호수정 성공모달, 회원탈퇴 성공모달
 	$(function() {
-	    var successMessage = "${success}";
-	    
-	    checkResult(successMessage);
-
-	    function checkResult(successMessage) {
-	        if (!successMessage || successMessage.trim() === '') {// 공백이거나 null이면 모달종료 
-	            return;
-	        }else{
-	        	$("#successModalBody").html(successMessage);
-	        }
-	        $("#successModal").modal("show");
-	    }
+		var successMessage = "${success}";
+		
+		checkResult(successMessage);
+		
+		function checkResult(successMessage) {
+			if (!successMessage || successMessage.trim() === '') {// 공백이거나 null이면 모달종료 
+				return;
+			}else{
+				$("#successModalBody").html(successMessage);
+				}
+			$("#successModal").modal("show");
+			}
 	});
 	
 	// 로그인버튼
 	$(".btn-custom-success").on("click", function(e) {
 		e.preventDefault();
-		// 아이디, 패스워드 입력 검증
+		
+		// 아이디, 패스워드 입력 null값 검증
+		var userid = $("#userid").val();
+		var userpw = $("#userpw").val();
+		
+		if (userid == null || userid.trim() === "" || userpw == null || userpw.trim() === "") {
+			alert("ID 또는 비밀번호가 비어있습니다.");
+			return; // 폼 제출 방지
+		}
+		
 		$("form").submit();
 	});
 	
@@ -142,7 +219,6 @@ $(document).ready(function() {
 			$(".footer").show();	
 		}
 	});
-});
 </script>
 
 </body>
