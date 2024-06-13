@@ -60,26 +60,24 @@
 
 	<!-- 검색 -->
 	<div class="col-lg-12">
-	        <form id='searchForm' action="/board/getPostList" method='get' class="form-inline" style="text-align: center;">
-	            <div class="form-group mr-2">
-	                <select class="form-control" name='type' style="padding-right: 0px; appearance: none;"> <!-- type이 null일떄(주소에 type이 없을때 type을 추가함)  -->
-	                    <option value="" <c:out value="${pageMaker.cri.type == null?'selected':''}"/> >검색조건 선택 &nbsp; ▼</option>
-	                    <option value="T" <c:out value="${pageMaker.cri.type == 'T'?'selected':''}"/>>제목만</option>
-	                    <option value="C" <c:out value="${pageMaker.cri.type == 'C'?'selected':''}"/>>내용만</option>
-	                    <option value="W" <c:out value="${pageMaker.cri.type == 'W'?'selected':''}"/>>글작성자</option>
-	                    <option value="TC" <c:out value="${pageMaker.cri.type == 'TC'?'selected':''}"/>>제목 + 내용</option>
-	                    <option value="TW" <c:out value="${pageMaker.cri.type == 'TW'?'selected':''}"/>>제목 + 작성자</option>
-	                    <option value="TWC" <c:out value="${pageMaker.cri.type == 'TWC'?'selected':''}"/>>제목 + 내용 + 작성자</option>
-	                </select>
-	            </div>
-				<div class="form-group mr-2">
-					<input class="form-control" type="text" name='keyword'
-					value='<c:out value="${pageMaker.cri.keyword}"/>' placeholder="검색어를 입력해주세요"> 
-					<input type='hidden' name='currentPageNum' value='<c:out value="${pageMaker.cri.currentPageNum}"/> '>
-					<input type='hidden' name='itemsPerPage' value='<c:out value="${pageMaker.cri.itemsPerPage}"/> '> 
-				</div>
-				<button type="submit" class='btn common-btn btn-search'>검색</button>
-	        </form>
+		<form id='searchForm' action="/board/getPostList" method='get' class="form-inline" style="text-align: center;">
+			<div class="form-group mr-2">
+				<select class="form-control" name='type' style="padding-right: 0px; appearance: none;">
+					<!-- type이 null일떄(주소에 type이 없을때 type을 추가함)  -->
+					<option value="" <c:out value="${pageMaker.cri.type == null?'selected':''}"/>>검색조건 선택 &nbsp; ▼</option>
+					<option value="T" <c:out value="${pageMaker.cri.type == 'T'?'selected':''}"/>>제목만</option>
+					<option value="C" <c:out value="${pageMaker.cri.type == 'C'?'selected':''}"/>>내용만</option>
+					<option value="W" <c:out value="${pageMaker.cri.type == 'W'?'selected':''}"/>>글작성자</option>
+					<option value="TC" <c:out value="${pageMaker.cri.type == 'TC'?'selected':''}"/>>제목 + 내용</option>
+					<option value="TW" <c:out value="${pageMaker.cri.type == 'TW'?'selected':''}"/>>제목 + 작성자</option>
+					<option value="TWC" <c:out value="${pageMaker.cri.type == 'TWC'?'selected':''}"/>>제목 + 내용 + 작성자</option>
+				</select>
+			</div>
+			<div class="form-group mr-2">
+				<input class="form-control" type="text" name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' placeholder="검색어를 입력해주세요"> <input type='hidden' name='currentPageNum' value='<c:out value="${pageMaker.cri.currentPageNum}"/> '> <input type='hidden' name='itemsPerPage' value='<c:out value="${pageMaker.cri.itemsPerPage}"/> '>
+			</div>
+			<button type="submit" class='btn common-btn btn-search'>검색</button>
+		</form>
 	</div>
 	<!-- /.검색 -->
 
