@@ -182,13 +182,12 @@ $(document).ready(function() {
 
 			console.log("ano :", ano, "fullName :" , fullName);
 			
-			target.closest("div").remove() /* closest("div") 버튼이벤트의 상위 div */
-			
+			target.closest("div").remove() // closest("div") 버튼이벤트의 상위 div		
 			console.log("attach hidden inputs: ", str); // 생성된 히든 입력 필드 로그
 			
-			if(!confirm("수정 하시겠습니까?")) {
+/* 			if(!confirm("수정 하시겠습니까?")) {
 				return;
-			}
+			} */
 			
 			document.querySelector(".deleteImages").innerHTML += str // 삭제할 이미지의 정보를 담은 input태그 > 폼제출시, 같이 제출
 		}

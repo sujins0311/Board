@@ -22,7 +22,7 @@ public class CommonController {
 	// 로그인 페이지에서 로그아웃을 요청할때 String logout
 	// http://localhost:8888/Custom Login?error
 	@GetMapping("/customLogin")
-	public void loginPage(String error, String logout, Model model) {
+	public void loginPage(String error, Model model) {
 		
 		log.info("/customLogin");
 
@@ -30,12 +30,25 @@ public class CommonController {
 			model.addAttribute("error", "ID 또는 비밀번호를 확인 후 다시 입력해 주세요.");
 			log.info("error: " + error);
 		}
-
-		if (logout != null) {
-			model.addAttribute("logout", "로그아웃 성공했습니다.");
-			log.info("logout: " + logout);
-		}
 	}
+	
+	
+	
+//	@GetMapping("/customLogin")
+//	public void loginPage(String error, String logout, Model model) {
+//		
+//		log.info("/customLogin");
+//
+//		if (error != null) {
+//			model.addAttribute("error", "ID 또는 비밀번호를 확인 후 다시 입력해 주세요.");
+//			log.info("error: " + error);
+//		}
+//
+//		if (logout != null) {
+//			model.addAttribute("logout", "로그아웃 성공했습니다.");
+//			log.info("logout: " + logout);
+//		}
+//	}
 	
 //	@GetMapping("/customLogout")
 //	public String logoutPage() {
