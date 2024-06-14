@@ -50,7 +50,7 @@ public class BoardController {
 		log.info("Criteria: " + cri);
 
 		model.addAttribute("list", service.getPostList(cri)); //게시글목록
-	    
+		
 		int total = service.getTotal(cri);
 		log.info("total: " + total);
 		
@@ -227,6 +227,7 @@ public class BoardController {
 		// 브라우저 업로드 파일이 서버로 전달 된 것을 받아 > upDownUtile로 전달
 		// List타압의 attachVOList에 담아 > boardVO의 AttachVOList에 할당
 		List<AttachVO> attachVOList = upDownUtile.uploadFormPost(multipartFiles);
+		log.info(attachVOList.toString());
 
 		// 파일이 업로드된 경우에만 AttachVOList를 설정
 		if (attachVOList != null && !attachVOList.isEmpty()) { // attachVOList가 null이 아니고 비어 있지 않을 때 실행할 코드

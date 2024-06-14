@@ -1,5 +1,6 @@
 package org.project.service;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.project.domain.AttachVO;
@@ -112,13 +113,14 @@ public class BoardServiceImpl implements BoardService {
 	public boolean modifyPost(BoardVO boardVO, Long[] attachFileNums) {
 		boardVO.setUpdatedDate();
 		log.info("modifyPost.....");
-		log.info("attachFileNums: " + attachFileNums);
+		log.info("attachFileNums: " + Arrays.toString(attachFileNums));
 
 		List<AttachVO> attachVOList = boardVO.getAttachVOList();
 
 		// 1. 이미지삭제
 		// attachFileNums가 null이 아니고 길이가 0보다 큰 경우에만 실행
 		if (attachFileNums != null && attachFileNums.length > 0) {
+			log.info("ano: " + Arrays.toString(attachFileNums));
 			attachMapper.deleteAttachFiles(attachFileNums);
 		}
 
