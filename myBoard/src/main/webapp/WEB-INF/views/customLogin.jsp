@@ -28,7 +28,8 @@
 								<input id="userpw" class="form-control" placeholder="비밀번호를 입력해 주세요." name="password" type="password" value="">
 							</div>
 							<div class="checkbox">
-								<label> <input name="remember-me" type="checkbox">아이디 저장
+								<label> 
+								<input name="remember-me" type="checkbox">아이디 저장
 								</label>
 							</div>
 							<!-- Change this to a button or input when using this as a form -->
@@ -134,9 +135,6 @@ $(document).ready(function() {
 			}
 		$("#successModal").modal("show");
 		}
-	});
-	
-
 
 
 	// 로그인(에러)모달
@@ -215,7 +213,7 @@ $(document).ready(function() {
 		}
 	});
 
-	// 모바일 화면에서 키보드 사용시 푸터 숨김 및 해제
+/* 	// 모바일 화면에서 키보드 사용시 푸터 숨김 및 해제
 	$("form input").focus(function() {
 		if ($(window).width() < 768) {
 			$(".footer").hide();
@@ -226,7 +224,22 @@ $(document).ready(function() {
 		if ($(window).width() < 768) {
 			$(".footer").show();
 		}
+	}); */
+	
+	// 모바일 화면에서 푸터 숨김
+	if ($(window).width() < 768) {
+		$(".footer").hide();
+	}
+	
+	// 윈도우 리사이즈 이벤트
+	$(window).resize(function() {
+		if ($(window).width() >= 768) {
+			$(".footer").show();
+		} else {
+			$(".footer").hide();
+		}
 	});
+});
 </script>
 
 </body>
